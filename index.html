@@ -317,7 +317,7 @@ document.querySelectorAll('.heat-filter').forEach(b=>b.addEventListener('click',
 renderHeatmap();
 
 const vertOrder=['Arq','E&U','I&S','N/D'];
-const vertNames={'Arq':'Arquitetura','E&U':'Engenharia & Utilidades','I&S':'Infraestrutura & Serviços','N/D':'Não Definido'};
+const vertNames={'Arq':'Arquitetura','E&U':'Engenharia & Utilites','I&S':'Industria & Serviços','N/D':'Não Definido'};
 const vertColors={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','N/D':'var(--nd)'};
 document.getElementById('vert-grid').innerHTML=vertOrder.filter(v=>VS[v]).map(v=>{
   const d=VS[v],adoption=Math.round(d.used/d.total*100);
