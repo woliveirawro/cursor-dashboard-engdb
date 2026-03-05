@@ -37,7 +37,7 @@ git push -u origin main
 1. No repositório GitHub, vá em **Settings → Secrets and variables → Actions**
 2. Clique em **New repository secret**
 3. Nome: `CURSOR_API_KEY`
-4. Valor: `crsr_f652e5b6f1f642065e19fb17464c10e4bdf83eb7206f2ec3cfb3e4d26bada2fb`
+4. Valor: `sua chave key`
 5. Clique em **Add secret**
 
 ### 3. Ativar GitHub Pages
