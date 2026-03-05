@@ -178,7 +178,7 @@ def process_data(members_raw, events_raw, spend_raw):
         ts = ev.get("timestamp", "")
         try:
             if isinstance(ts, (int, float)) or (isinstance(ts, str) and ts.isdigit()):
-                dt = datetime.utcfromtimestamp(int(ts) / 1000)
+                dt = datetime.fromtimestamp(int(ts) / 1000)
             else:
                 dt = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
         except:
@@ -186,7 +186,8 @@ def process_data(members_raw, events_raw, spend_raw):
 
         date_str = dt.strftime("%Y-%m-%d")
         all_dates.add(date_str)
-        requests_count = ev.get("requestsCosts", 1)
+        raw_cost = ev.get("requestsCosts", 1)
+        requests_count = round(float(raw_cost)) if raw_cost else 1
         model = ev.get("model", "unknown")
 
         tokens = ev.get("tokenUsage", {})
@@ -255,7 +256,7 @@ def process_data(members_raw, events_raw, spend_raw):
             "email": email,
             "role": m["role"],
             "vertical": m["vertical"],
-            "total_requests": tr,
+            "total_requests": round(tr),
             "total_tokens": u["tokens"],
             "days_used": len(dates),
             "periodo": periodo,
@@ -270,7 +271,7 @@ def process_data(members_raw, events_raw, spend_raw):
     for (email, date_str), req in usage_by_user_date.items():
         if email not in daily_usage:
             daily_usage[email] = {}
-        daily_usage[email][date_str] = req
+        daily_usage[email][date_str] = round(req)
 
     # Vertical summary
     vert_summary = {}
@@ -295,7 +296,7 @@ def process_data(members_raw, events_raw, spend_raw):
         "members": member_list,
         "daily_usage": daily_usage,
         "all_dates": all_dates,
-        "daily_totals": [{"date": d, "requests": daily_totals.get(d, 0)} for d in all_dates],
+        "daily_totals": [{"date": d, "requests": round(daily_totals.get(d, 0))} for d in all_dates],
         "models": sorted(
             [{"model": k, "requests": v} for k, v in model_usage.items()],
             key=lambda x: -x["requests"]
@@ -305,19 +306,19 @@ def process_data(members_raw, events_raw, spend_raw):
             "total_members": len(member_list),
             "active_members": sum(1 for m in member_list if m["used"]),
             "inactive_members": sum(1 for m in member_list if not m["used"]),
-            "total_requests": sum(m["total_requests"] for m in member_list),
-            "total_tokens": sum(m["total_tokens"] for m in member_list),
+            "total_requests": round(sum(m["total_requests"] for m in member_list)),
+            "total_tokens": round(sum(m["total_tokens"] for m in member_list)),
             "total_days": len(all_dates),
         },
         "report_period": report_period,
-        "updated_at": datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC"),
+        "updated_at": datetime.now(tz=None).strftime("%d/%m/%Y %H:%M UTC"),
     }
 
 
 def build_html(data):
     """Lê o template HTML e injeta os dados."""
     template_path = os.path.join(os.path.dirname(__file__), "..", "template.html")
-    with open(template_path, "r") as f:
+    with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
 
     html = html.replace("__DATA_PLACEHOLDER__", json.dumps(data, ensure_ascii=False))
@@ -333,7 +334,7 @@ def main():
         sys.exit(1)
 
     print(f"═══ Cursor Dashboard Builder ═══")
-    print(f"Início: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}\n")
+    print(f"Início: {datetime.now(tz=None).strftime('%Y-%m-%d %H:%M UTC')}\n")
 
     members = fetch_team_members_from_spend()
     events = fetch_usage_events()
@@ -350,7 +351,7 @@ def main():
     html = build_html(data)
 
     output_path = os.path.join(os.path.dirname(__file__), "..", "index.html")
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
     print(f"  → Salvo: {output_path} ({len(html) // 1024}KB)")
