@@ -82,13 +82,31 @@ def api_call(endpoint, payload=None):
         sys.exit(1)
 
 
-def fetch_team_members():
-    """Busca todos os membros do time."""
-    print("Buscando membros do time...")
-    data = api_call("/teams/team-members")
-    members = data if isinstance(data, list) else data.get("members", data.get("teamMembers", []))
-    print(f"  → {len(members)} membros encontrados")
-    return members
+def fetch_team_members_from_spend():
+    """Busca membros do time via endpoint /teams/spend (retorna nome, email, role)."""
+    print("Buscando membros do time via /teams/spend...")
+    all_members = []
+    page = 1
+
+    while True:
+        data = api_call("/teams/spend", {"page": page, "pageSize": 50})
+        spend_list = data.get("teamMemberSpend", [])
+        for s in spend_list:
+            all_members.append({
+                "name": s.get("name", ""),
+                "email": s.get("email", ""),
+                "role": s.get("role", "member"),
+            })
+        total_pages = data.get("totalPages", 1)
+        print(f"  → Página {page}/{total_pages}: {len(spend_list)} membros")
+
+        if page >= total_pages:
+            break
+        page += 1
+        time.sleep(0.3)
+
+    print(f"  → {len(all_members)} membros encontrados")
+    return all_members
 
 
 def fetch_usage_events():
@@ -317,9 +335,9 @@ def main():
     print(f"═══ Cursor Dashboard Builder ═══")
     print(f"Início: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}\n")
 
-    members = fetch_team_members()
+    members = fetch_team_members_from_spend()
     events = fetch_usage_events()
-    spend = fetch_spend()
+    spend = []  # Já extraímos membros do spend
 
     print("\nProcessando dados...")
     data = process_data(members, events, spend)
