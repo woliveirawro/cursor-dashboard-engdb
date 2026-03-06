@@ -311,7 +311,7 @@ def process_data(members_raw, events_raw, spend_raw):
             "total_days": len(all_dates),
         },
         "report_period": report_period,
-        "updated_at": datetime.now(tz=None).strftime("%d/%m/%Y %H:%M UTC"),
+        ""updated_at": (datetime.now(tz=None) - timedelta(hours=3)).strftime("%d/%m/%Y %H:%M") + " (BRT)",,
     }
 
 
