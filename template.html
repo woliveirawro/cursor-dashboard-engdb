@@ -14,7 +14,7 @@
   --green:#22c55e;--green-bg:rgba(34,197,94,.1);--green-border:rgba(34,197,94,.25);
   --red:#ef4444;--red-bg:rgba(239,68,68,.08);--red-border:rgba(239,68,68,.2);
   --yellow:#eab308;--yellow-bg:rgba(234,179,8,.1);
-  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;
+  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;--prod:#ec4899;
   --radius:10px;--radius-lg:16px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -27,6 +27,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .header-right{text-align:right}
 .header-badge{background:var(--accent-glow);border:1px solid rgba(99,102,241,.3);color:var(--accent2);padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.03em;display:inline-block}
 .header-updated{color:var(--text3);font-size:.72rem;margin-top:6px}
+
+/* Group Selector */
+.group-bar{max-width:1600px;margin:0 auto;padding:16px 40px 0;display:flex;align-items:center;gap:10px}
+.group-label{font-size:.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.group-btn{padding:8px 20px;font-size:.82rem;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .25s}
+.group-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.group-btn.active{background:linear-gradient(135deg,var(--accent),#7c3aed);border-color:transparent;color:#fff;box-shadow:0 2px 12px rgba(99,102,241,.3)}
 
 .nav{max-width:1600px;margin:0 auto;padding:0 40px}
 .tabs{display:flex;gap:4px;padding:20px 0 0;border-bottom:1px solid var(--border)}
@@ -72,6 +79,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .badge-arq{background:rgba(139,92,246,.12);color:#a78bfa;border:1px solid rgba(139,92,246,.25)}
 .badge-eu{background:rgba(6,182,212,.1);color:#22d3ee;border:1px solid rgba(6,182,212,.25)}
 .badge-is{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+.badge-produtos{background:rgba(236,72,153,.1);color:#f472b6;border:1px solid rgba(236,72,153,.25)}
 .badge-nd{background:rgba(107,114,128,.1);color:#9ca3af;border:1px solid rgba(107,114,128,.25)}
 .num{font-family:'JetBrains Mono',monospace;font-weight:500;text-align:right}
 .periodo-cell{font-size:.76rem;color:var(--accent2);font-weight:500}
@@ -100,6 +108,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .vert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .vert-card.card-arq::before{background:var(--arq)}.vert-card.card-eu::before{background:var(--eu)}
 .vert-card.card-is::before{background:var(--is)}.vert-card.card-nd::before{background:var(--nd)}
+.vert-card.card-produtos::before{background:var(--prod)}
 .vert-title{font-size:1.1rem;font-weight:700;margin-bottom:16px}
 .vert-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .vert-stat{text-align:center}
@@ -131,7 +140,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-@media(max-width:768px){.header,.nav,.content{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.header,.nav,.content,.group-bar{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -139,7 +148,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="header-inner">
     <div>
       <h1>Cursor AI - Dashboard - Utilização</h1>
-      <div class="header-sub">ENGDB Team · __REPORT_PERIOD__</div>
+      <div class="header-sub">ENGDB Team</div>
     </div>
     <div class="header-right">
       <div class="header-badge">AUTOMÁTICO VIA API</div>
@@ -147,6 +156,9 @@ tbody td{padding:10px 16px;white-space:nowrap}
     </div>
   </div>
 </div>
+
+<div class="group-bar" id="group-bar"></div>
+
 <div class="nav"><div class="tabs">
   <div class="tab active" data-view="consolidated">Visão Consolidada</div>
   <div class="tab" data-view="heatmap">Uso por Data</div>
@@ -156,15 +168,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 <div class="content">
   <div class="view active" id="v-consolidated">
     <div class="kpi-row fade-in" id="kpi-row"></div>
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">Todos</button>
-      <button class="filter-btn" data-filter="used">Usaram</button>
-      <button class="filter-btn" data-filter="unused">Não Usaram</button>
-      <button class="filter-btn" data-filter="Arq">Arq</button>
-      <button class="filter-btn" data-filter="E&U">E&U</button>
-      <button class="filter-btn" data-filter="I&S">I&S</button>
-      <input class="search-box" placeholder="Buscar nome ou e-mail..." id="search-input">
-    </div>
+    <div class="filter-bar" id="filter-bar"></div>
     <div class="table-wrap fade-in">
       <table id="main-table">
         <thead><tr>
@@ -186,12 +190,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
       <div class="chart-title">Requests por Dia (Total Team)</div>
       <div class="bar-chart" id="daily-chart"></div>
     </div>
-    <div class="filter-bar">
-      <button class="filter-btn active heat-filter" data-hf="all">Todos</button>
-      <button class="filter-btn heat-filter" data-hf="Arq">Arq</button>
-      <button class="filter-btn heat-filter" data-hf="E&U">E&U</button>
-      <button class="filter-btn heat-filter" data-hf="I&S">I&S</button>
-    </div>
+    <div class="filter-bar" id="heat-filter-bar"></div>
     <div class="heat-legend">
       <span class="heat-legend-title">Legenda:</span>
       <div class="heat-legend-items">
@@ -227,31 +226,83 @@ tbody td{padding:10px 16px;white-space:nowrap}
 </div>
 
 <script>
-const DATA=__DATA_PLACEHOLDER__;
-const M=DATA.members,DU=DATA.daily_usage,AD=DATA.all_dates,DT=DATA.daily_totals,MO=DATA.models,VS=DATA.vertical_summary,ST=DATA.stats;
-const fmt=n=>n.toLocaleString('pt-BR');
-const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':'nd';
+const RAW=__DATA_PLACEHOLDER__;
+const GROUPS=RAW.groups, GROUP_LIST=RAW.group_list;
+
+// State
+let activeGroup=GROUP_LIST[0]?.id||'';
+let G=GROUPS[activeGroup]||{};
+let M=G.members||[],DU=G.daily_usage||{},AD=G.all_dates||[],DT=G.daily_totals||[],MO=G.models||[],VS=G.vertical_summary||{},ST=G.stats||{};
+let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='',heatFilter='all';
+
+const fmt=n=>(n||0).toLocaleString('pt-BR');
+const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'produtos':'nd';
 const shortDate=d=>{const p=d.split('-');return p[2]+'/'+p[1]};
 function renderMesesTags(m){if(!m||m==='—')return'<span style="color:var(--text3)">—</span>';return m.split(', ').map(x=>`<span class="mes-tag">${x}</span>`).join('')}
 
-document.getElementById('kpi-row').innerHTML=`
-  <div class="kpi"><div class="kpi-icon purple">👥</div><div class="kpi-label">Total Membros</div><div class="kpi-value">${ST.total_members}</div><div class="kpi-detail">${ST.total_days} dias de atividade</div></div>
-  <div class="kpi"><div class="kpi-icon green">✓</div><div class="kpi-label">Ativos</div><div class="kpi-value">${ST.active_members}</div><div class="kpi-detail">${Math.round(ST.active_members/ST.total_members*100)}% de adoção</div></div>
-  <div class="kpi"><div class="kpi-icon red">✗</div><div class="kpi-label">Inativos</div><div class="kpi-value">${ST.inactive_members}</div><div class="kpi-detail">Sem nenhum request</div></div>
-  <div class="kpi"><div class="kpi-icon yellow">⚡</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(ST.total_requests)}</div><div class="kpi-detail">${fmt(Math.round(ST.total_tokens/1e6))}M tokens</div></div>`;
+const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Produtos':'var(--prod)','N/D':'var(--nd)'};
 
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');document.getElementById('v-'+t.dataset.view).classList.add('active');
-}));
+// Group selector
+function renderGroupBar(){
+  document.getElementById('group-bar').innerHTML=
+    `<span class="group-label">Grupo:</span>`+
+    GROUP_LIST.map(g=>`<button class="group-btn ${g.id===activeGroup?'active':''}" data-gid="${g.id}">${g.name}</button>`).join('');
+  document.querySelectorAll('.group-btn').forEach(b=>b.addEventListener('click',()=>{
+    activeGroup=b.dataset.gid;
+    switchGroup();
+  }));
+}
 
-let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='';
+function switchGroup(){
+  G=GROUPS[activeGroup]||{};
+  M=G.members||[];DU=G.daily_usage||{};AD=G.all_dates||[];DT=G.daily_totals||[];MO=G.models||[];VS=G.vertical_summary||{};ST=G.stats||{};
+  currentFilter='all';heatFilter='all';searchTerm='';
+  document.getElementById('search-input')&&(document.getElementById('search-input').value='');
+  renderGroupBar();
+  renderKPIs();
+  renderFilterBar();
+  renderTable();
+  renderDailyChart();
+  renderHeatFilterBar();
+  renderHeatmap();
+  renderVerticals();
+  renderModels();
+  document.querySelector('.header-sub').textContent=`ENGDB Team · ${G.report_period||''}`;
+}
+
+// KPIs
+function renderKPIs(){
+  const s=ST;
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi"><div class="kpi-icon purple">👥</div><div class="kpi-label">Total Membros</div><div class="kpi-value">${s.total_members||0}</div><div class="kpi-detail">${s.total_days||0} dias de atividade</div></div>
+    <div class="kpi"><div class="kpi-icon green">✓</div><div class="kpi-label">Ativos</div><div class="kpi-value">${s.active_members||0}</div><div class="kpi-detail">${s.total_members?Math.round(s.active_members/s.total_members*100):0}% de adoção</div></div>
+    <div class="kpi"><div class="kpi-icon red">✗</div><div class="kpi-label">Inativos</div><div class="kpi-value">${s.inactive_members||0}</div><div class="kpi-detail">Sem nenhum request</div></div>
+    <div class="kpi"><div class="kpi-icon yellow">⚡</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(s.total_requests)}</div><div class="kpi-detail">${fmt(Math.round((s.total_tokens||0)/1e6))}M tokens</div></div>`;
+}
+
+// Filter bar (dynamic verticals)
+function renderFilterBar(){
+  const verts=Object.keys(VS);
+  let html=`<button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="used">Usaram</button>
+    <button class="filter-btn" data-filter="unused">Não Usaram</button>`;
+  verts.forEach(v=>{if(v!=='N/D')html+=`<button class="filter-btn" data-filter="${v}">${v}</button>`});
+  html+=`<input class="search-box" placeholder="Buscar nome ou e-mail..." id="search-input">`;
+  document.getElementById('filter-bar').innerHTML=html;
+  document.querySelectorAll('#filter-bar .filter-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#filter-bar .filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');currentFilter=b.dataset.filter;renderTable();
+  }));
+  document.getElementById('search-input').addEventListener('input',e=>{searchTerm=e.target.value;renderTable()});
+}
+
+// Table
 function renderTable(){
+  const verts=Object.keys(VS).filter(v=>v!=='N/D');
   let filtered=M.filter(m=>{
     if(currentFilter==='used'&&!m.used)return false;
     if(currentFilter==='unused'&&m.used)return false;
-    if(['Arq','E&U','I&S'].includes(currentFilter)&&m.vertical!==currentFilter)return false;
+    if(verts.includes(currentFilter)&&m.vertical!==currentFilter)return false;
     if(searchTerm){const s=searchTerm.toLowerCase();if(!m.name.toLowerCase().includes(s)&&!m.email.toLowerCase().includes(s))return false}
     return true;
   });
@@ -276,27 +327,47 @@ function renderTable(){
     <td class="meses-cell">${renderMesesTags(m.meses_ativos)}</td>
   </tr>`).join('');
 }
-document.querySelectorAll('.filter-btn:not(.heat-filter)').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.filter-btn:not(.heat-filter)').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');currentFilter=b.dataset.filter;renderTable();
-}));
+
+// Sort
 document.querySelectorAll('th.sortable').forEach(th=>th.addEventListener('click',()=>{
   const col=th.dataset.col;
   if(currentSort===col)sortDir*=-1;else{currentSort=col;sortDir=col==='requests'||col==='days'?-1:1}
   document.querySelectorAll('th.sortable').forEach(x=>x.classList.remove('sorted'));
   th.classList.add('sorted');th.querySelector('.sort-arrow').textContent=sortDir===1?'▲':'▼';renderTable();
 }));
-document.getElementById('search-input').addEventListener('input',e=>{searchTerm=e.target.value;renderTable()});
-renderTable();
 
-const maxReq=Math.max(...DT.map(d=>d.requests));
-document.getElementById('daily-chart').innerHTML=DT.map(d=>{
-  const h=Math.max(4,(d.requests/maxReq)*140);
-  return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
-}).join('');
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');document.getElementById('v-'+t.dataset.view).classList.add('active');
+}));
 
-let heatFilter='all';
+// Daily chart
+function renderDailyChart(){
+  if(!DT.length){document.getElementById('daily-chart').innerHTML='<span style="color:var(--text3)">Sem dados</span>';return}
+  const maxReq=Math.max(...DT.map(d=>d.requests));
+  document.getElementById('daily-chart').innerHTML=DT.map(d=>{
+    const h=Math.max(4,(d.requests/maxReq)*140);
+    return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
+  }).join('');
+}
+
+// Heat filter bar (dynamic)
+function renderHeatFilterBar(){
+  const verts=Object.keys(VS);
+  let html=`<button class="filter-btn active heat-filter" data-hf="all">Todos</button>`;
+  verts.forEach(v=>{if(v!=='N/D')html+=`<button class="filter-btn heat-filter" data-hf="${v}">${v}</button>`});
+  document.getElementById('heat-filter-bar').innerHTML=html;
+  document.querySelectorAll('.heat-filter').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.heat-filter').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');heatFilter=b.dataset.hf;renderHeatmap();
+  }));
+}
+
+// Heatmap
 function renderHeatmap(){
+  if(!AD.length){document.getElementById('heatmap-head').innerHTML='';document.getElementById('heatmap-body').innerHTML='<tr><td style="color:var(--text3);padding:20px">Sem dados</td></tr>';return}
   document.getElementById('heatmap-head').innerHTML=`<th style="min-width:200px;padding-left:14px">Nome</th><th style="min-width:220px">E-mail</th><th style="min-width:50px">Vert.</th>`+AD.map(d=>`<th>${d.slice(8)+'/'+d.slice(5,7)}</th>`).join('');
   const members=heatFilter==='all'?M:M.filter(m=>m.vertical===heatFilter);
   let allVals=[];
@@ -310,36 +381,41 @@ function renderHeatmap(){
     return`<tr><td>${m.name}</td><td>${m.email}</td><td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>${AD.map(d=>{const v=ud[d]||0;return`<td class="heat-${hl(v)}">${v||''}</td>`}).join('')}</tr>`;
   }).join('');
 }
-document.querySelectorAll('.heat-filter').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.heat-filter').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');heatFilter=b.dataset.hf;renderHeatmap();
-}));
-renderHeatmap();
 
-const vertOrder=['Arq','E&U','I&S','N/D'];
-const vertNames={'Arq':'Arquitetura','E&U':'Energy & Utilities','I&S':'Industria & Serviços','N/D':'Não Definido'};
-const vertColors={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','N/D':'var(--nd)'};
-document.getElementById('vert-grid').innerHTML=vertOrder.filter(v=>VS[v]).map(v=>{
-  const d=VS[v],adoption=Math.round(d.used/d.total*100);
-  const members=M.filter(m=>m.vertical===v).sort((a,b)=>b.total_requests-a.total_requests);
-  return`<div class="vert-card card-${vClass(v)}">
-    <div class="vert-title">${vertNames[v]} <span style="font-weight:400;color:var(--text3);font-size:.82rem">(${v})</span></div>
-    <div class="vert-stats">
-      <div class="vert-stat"><div class="vert-stat-val">${d.total}</div><div class="vert-stat-label">Membros</div></div>
-      <div class="vert-stat"><div class="vert-stat-val">${d.used}</div><div class="vert-stat-label">Ativos</div></div>
-      <div class="vert-stat"><div class="vert-stat-val" style="color:${vertColors[v]}">${adoption}%</div><div class="vert-stat-label">Adoção</div></div>
-      <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${vertColors[v]}"></div></div>
-    <div class="vert-members">${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
-  </div>`;
-}).join('');
+// Verticals
+function renderVerticals(){
+  const vertNames=G.vert_names||{};
+  const verts=Object.keys(VS);
+  document.getElementById('vert-grid').innerHTML=verts.map(v=>{
+    const d=VS[v],adoption=d.total?Math.round(d.used/d.total*100):0;
+    const members=M.filter(m=>m.vertical===v).sort((a,b)=>b.total_requests-a.total_requests);
+    const color=vertColorsMap[v]||'var(--nd)';
+    return`<div class="vert-card card-${vClass(v)}">
+      <div class="vert-title">${vertNames[v]||v} <span style="font-weight:400;color:var(--text3);font-size:.82rem">(${v})</span></div>
+      <div class="vert-stats">
+        <div class="vert-stat"><div class="vert-stat-val">${d.total}</div><div class="vert-stat-label">Membros</div></div>
+        <div class="vert-stat"><div class="vert-stat-val">${d.used}</div><div class="vert-stat-label">Ativos</div></div>
+        <div class="vert-stat"><div class="vert-stat-val" style="color:${color}">${adoption}%</div><div class="vert-stat-label">Adoção</div></div>
+        <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${color}"></div></div>
+      <div class="vert-members">${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
 
-const maxModel=MO[0]?.requests||1;
-document.getElementById('model-chart').innerHTML=MO.slice(0,10).map(m=>{
-  const pct=(m.requests/maxModel*100).toFixed(1);
-  return`<div class="model-row"><div class="model-name">${m.model}</div><div class="model-bar-wrap"><div class="model-bar" style="width:${pct}%"></div></div><div class="model-val">${fmt(m.requests)}</div></div>`;
-}).join('');
+// Models
+function renderModels(){
+  if(!MO.length){document.getElementById('model-chart').innerHTML='<span style="color:var(--text3)">Sem dados</span>';return}
+  const maxModel=MO[0]?.requests||1;
+  document.getElementById('model-chart').innerHTML=MO.slice(0,10).map(m=>{
+    const pct=(m.requests/maxModel*100).toFixed(1);
+    return`<div class="model-row"><div class="model-name">${m.model}</div><div class="model-bar-wrap"><div class="model-bar" style="width:${pct}%"></div></div><div class="model-val">${fmt(m.requests)}</div></div>`;
+  }).join('');
+}
+
+// Init
+switchGroup();
 </script>
 </body>
 </html>
