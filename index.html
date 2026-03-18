@@ -14,7 +14,7 @@
   --green:#22c55e;--green-bg:rgba(34,197,94,.1);--green-border:rgba(34,197,94,.25);
   --red:#ef4444;--red-bg:rgba(239,68,68,.08);--red-border:rgba(239,68,68,.2);
   --yellow:#eab308;--yellow-bg:rgba(234,179,8,.1);
-  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;
+  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;--prod:#ec4899;
   --radius:10px;--radius-lg:16px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -27,6 +27,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .header-right{text-align:right}
 .header-badge{background:var(--accent-glow);border:1px solid rgba(99,102,241,.3);color:var(--accent2);padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.03em;display:inline-block}
 .header-updated{color:var(--text3);font-size:.72rem;margin-top:6px}
+
+/* Group Selector */
+.group-bar{max-width:1600px;margin:0 auto;padding:16px 40px 0;display:flex;align-items:center;gap:10px}
+.group-label{font-size:.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.group-btn{padding:8px 20px;font-size:.82rem;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .25s}
+.group-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.group-btn.active{background:linear-gradient(135deg,var(--accent),#7c3aed);border-color:transparent;color:#fff;box-shadow:0 2px 12px rgba(99,102,241,.3)}
 
 .nav{max-width:1600px;margin:0 auto;padding:0 40px}
 .tabs{display:flex;gap:4px;padding:20px 0 0;border-bottom:1px solid var(--border)}
@@ -72,6 +79,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .badge-arq{background:rgba(139,92,246,.12);color:#a78bfa;border:1px solid rgba(139,92,246,.25)}
 .badge-eu{background:rgba(6,182,212,.1);color:#22d3ee;border:1px solid rgba(6,182,212,.25)}
 .badge-is{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+.badge-produtos{background:rgba(236,72,153,.1);color:#f472b6;border:1px solid rgba(236,72,153,.25)}
 .badge-nd{background:rgba(107,114,128,.1);color:#9ca3af;border:1px solid rgba(107,114,128,.25)}
 .num{font-family:'JetBrains Mono',monospace;font-weight:500;text-align:right}
 .periodo-cell{font-size:.76rem;color:var(--accent2);font-weight:500}
@@ -100,6 +108,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .vert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .vert-card.card-arq::before{background:var(--arq)}.vert-card.card-eu::before{background:var(--eu)}
 .vert-card.card-is::before{background:var(--is)}.vert-card.card-nd::before{background:var(--nd)}
+.vert-card.card-produtos::before{background:var(--prod)}
 .vert-title{font-size:1.1rem;font-weight:700;margin-bottom:16px}
 .vert-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .vert-stat{text-align:center}
@@ -131,7 +140,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-@media(max-width:768px){.header,.nav,.content{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.header,.nav,.content,.group-bar{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -139,14 +148,17 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="header-inner">
     <div>
       <h1>Cursor AI - Dashboard - Utilização</h1>
-      <div class="header-sub">ENGDB Team · __REPORT_PERIOD__</div>
+      <div class="header-sub">ENGDB Team</div>
     </div>
     <div class="header-right">
       <div class="header-badge">AUTOMÁTICO VIA API</div>
-      <div class="header-updated">Última atualização: 18/03/2026 10:29 (BRT)</div>
+      <div class="header-updated">Última atualização: 18/03/2026 10:34 (BRT)</div>
     </div>
   </div>
 </div>
+
+<div class="group-bar" id="group-bar"></div>
+
 <div class="nav"><div class="tabs">
   <div class="tab active" data-view="consolidated">Visão Consolidada</div>
   <div class="tab" data-view="heatmap">Uso por Data</div>
@@ -156,15 +168,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 <div class="content">
   <div class="view active" id="v-consolidated">
     <div class="kpi-row fade-in" id="kpi-row"></div>
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">Todos</button>
-      <button class="filter-btn" data-filter="used">Usaram</button>
-      <button class="filter-btn" data-filter="unused">Não Usaram</button>
-      <button class="filter-btn" data-filter="Arq">Arq</button>
-      <button class="filter-btn" data-filter="E&U">E&U</button>
-      <button class="filter-btn" data-filter="I&S">I&S</button>
-      <input class="search-box" placeholder="Buscar nome ou e-mail..." id="search-input">
-    </div>
+    <div class="filter-bar" id="filter-bar"></div>
     <div class="table-wrap fade-in">
       <table id="main-table">
         <thead><tr>
@@ -186,12 +190,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
       <div class="chart-title">Requests por Dia (Total Team)</div>
       <div class="bar-chart" id="daily-chart"></div>
     </div>
-    <div class="filter-bar">
-      <button class="filter-btn active heat-filter" data-hf="all">Todos</button>
-      <button class="filter-btn heat-filter" data-hf="Arq">Arq</button>
-      <button class="filter-btn heat-filter" data-hf="E&U">E&U</button>
-      <button class="filter-btn heat-filter" data-hf="I&S">I&S</button>
-    </div>
+    <div class="filter-bar" id="heat-filter-bar"></div>
     <div class="heat-legend">
       <span class="heat-legend-title">Legenda:</span>
       <div class="heat-legend-items">
@@ -227,31 +226,83 @@ tbody td{padding:10px 16px;white-space:nowrap}
 </div>
 
 <script>
-const DATA={"groups": {"engdb": {"members": [{"name": "Leonardo Reis de Sousa", "email": "leonardo.sousa@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 22249, "total_tokens": 741082800, "days_used": 16, "periodo": "19/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Thiago Mascarenhas", "email": "thiago.mascarenhas@engdb.com.br", "role": "owner", "vertical": "Arq", "total_requests": 2184, "total_tokens": 1916358841, "days_used": 26, "periodo": "16/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Ricardo Chagas", "email": "ricardo.chagas@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 1628, "total_tokens": 435593914, "days_used": 16, "periodo": "25/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Edson Pereira dos Reis Junior", "email": "edson.junior@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 779, "total_tokens": 55521432, "days_used": 12, "periodo": "24/02/2026 até 14/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Oswaldo Augusto Pelegrina", "email": "oswaldo.pelegrina@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 615, "total_tokens": 67904159, "days_used": 9, "periodo": "18/02/2026 até 16/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Thiago NoMa", "email": "thiago.mascarenhas@eng.it", "role": "member", "vertical": "N/D", "total_requests": 503, "total_tokens": 375645224, "days_used": 4, "periodo": "15/03/2026 até 18/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Luciano Mengarelli", "email": "luciano.mengarelli@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 306, "total_tokens": 409196723, "days_used": 14, "periodo": "18/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "José Marcelo Marques", "email": "jose.marcelo@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 283, "total_tokens": 25233298, "days_used": 18, "periodo": "18/02/2026 até 18/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Stefano Correia Rodrigues Damacena", "email": "stefano.damacena@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 157, "total_tokens": 145101915, "days_used": 2, "periodo": "16/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Wander Oliveira", "email": "wander.oliveira@engdb.com.br", "role": "owner", "vertical": "Arq", "total_requests": 144, "total_tokens": 58921730, "days_used": 13, "periodo": "20/02/2026 até 17/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Alessandro Schneider", "email": "alessandro.schneider@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 66, "total_tokens": 3474701, "days_used": 3, "periodo": "23/02/2026 até 18/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Luiz Henrique Gomes de Souza", "email": "luiz.souza@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 55, "total_tokens": 10709131, "days_used": 3, "periodo": "15/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Jhon Willian de Carvalho", "email": "jhon.carvalho@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 53, "total_tokens": 32987260, "days_used": 5, "periodo": "19/02/2026 até 25/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Tiago Cardoso", "email": "tiago.cardoso@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 35, "total_tokens": 28848970, "days_used": 4, "periodo": "11/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Mariane Monteiro", "email": "mariane.quirino@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 7, "total_tokens": 1471509, "days_used": 2, "periodo": "02/03/2026 até 04/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "André Ferreira Santos", "email": "andre.santos@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 6, "total_tokens": 4794668, "days_used": 1, "periodo": "25/02/2026 até 25/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Daniela Costa", "email": "daniela.costa@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 6, "total_tokens": 205372, "days_used": 2, "periodo": "05/03/2026 até 06/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Danilo Netti", "email": "danilo.netti@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 6, "total_tokens": 612138, "days_used": 1, "periodo": "02/03/2026 até 02/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Andre Zaniboni", "email": "andre.zaniboni@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 2, "total_tokens": 90289, "days_used": 1, "periodo": "19/02/2026 até 19/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Ulisses Oliveira", "email": "ulisses.oliveira@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 2, "total_tokens": 18081, "days_used": 1, "periodo": "24/02/2026 até 24/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Alaecio Quirino", "email": "alaecio.junior@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Amauri Serra", "email": "amauri.serra@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ana Carolina Dos Santos Rosa", "email": "ana.rosa@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Breno dos Santos Neves", "email": "brenno.neves@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Márcio Silva", "email": "marcio.silva@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Phelipe Medeiros", "email": "phelipe.medeiros@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ricardo Tassini", "email": "ricardo.tassini@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Romero Barreto", "email": "romero.barreto@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Sabrina Silva", "email": "sabrina.silva@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "SERGIO MARMILICZ", "email": "sergio.marmilicz@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ulisses Rodrigues", "email": "ulisses.rodrigues@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Walter Araujo de Moura", "email": "walter.moura@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}], "daily_usage": {"alessandro.schneider@engdb.com.br": {"2026-03-18": 4, "2026-03-04": 50, "2026-02-23": 12}, "jose.marcelo@engdb.com.br": {"2026-03-18": 5, "2026-03-17": 54, "2026-03-16": 11, "2026-03-13": 4, "2026-03-12": 4, "2026-03-11": 38, "2026-03-10": 36, "2026-03-09": 32, "2026-03-06": 8, "2026-03-05": 8, "2026-03-04": 10, "2026-03-03": 8, "2026-03-02": 4, "2026-02-27": 2, "2026-02-26": 30, "2026-02-24": 6, "2026-02-23": 11, "2026-02-18": 12}, "thiago.mascarenhas@eng.it": {"2026-03-18": 1, "2026-03-17": 183, "2026-03-16": 106, "2026-03-15": 213}, "tiago.cardoso@engdb.com.br": {"2026-03-17": 16, "2026-03-16": 6, "2026-03-13": 5, "2026-03-11": 8}, "luiz.souza@engdb.com.br": {"2026-03-17": 10, "2026-03-16": 39, "2026-03-15": 6}, "stefano.damacena@engdb.com.br": {"2026-03-17": 73, "2026-03-16": 84}, "wander.oliveira@engdb.com.br": {"2026-03-17": 15, "2026-03-16": 6, "2026-03-13": 6, "2026-03-12": 6, "2026-03-11": 4, "2026-03-10": 4, "2026-03-05": 6, "2026-03-03": 16, "2026-03-02": 32, "2026-02-27": 16, "2026-02-25": 18, "2026-02-21": 4, "2026-02-20": 11}, "oswaldo.pelegrina@engdb.com.br": {"2026-03-16": 2, "2026-03-14": 599, "2026-03-06": 1, "2026-03-04": 1, "2026-02-25": 3, "2026-02-24": 2, "2026-02-20": 2, "2026-02-19": 4, "2026-02-18": 1}, "edson.junior@engdb.com.br": {"2026-03-14": 348, "2026-03-13": 106, "2026-03-12": 233, "2026-03-11": 10, "2026-03-10": 8, "2026-03-09": 14, "2026-03-06": 16, "2026-03-05": 10, "2026-03-04": 4, "2026-02-27": 10, "2026-02-26": 12, "2026-02-24": 8}, "leonardo.sousa@engdb.com.br": {"2026-03-13": 6595, "2026-03-12": 28, "2026-03-11": 488, "2026-03-10": 2910, "2026-03-09": 1206, "2026-03-06": 474, "2026-03-05": 388, "2026-03-04": 193, "2026-03-03": 1764, "2026-03-02": 1617, "2026-02-27": 240, "2026-02-26": 2568, "2026-02-25": 87, "2026-02-24": 371, "2026-02-20": 1565, "2026-02-19": 1755}, "thiago.mascarenhas@engdb.com.br": {"2026-03-13": 64, "2026-03-12": 85, "2026-03-11": 48, "2026-03-10": 76, "2026-03-09": 84, "2026-03-08": 29, "2026-03-07": 120, "2026-03-06": 94, "2026-03-05": 34, "2026-03-04": 192, "2026-03-03": 101, "2026-03-02": 123, "2026-03-01": 76, "2026-02-28": 26, "2026-02-27": 94, "2026-02-26": 115, "2026-02-25": 108, "2026-02-24": 14, "2026-02-23": 64, "2026-02-22": 86, "2026-02-21": 80, "2026-02-20": 72, "2026-02-19": 116, "2026-02-18": 162, "2026-02-17": 87, "2026-02-16": 34}, "ricardo.chagas@engdb.com.br": {"2026-03-13": 7, "2026-03-12": 1, "2026-03-11": 5, "2026-03-10": 15, "2026-03-09": 41, "2026-03-07": 35, "2026-03-06": 49, "2026-03-05": 6, "2026-03-04": 147, "2026-03-03": 97, "2026-03-02": 68, "2026-03-01": 150, "2026-02-28": 249, "2026-02-27": 208, "2026-02-26": 544, "2026-02-25": 6}, "luciano.mengarelli@engdb.com.br": {"2026-03-13": 10, "2026-03-12": 16, "2026-03-11": 83, "2026-03-10": 28, "2026-03-09": 36, "2026-03-06": 2, "2026-03-05": 18, "2026-03-04": 32, "2026-03-03": 16, "2026-03-02": 22, "2026-02-27": 12, "2026-02-25": 7, "2026-02-24": 15, "2026-02-18": 9}, "daniela.costa@engdb.com.br": {"2026-03-06": 2, "2026-03-05": 4}, "mariane.quirino@engdb.com.br": {"2026-03-04": 1, "2026-03-02": 6}, "danilo.netti@engdb.com.br": {"2026-03-02": 6}, "andre.santos@engdb.com.br": {"2026-02-25": 6}, "jhon.carvalho@engdb.com.br": {"2026-02-25": 6, "2026-02-24": 35, "2026-02-23": 4, "2026-02-20": 5, "2026-02-19": 3}, "ulisses.oliveira@engdb.com.br": {"2026-02-24": 2}, "andre.zaniboni@engdb.com.br": {"2026-02-19": 2}}, "all_dates": ["2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"], "daily_totals": [{"date": "2026-02-16", "requests": 34}, {"date": "2026-02-17", "requests": 87}, {"date": "2026-02-18", "requests": 184}, {"date": "2026-02-19", "requests": 1880}, {"date": "2026-02-20", "requests": 1655}, {"date": "2026-02-21", "requests": 84}, {"date": "2026-02-22", "requests": 86}, {"date": "2026-02-23", "requests": 91}, {"date": "2026-02-24", "requests": 453}, {"date": "2026-02-25", "requests": 241}, {"date": "2026-02-26", "requests": 3269}, {"date": "2026-02-27", "requests": 582}, {"date": "2026-02-28", "requests": 275}, {"date": "2026-03-01", "requests": 226}, {"date": "2026-03-02", "requests": 1878}, {"date": "2026-03-03", "requests": 2002}, {"date": "2026-03-04", "requests": 630}, {"date": "2026-03-05", "requests": 474}, {"date": "2026-03-06", "requests": 646}, {"date": "2026-03-07", "requests": 155}, {"date": "2026-03-08", "requests": 29}, {"date": "2026-03-09", "requests": 1413}, {"date": "2026-03-10", "requests": 3077}, {"date": "2026-03-11", "requests": 684}, {"date": "2026-03-12", "requests": 373}, {"date": "2026-03-13", "requests": 6797}, {"date": "2026-03-14", "requests": 947}, {"date": "2026-03-15", "requests": 219}, {"date": "2026-03-16", "requests": 254}, {"date": "2026-03-17", "requests": 351}, {"date": "2026-03-18", "requests": 10}], "models": [{"model": "claude-4.6-opus-high-thinking", "requests": 26680}, {"model": "composer-1.5", "requests": 959}, {"model": "claude-4.6-sonnet-medium-thinking", "requests": 653}, {"model": "gpt-5.3-codex", "requests": 272}, {"model": "default", "requests": 172}, {"model": "gpt-5.2", "requests": 156}, {"model": "kimi-k2.5", "requests": 70}, {"model": "claude-4.5-sonnet-thinking", "requests": 30}, {"model": "gemini-3.1-pro-preview", "requests": 29}, {"model": "composer-1", "requests": 28}, {"model": "claude-4.5-opus-high-thinking", "requests": 16}, {"model": "claude-4.6-opus-max", "requests": 8}, {"model": "gpt-5.2-codex", "requests": 7}, {"model": "claude-4.5-sonnet", "requests": 5}, {"model": "grok-code-fast-1", "requests": 1}], "vertical_summary": {"E&U": {"total": 11, "used": 8, "requests": 24397}, "Arq": {"total": 10, "used": 7, "requests": 4119}, "N/D": {"total": 1, "used": 1, "requests": 503}, "I&S": {"total": 10, "used": 4, "requests": 67}}, "stats": {"total_members": 32, "active_members": 20, "inactive_members": 12, "total_requests": 29086, "total_tokens": 4313772155, "total_days": 31}, "report_period": "16 Feb — 18 Mar 2026", "vert_names": {"Arq": "Arquitetura", "E&U": "Energia e Utilities", "I&S": "Indústria e Serviços", "N/D": "Não Definido"}}}, "group_list": [{"id": "engdb", "name": "ENGDB"}], "updated_at": "18/03/2026 10:29 (BRT)"};
-const M=DATA.members,DU=DATA.daily_usage,AD=DATA.all_dates,DT=DATA.daily_totals,MO=DATA.models,VS=DATA.vertical_summary,ST=DATA.stats;
-const fmt=n=>n.toLocaleString('pt-BR');
-const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':'nd';
+const RAW={"groups": {"engdb": {"members": [{"name": "Leonardo Reis de Sousa", "email": "leonardo.sousa@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 22249, "total_tokens": 741082800, "days_used": 16, "periodo": "19/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Thiago Mascarenhas", "email": "thiago.mascarenhas@engdb.com.br", "role": "owner", "vertical": "Arq", "total_requests": 2184, "total_tokens": 1916358841, "days_used": 26, "periodo": "16/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Ricardo Chagas", "email": "ricardo.chagas@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 1628, "total_tokens": 435593914, "days_used": 16, "periodo": "25/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Edson Pereira dos Reis Junior", "email": "edson.junior@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 779, "total_tokens": 55521432, "days_used": 12, "periodo": "24/02/2026 até 14/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Oswaldo Augusto Pelegrina", "email": "oswaldo.pelegrina@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 615, "total_tokens": 67904159, "days_used": 9, "periodo": "18/02/2026 até 16/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Thiago NoMa", "email": "thiago.mascarenhas@eng.it", "role": "member", "vertical": "N/D", "total_requests": 503, "total_tokens": 375645224, "days_used": 4, "periodo": "15/03/2026 até 18/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Luciano Mengarelli", "email": "luciano.mengarelli@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 306, "total_tokens": 409196723, "days_used": 14, "periodo": "18/02/2026 até 13/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "José Marcelo Marques", "email": "jose.marcelo@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 283, "total_tokens": 25233298, "days_used": 18, "periodo": "18/02/2026 até 18/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Stefano Correia Rodrigues Damacena", "email": "stefano.damacena@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 157, "total_tokens": 145101915, "days_used": 2, "periodo": "16/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Wander Oliveira", "email": "wander.oliveira@engdb.com.br", "role": "owner", "vertical": "Arq", "total_requests": 144, "total_tokens": 58921730, "days_used": 13, "periodo": "20/02/2026 até 17/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Alessandro Schneider", "email": "alessandro.schneider@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 66, "total_tokens": 3474701, "days_used": 3, "periodo": "23/02/2026 até 18/03/2026", "meses_ativos": "02/2026, 03/2026", "used": true}, {"name": "Luiz Henrique Gomes de Souza", "email": "luiz.souza@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 55, "total_tokens": 10709131, "days_used": 3, "periodo": "15/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Jhon Willian de Carvalho", "email": "jhon.carvalho@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 53, "total_tokens": 32987260, "days_used": 5, "periodo": "19/02/2026 até 25/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Tiago Cardoso", "email": "tiago.cardoso@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 35, "total_tokens": 28848970, "days_used": 4, "periodo": "11/03/2026 até 17/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Mariane Monteiro", "email": "mariane.quirino@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 7, "total_tokens": 1471509, "days_used": 2, "periodo": "02/03/2026 até 04/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "André Ferreira Santos", "email": "andre.santos@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 6, "total_tokens": 4794668, "days_used": 1, "periodo": "25/02/2026 até 25/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Daniela Costa", "email": "daniela.costa@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 6, "total_tokens": 205372, "days_used": 2, "periodo": "05/03/2026 até 06/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Danilo Netti", "email": "danilo.netti@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 6, "total_tokens": 612138, "days_used": 1, "periodo": "02/03/2026 até 02/03/2026", "meses_ativos": "03/2026", "used": true}, {"name": "Andre Zaniboni", "email": "andre.zaniboni@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 2, "total_tokens": 90289, "days_used": 1, "periodo": "19/02/2026 até 19/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Ulisses Oliveira", "email": "ulisses.oliveira@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 2, "total_tokens": 18081, "days_used": 1, "periodo": "24/02/2026 até 24/02/2026", "meses_ativos": "02/2026", "used": true}, {"name": "Alaecio Quirino", "email": "alaecio.junior@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Amauri Serra", "email": "amauri.serra@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ana Carolina Dos Santos Rosa", "email": "ana.rosa@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Breno dos Santos Neves", "email": "brenno.neves@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Márcio Silva", "email": "marcio.silva@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Phelipe Medeiros", "email": "phelipe.medeiros@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ricardo Tassini", "email": "ricardo.tassini@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Romero Barreto", "email": "romero.barreto@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Sabrina Silva", "email": "sabrina.silva@engdb.com.br", "role": "member", "vertical": "I&S", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "SERGIO MARMILICZ", "email": "sergio.marmilicz@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Ulisses Rodrigues", "email": "ulisses.rodrigues@engdb.com.br", "role": "member", "vertical": "E&U", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}, {"name": "Walter Araujo de Moura", "email": "walter.moura@engdb.com.br", "role": "member", "vertical": "Arq", "total_requests": 0, "total_tokens": 0, "days_used": 0, "periodo": "—", "meses_ativos": "—", "used": false}], "daily_usage": {"alessandro.schneider@engdb.com.br": {"2026-03-18": 4, "2026-03-04": 50, "2026-02-23": 12}, "jose.marcelo@engdb.com.br": {"2026-03-18": 5, "2026-03-17": 54, "2026-03-16": 11, "2026-03-13": 4, "2026-03-12": 4, "2026-03-11": 38, "2026-03-10": 36, "2026-03-09": 32, "2026-03-06": 8, "2026-03-05": 8, "2026-03-04": 10, "2026-03-03": 8, "2026-03-02": 4, "2026-02-27": 2, "2026-02-26": 30, "2026-02-24": 6, "2026-02-23": 11, "2026-02-18": 12}, "thiago.mascarenhas@eng.it": {"2026-03-18": 1, "2026-03-17": 183, "2026-03-16": 106, "2026-03-15": 213}, "tiago.cardoso@engdb.com.br": {"2026-03-17": 16, "2026-03-16": 6, "2026-03-13": 5, "2026-03-11": 8}, "luiz.souza@engdb.com.br": {"2026-03-17": 10, "2026-03-16": 39, "2026-03-15": 6}, "stefano.damacena@engdb.com.br": {"2026-03-17": 73, "2026-03-16": 84}, "wander.oliveira@engdb.com.br": {"2026-03-17": 15, "2026-03-16": 6, "2026-03-13": 6, "2026-03-12": 6, "2026-03-11": 4, "2026-03-10": 4, "2026-03-05": 6, "2026-03-03": 16, "2026-03-02": 32, "2026-02-27": 16, "2026-02-25": 18, "2026-02-21": 4, "2026-02-20": 11}, "oswaldo.pelegrina@engdb.com.br": {"2026-03-16": 2, "2026-03-14": 599, "2026-03-06": 1, "2026-03-04": 1, "2026-02-25": 3, "2026-02-24": 2, "2026-02-20": 2, "2026-02-19": 4, "2026-02-18": 1}, "edson.junior@engdb.com.br": {"2026-03-14": 348, "2026-03-13": 106, "2026-03-12": 233, "2026-03-11": 10, "2026-03-10": 8, "2026-03-09": 14, "2026-03-06": 16, "2026-03-05": 10, "2026-03-04": 4, "2026-02-27": 10, "2026-02-26": 12, "2026-02-24": 8}, "leonardo.sousa@engdb.com.br": {"2026-03-13": 6595, "2026-03-12": 28, "2026-03-11": 488, "2026-03-10": 2910, "2026-03-09": 1206, "2026-03-06": 474, "2026-03-05": 388, "2026-03-04": 193, "2026-03-03": 1764, "2026-03-02": 1617, "2026-02-27": 240, "2026-02-26": 2568, "2026-02-25": 87, "2026-02-24": 371, "2026-02-20": 1565, "2026-02-19": 1755}, "thiago.mascarenhas@engdb.com.br": {"2026-03-13": 64, "2026-03-12": 85, "2026-03-11": 48, "2026-03-10": 76, "2026-03-09": 84, "2026-03-08": 29, "2026-03-07": 120, "2026-03-06": 94, "2026-03-05": 34, "2026-03-04": 192, "2026-03-03": 101, "2026-03-02": 123, "2026-03-01": 76, "2026-02-28": 26, "2026-02-27": 94, "2026-02-26": 115, "2026-02-25": 108, "2026-02-24": 14, "2026-02-23": 64, "2026-02-22": 86, "2026-02-21": 80, "2026-02-20": 72, "2026-02-19": 116, "2026-02-18": 162, "2026-02-17": 87, "2026-02-16": 34}, "ricardo.chagas@engdb.com.br": {"2026-03-13": 7, "2026-03-12": 1, "2026-03-11": 5, "2026-03-10": 15, "2026-03-09": 41, "2026-03-07": 35, "2026-03-06": 49, "2026-03-05": 6, "2026-03-04": 147, "2026-03-03": 97, "2026-03-02": 68, "2026-03-01": 150, "2026-02-28": 249, "2026-02-27": 208, "2026-02-26": 544, "2026-02-25": 6}, "luciano.mengarelli@engdb.com.br": {"2026-03-13": 10, "2026-03-12": 16, "2026-03-11": 83, "2026-03-10": 28, "2026-03-09": 36, "2026-03-06": 2, "2026-03-05": 18, "2026-03-04": 32, "2026-03-03": 16, "2026-03-02": 22, "2026-02-27": 12, "2026-02-25": 7, "2026-02-24": 15, "2026-02-18": 9}, "daniela.costa@engdb.com.br": {"2026-03-06": 2, "2026-03-05": 4}, "mariane.quirino@engdb.com.br": {"2026-03-04": 1, "2026-03-02": 6}, "danilo.netti@engdb.com.br": {"2026-03-02": 6}, "andre.santos@engdb.com.br": {"2026-02-25": 6}, "jhon.carvalho@engdb.com.br": {"2026-02-25": 6, "2026-02-24": 35, "2026-02-23": 4, "2026-02-20": 5, "2026-02-19": 3}, "ulisses.oliveira@engdb.com.br": {"2026-02-24": 2}, "andre.zaniboni@engdb.com.br": {"2026-02-19": 2}}, "all_dates": ["2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16", "2026-03-17", "2026-03-18"], "daily_totals": [{"date": "2026-02-16", "requests": 34}, {"date": "2026-02-17", "requests": 87}, {"date": "2026-02-18", "requests": 184}, {"date": "2026-02-19", "requests": 1880}, {"date": "2026-02-20", "requests": 1655}, {"date": "2026-02-21", "requests": 84}, {"date": "2026-02-22", "requests": 86}, {"date": "2026-02-23", "requests": 91}, {"date": "2026-02-24", "requests": 453}, {"date": "2026-02-25", "requests": 241}, {"date": "2026-02-26", "requests": 3269}, {"date": "2026-02-27", "requests": 582}, {"date": "2026-02-28", "requests": 275}, {"date": "2026-03-01", "requests": 226}, {"date": "2026-03-02", "requests": 1878}, {"date": "2026-03-03", "requests": 2002}, {"date": "2026-03-04", "requests": 630}, {"date": "2026-03-05", "requests": 474}, {"date": "2026-03-06", "requests": 646}, {"date": "2026-03-07", "requests": 155}, {"date": "2026-03-08", "requests": 29}, {"date": "2026-03-09", "requests": 1413}, {"date": "2026-03-10", "requests": 3077}, {"date": "2026-03-11", "requests": 684}, {"date": "2026-03-12", "requests": 373}, {"date": "2026-03-13", "requests": 6797}, {"date": "2026-03-14", "requests": 947}, {"date": "2026-03-15", "requests": 219}, {"date": "2026-03-16", "requests": 254}, {"date": "2026-03-17", "requests": 351}, {"date": "2026-03-18", "requests": 10}], "models": [{"model": "claude-4.6-opus-high-thinking", "requests": 26680}, {"model": "composer-1.5", "requests": 959}, {"model": "claude-4.6-sonnet-medium-thinking", "requests": 653}, {"model": "gpt-5.3-codex", "requests": 272}, {"model": "default", "requests": 172}, {"model": "gpt-5.2", "requests": 156}, {"model": "kimi-k2.5", "requests": 70}, {"model": "claude-4.5-sonnet-thinking", "requests": 30}, {"model": "gemini-3.1-pro-preview", "requests": 29}, {"model": "composer-1", "requests": 28}, {"model": "claude-4.5-opus-high-thinking", "requests": 16}, {"model": "claude-4.6-opus-max", "requests": 8}, {"model": "gpt-5.2-codex", "requests": 7}, {"model": "claude-4.5-sonnet", "requests": 5}, {"model": "grok-code-fast-1", "requests": 1}], "vertical_summary": {"E&U": {"total": 11, "used": 8, "requests": 24397}, "Arq": {"total": 10, "used": 7, "requests": 4119}, "N/D": {"total": 1, "used": 1, "requests": 503}, "I&S": {"total": 10, "used": 4, "requests": 67}}, "stats": {"total_members": 32, "active_members": 20, "inactive_members": 12, "total_requests": 29086, "total_tokens": 4313772155, "total_days": 31}, "report_period": "16 Feb — 18 Mar 2026", "vert_names": {"Arq": "Arquitetura", "E&U": "Energia e Utilities", "I&S": "Indústria e Serviços", "N/D": "Não Definido"}}}, "group_list": [{"id": "engdb", "name": "ENGDB"}], "updated_at": "18/03/2026 10:34 (BRT)"};
+const GROUPS=RAW.groups, GROUP_LIST=RAW.group_list;
+
+// State
+let activeGroup=GROUP_LIST[0]?.id||'';
+let G=GROUPS[activeGroup]||{};
+let M=G.members||[],DU=G.daily_usage||{},AD=G.all_dates||[],DT=G.daily_totals||[],MO=G.models||[],VS=G.vertical_summary||{},ST=G.stats||{};
+let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='',heatFilter='all';
+
+const fmt=n=>(n||0).toLocaleString('pt-BR');
+const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'produtos':'nd';
 const shortDate=d=>{const p=d.split('-');return p[2]+'/'+p[1]};
 function renderMesesTags(m){if(!m||m==='—')return'<span style="color:var(--text3)">—</span>';return m.split(', ').map(x=>`<span class="mes-tag">${x}</span>`).join('')}
 
-document.getElementById('kpi-row').innerHTML=`
-  <div class="kpi"><div class="kpi-icon purple">👥</div><div class="kpi-label">Total Membros</div><div class="kpi-value">${ST.total_members}</div><div class="kpi-detail">${ST.total_days} dias de atividade</div></div>
-  <div class="kpi"><div class="kpi-icon green">✓</div><div class="kpi-label">Ativos</div><div class="kpi-value">${ST.active_members}</div><div class="kpi-detail">${Math.round(ST.active_members/ST.total_members*100)}% de adoção</div></div>
-  <div class="kpi"><div class="kpi-icon red">✗</div><div class="kpi-label">Inativos</div><div class="kpi-value">${ST.inactive_members}</div><div class="kpi-detail">Sem nenhum request</div></div>
-  <div class="kpi"><div class="kpi-icon yellow">⚡</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(ST.total_requests)}</div><div class="kpi-detail">${fmt(Math.round(ST.total_tokens/1e6))}M tokens</div></div>`;
+const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Produtos':'var(--prod)','N/D':'var(--nd)'};
 
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');document.getElementById('v-'+t.dataset.view).classList.add('active');
-}));
+// Group selector
+function renderGroupBar(){
+  document.getElementById('group-bar').innerHTML=
+    `<span class="group-label">Grupo:</span>`+
+    GROUP_LIST.map(g=>`<button class="group-btn ${g.id===activeGroup?'active':''}" data-gid="${g.id}">${g.name}</button>`).join('');
+  document.querySelectorAll('.group-btn').forEach(b=>b.addEventListener('click',()=>{
+    activeGroup=b.dataset.gid;
+    switchGroup();
+  }));
+}
 
-let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='';
+function switchGroup(){
+  G=GROUPS[activeGroup]||{};
+  M=G.members||[];DU=G.daily_usage||{};AD=G.all_dates||[];DT=G.daily_totals||[];MO=G.models||[];VS=G.vertical_summary||{};ST=G.stats||{};
+  currentFilter='all';heatFilter='all';searchTerm='';
+  document.getElementById('search-input')&&(document.getElementById('search-input').value='');
+  renderGroupBar();
+  renderKPIs();
+  renderFilterBar();
+  renderTable();
+  renderDailyChart();
+  renderHeatFilterBar();
+  renderHeatmap();
+  renderVerticals();
+  renderModels();
+  document.querySelector('.header-sub').textContent=`ENGDB Team · ${G.report_period||''}`;
+}
+
+// KPIs
+function renderKPIs(){
+  const s=ST;
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi"><div class="kpi-icon purple">👥</div><div class="kpi-label">Total Membros</div><div class="kpi-value">${s.total_members||0}</div><div class="kpi-detail">${s.total_days||0} dias de atividade</div></div>
+    <div class="kpi"><div class="kpi-icon green">✓</div><div class="kpi-label">Ativos</div><div class="kpi-value">${s.active_members||0}</div><div class="kpi-detail">${s.total_members?Math.round(s.active_members/s.total_members*100):0}% de adoção</div></div>
+    <div class="kpi"><div class="kpi-icon red">✗</div><div class="kpi-label">Inativos</div><div class="kpi-value">${s.inactive_members||0}</div><div class="kpi-detail">Sem nenhum request</div></div>
+    <div class="kpi"><div class="kpi-icon yellow">⚡</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(s.total_requests)}</div><div class="kpi-detail">${fmt(Math.round((s.total_tokens||0)/1e6))}M tokens</div></div>`;
+}
+
+// Filter bar (dynamic verticals)
+function renderFilterBar(){
+  const verts=Object.keys(VS);
+  let html=`<button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="used">Usaram</button>
+    <button class="filter-btn" data-filter="unused">Não Usaram</button>`;
+  verts.forEach(v=>{if(v!=='N/D')html+=`<button class="filter-btn" data-filter="${v}">${v}</button>`});
+  html+=`<input class="search-box" placeholder="Buscar nome ou e-mail..." id="search-input">`;
+  document.getElementById('filter-bar').innerHTML=html;
+  document.querySelectorAll('#filter-bar .filter-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#filter-bar .filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');currentFilter=b.dataset.filter;renderTable();
+  }));
+  document.getElementById('search-input').addEventListener('input',e=>{searchTerm=e.target.value;renderTable()});
+}
+
+// Table
 function renderTable(){
+  const verts=Object.keys(VS).filter(v=>v!=='N/D');
   let filtered=M.filter(m=>{
     if(currentFilter==='used'&&!m.used)return false;
     if(currentFilter==='unused'&&m.used)return false;
-    if(['Arq','E&U','I&S'].includes(currentFilter)&&m.vertical!==currentFilter)return false;
+    if(verts.includes(currentFilter)&&m.vertical!==currentFilter)return false;
     if(searchTerm){const s=searchTerm.toLowerCase();if(!m.name.toLowerCase().includes(s)&&!m.email.toLowerCase().includes(s))return false}
     return true;
   });
@@ -276,27 +327,47 @@ function renderTable(){
     <td class="meses-cell">${renderMesesTags(m.meses_ativos)}</td>
   </tr>`).join('');
 }
-document.querySelectorAll('.filter-btn:not(.heat-filter)').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.filter-btn:not(.heat-filter)').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');currentFilter=b.dataset.filter;renderTable();
-}));
+
+// Sort
 document.querySelectorAll('th.sortable').forEach(th=>th.addEventListener('click',()=>{
   const col=th.dataset.col;
   if(currentSort===col)sortDir*=-1;else{currentSort=col;sortDir=col==='requests'||col==='days'?-1:1}
   document.querySelectorAll('th.sortable').forEach(x=>x.classList.remove('sorted'));
   th.classList.add('sorted');th.querySelector('.sort-arrow').textContent=sortDir===1?'▲':'▼';renderTable();
 }));
-document.getElementById('search-input').addEventListener('input',e=>{searchTerm=e.target.value;renderTable()});
-renderTable();
 
-const maxReq=Math.max(...DT.map(d=>d.requests));
-document.getElementById('daily-chart').innerHTML=DT.map(d=>{
-  const h=Math.max(4,(d.requests/maxReq)*140);
-  return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
-}).join('');
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');document.getElementById('v-'+t.dataset.view).classList.add('active');
+}));
 
-let heatFilter='all';
+// Daily chart
+function renderDailyChart(){
+  if(!DT.length){document.getElementById('daily-chart').innerHTML='<span style="color:var(--text3)">Sem dados</span>';return}
+  const maxReq=Math.max(...DT.map(d=>d.requests));
+  document.getElementById('daily-chart').innerHTML=DT.map(d=>{
+    const h=Math.max(4,(d.requests/maxReq)*140);
+    return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
+  }).join('');
+}
+
+// Heat filter bar (dynamic)
+function renderHeatFilterBar(){
+  const verts=Object.keys(VS);
+  let html=`<button class="filter-btn active heat-filter" data-hf="all">Todos</button>`;
+  verts.forEach(v=>{if(v!=='N/D')html+=`<button class="filter-btn heat-filter" data-hf="${v}">${v}</button>`});
+  document.getElementById('heat-filter-bar').innerHTML=html;
+  document.querySelectorAll('.heat-filter').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.heat-filter').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');heatFilter=b.dataset.hf;renderHeatmap();
+  }));
+}
+
+// Heatmap
 function renderHeatmap(){
+  if(!AD.length){document.getElementById('heatmap-head').innerHTML='';document.getElementById('heatmap-body').innerHTML='<tr><td style="color:var(--text3);padding:20px">Sem dados</td></tr>';return}
   document.getElementById('heatmap-head').innerHTML=`<th style="min-width:200px;padding-left:14px">Nome</th><th style="min-width:220px">E-mail</th><th style="min-width:50px">Vert.</th>`+AD.map(d=>`<th>${d.slice(8)+'/'+d.slice(5,7)}</th>`).join('');
   const members=heatFilter==='all'?M:M.filter(m=>m.vertical===heatFilter);
   let allVals=[];
@@ -310,36 +381,41 @@ function renderHeatmap(){
     return`<tr><td>${m.name}</td><td>${m.email}</td><td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>${AD.map(d=>{const v=ud[d]||0;return`<td class="heat-${hl(v)}">${v||''}</td>`}).join('')}</tr>`;
   }).join('');
 }
-document.querySelectorAll('.heat-filter').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.heat-filter').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');heatFilter=b.dataset.hf;renderHeatmap();
-}));
-renderHeatmap();
 
-const vertOrder=['Arq','E&U','I&S','N/D'];
-const vertNames={'Arq':'Arquitetura','E&U':'Energy & Utilities','I&S':'Industria & Serviços','N/D':'Não Definido'};
-const vertColors={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','N/D':'var(--nd)'};
-document.getElementById('vert-grid').innerHTML=vertOrder.filter(v=>VS[v]).map(v=>{
-  const d=VS[v],adoption=Math.round(d.used/d.total*100);
-  const members=M.filter(m=>m.vertical===v).sort((a,b)=>b.total_requests-a.total_requests);
-  return`<div class="vert-card card-${vClass(v)}">
-    <div class="vert-title">${vertNames[v]} <span style="font-weight:400;color:var(--text3);font-size:.82rem">(${v})</span></div>
-    <div class="vert-stats">
-      <div class="vert-stat"><div class="vert-stat-val">${d.total}</div><div class="vert-stat-label">Membros</div></div>
-      <div class="vert-stat"><div class="vert-stat-val">${d.used}</div><div class="vert-stat-label">Ativos</div></div>
-      <div class="vert-stat"><div class="vert-stat-val" style="color:${vertColors[v]}">${adoption}%</div><div class="vert-stat-label">Adoção</div></div>
-      <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${vertColors[v]}"></div></div>
-    <div class="vert-members">${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
-  </div>`;
-}).join('');
+// Verticals
+function renderVerticals(){
+  const vertNames=G.vert_names||{};
+  const verts=Object.keys(VS);
+  document.getElementById('vert-grid').innerHTML=verts.map(v=>{
+    const d=VS[v],adoption=d.total?Math.round(d.used/d.total*100):0;
+    const members=M.filter(m=>m.vertical===v).sort((a,b)=>b.total_requests-a.total_requests);
+    const color=vertColorsMap[v]||'var(--nd)';
+    return`<div class="vert-card card-${vClass(v)}">
+      <div class="vert-title">${vertNames[v]||v} <span style="font-weight:400;color:var(--text3);font-size:.82rem">(${v})</span></div>
+      <div class="vert-stats">
+        <div class="vert-stat"><div class="vert-stat-val">${d.total}</div><div class="vert-stat-label">Membros</div></div>
+        <div class="vert-stat"><div class="vert-stat-val">${d.used}</div><div class="vert-stat-label">Ativos</div></div>
+        <div class="vert-stat"><div class="vert-stat-val" style="color:${color}">${adoption}%</div><div class="vert-stat-label">Adoção</div></div>
+        <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${color}"></div></div>
+      <div class="vert-members">${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
 
-const maxModel=MO[0]?.requests||1;
-document.getElementById('model-chart').innerHTML=MO.slice(0,10).map(m=>{
-  const pct=(m.requests/maxModel*100).toFixed(1);
-  return`<div class="model-row"><div class="model-name">${m.model}</div><div class="model-bar-wrap"><div class="model-bar" style="width:${pct}%"></div></div><div class="model-val">${fmt(m.requests)}</div></div>`;
-}).join('');
+// Models
+function renderModels(){
+  if(!MO.length){document.getElementById('model-chart').innerHTML='<span style="color:var(--text3)">Sem dados</span>';return}
+  const maxModel=MO[0]?.requests||1;
+  document.getElementById('model-chart').innerHTML=MO.slice(0,10).map(m=>{
+    const pct=(m.requests/maxModel*100).toFixed(1);
+    return`<div class="model-row"><div class="model-name">${m.model}</div><div class="model-bar-wrap"><div class="model-bar" style="width:${pct}%"></div></div><div class="model-val">${fmt(m.requests)}</div></div>`;
+  }).join('');
+}
+
+// Init
+switchGroup();
 </script>
 </body>
 </html>
