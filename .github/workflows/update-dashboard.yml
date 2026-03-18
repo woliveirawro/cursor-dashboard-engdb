@@ -25,6 +25,7 @@ jobs:
       - name: Buscar dados e gerar dashboard
         env:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          CURSOR_API_KEY_2: ${{ secrets.CURSOR_API_KEY_2 }}  # ADICIONE ESTA LINHA
         run: python scripts/fetch_and_build.py
 
       - name: Commit index.html atualizado
