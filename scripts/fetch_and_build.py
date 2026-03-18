@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Cursor AI Dashboard Builder
-Consome a Admin API do Cursor, processa os dados e gera o dashboard HTML.
+Cursor AI Dashboard Builder - Multi-Group
+Consome a Admin API do Cursor para múltiplos grupos e gera o dashboard HTML.
 """
 import os, json, sys, time
 from datetime import datetime, timedelta
@@ -10,63 +10,88 @@ from urllib.error import HTTPError, URLError
 from base64 import b64encode
 
 API_BASE = "https://api.cursor.com"
-API_KEY = os.environ.get("CURSOR_API_KEY", "")
 
-# ── Mapeamento de verticais (ENGDB) ──
-VERTICAL_MAP = {
-    "daniela.costa@engdb.com.br": "I&S",
-    "andre.santos@engdb.com.br": "I&S",
-    "ulisses.oliveira@engdb.com.br": "I&S",
-    "alaecio.junior@engdb.com.br": "I&S",
-    "ana.rosa@engdb.com.br": "I&S",
-    "marcio.silva@engdb.com.br": "I&S",
-    "phelipe.medeiros@engdb.com.br": "I&S",
-    "ricardo.tassini@engdb.com.br": "I&S",
-    "sabrina.silva@engdb.com.br": "I&S",
-    "luciano.mengarelli@engdb.com.br": "E&U",
-    "andre.zaniboni@engdb.com.br": "E&U",
-    "danilo.netti@engdb.com.br": "E&U",
-    "amauri.serra@engdb.com.br": "E&U",
-    "stefano.damacena@engdb.com.br": "E&U",
-    "romero.barreto@engdb.com.br": "I&S",
-    "edson.junior@engdb.com.br": "E&U",
-    "jose.marcelo@engdb.com.br": "E&U",
-    "leonardo.sousa@engdb.com.br": "E&U",
-    "oswaldo.pelegrina@engdb.com.br": "E&U",
-    "ulisses.rodrigues@engdb.com.br": "I&S",
-    "ricardo.chagas@engdb.com.br": "Arq",
-    "sergio.marmilicz@engdb.com.br": "Arq",
-    "tiago.cardoso@engdb.com.br": "Arq",
-    "wander.oliveira@engdb.com.br": "Arq",
-    "thiago.mascarenhas@engdb.com.br": "Arq",
-    "alessandro.schneider@engdb.com.br": "Arq",
-    "brenno.neves@engdb.com.br": "Arq",
-    "luiz.souza@engdb.com.br": "Arq",
-    "mariane.quirino@engdb.com.br": "Arq",
-    "walter.moura@engdb.com.br": "Arq",
-    "jhon.carvalho@engdb.com.br": "I&S",
-}
+# ══════════════════════════════════════════════════════════════
+# CONFIGURAÇÃO DOS GRUPOS
+# Para adicionar um novo grupo, basta criar uma entrada aqui
+# ══════════════════════════════════════════════════════════════
+GROUPS = [
+    {
+        "id": "engdb",
+        "name": "ENGDB",
+        "api_key_env": "CURSOR_API_KEY",
+        "default_vertical": "N/D",
+        "vertical_map": {
+            "daniela.costa@engdb.com.br": "I&S",
+            "andre.santos@engdb.com.br": "I&S",
+            "ulisses.oliveira@engdb.com.br": "I&S",
+            "alaecio.junior@engdb.com.br": "I&S",
+            "ana.rosa@engdb.com.br": "I&S",
+            "marcio.silva@engdb.com.br": "I&S",
+            "phelipe.medeiros@engdb.com.br": "I&S",
+            "ricardo.tassini@engdb.com.br": "I&S",
+            "sabrina.silva@engdb.com.br": "I&S",
+            "luciano.mengarelli@engdb.com.br": "E&U",
+            "andre.zaniboni@engdb.com.br": "E&U",
+            "danilo.netti@engdb.com.br": "E&U",
+            "amauri.serra@engdb.com.br": "E&U",
+            "stefano.damacena@engdb.com.br": "E&U",
+            "romero.barreto@engdb.com.br": "E&U",
+            "edson.junior@engdb.com.br": "E&U",
+            "jose.marcelo@engdb.com.br": "E&U",
+            "leonardo.sousa@engdb.com.br": "E&U",
+            "oswaldo.pelegrina@engdb.com.br": "E&U",
+            "ulisses.rodrigues@engdb.com.br": "E&U",
+            "ricardo.chagas@engdb.com.br": "Arq",
+            "sergio.marmilicz@engdb.com.br": "Arq",
+            "tiago.cardoso@engdb.com.br": "Arq",
+            "wander.oliveira@engdb.com.br": "Arq",
+            "thiago.mascarenhas@engdb.com.br": "Arq",
+            "alessandro.schneider@engdb.com.br": "Arq",
+            "brenno.neves@engdb.com.br": "Arq",
+            "luiz.souza@engdb.com.br": "Arq",
+            "mariane.quirino@engdb.com.br": "Arq",
+            "walter.moura@engdb.com.br": "Arq",
+            "jhon.carvalho@engdb.com.br": "I&S",
+        },
+        "name_map": {
+            "thiago.mascarenhas@engdb.com.br": "Thiago Mascarenhas",
+            "luciano.mengarelli@engdb.com.br": "Luciano Mengarelli",
+            "ulisses.oliveira@engdb.com.br": "Ulisses Oliveira",
+            "andre.zaniboni@engdb.com.br": "Andre Zaniboni",
+            "daniela.costa@engdb.com.br": "Daniela Costa",
+            "danilo.netti@engdb.com.br": "Danilo Netti",
+            "alaecio.junior@engdb.com.br": "Alaecio Quirino",
+            "ulisses.rodrigues@engdb.com.br": "Ulisses Rodrigues",
+            "amauri.serra@engdb.com.br": "Amauri Serra",
+            "romero.barreto@engdb.com.br": "Romero Barreto",
+        },
+        "vert_names": {
+            "Arq": "Arquitetura",
+            "E&U": "Energia e Utilities",
+            "I&S": "Indústria e Serviços",
+            "N/D": "Não Definido",
+        },
+    },
+    {
+        "id": "produtos",
+        "name": "Produtos",
+        "api_key_env": "CURSOR_API_KEY_2",
+        "default_vertical": "Produtos",
+        "vertical_map": {},  # Todos ficam como "Produtos"
+        "name_map": {},
+        "vert_names": {
+            "Produtos": "Produtos",
+            "N/D": "Não Definido",
+        },
+    },
+]
 
-# ── Mapeamento de nomes (para preencher "Unnamed") ──
-NAME_MAP = {
-    "thiago.mascarenhas@engdb.com.br": "Thiago Mascarenhas",
-    "luciano.mengarelli@engdb.com.br": "Luciano Mengarelli",
-    "ulisses.oliveira@engdb.com.br": "Ulisses Oliveira",
-    "andre.zaniboni@engdb.com.br": "Andre Zaniboni",
-    "daniela.costa@engdb.com.br": "Daniela Costa",
-    "danilo.netti@engdb.com.br": "Danilo Netti",
-    "alaecio.junior@engdb.com.br": "Alaecio Quirino",
-    "ulisses.rodrigues@engdb.com.br": "Ulisses Rodrigues",
-    "amauri.serra@engdb.com.br": "Amauri Serra",
-    "romero.barreto@engdb.com.br": "Romero Barreto",
-}
 
-
-def api_call(endpoint, payload=None):
-    """Faz chamada autenticada à API do Cursor."""
+def api_call(endpoint, api_key, payload=None):
     url = f"{API_BASE}{endpoint}"
     data = json.dumps(payload or {}).encode()
-    creds = b64encode(f"{API_KEY}:".encode()).decode()
+    creds = b64encode(f"{api_key}:".encode()).decode()
     req = Request(url, data=data, headers={
         "Content-Type": "application/json",
         "Authorization": f"Basic {creds}"
@@ -75,21 +100,20 @@ def api_call(endpoint, payload=None):
         with urlopen(req, timeout=30) as resp:
             return json.loads(resp.read().decode())
     except HTTPError as e:
-        print(f"API Error {e.code}: {e.read().decode()}", file=sys.stderr)
-        sys.exit(1)
+        print(f"  API Error {e.code}: {e.read().decode()}", file=sys.stderr)
+        return None
     except URLError as e:
-        print(f"Connection Error: {e.reason}", file=sys.stderr)
-        sys.exit(1)
+        print(f"  Connection Error: {e.reason}", file=sys.stderr)
+        return None
 
 
-def fetch_team_members_from_spend():
-    """Busca membros do time via endpoint /teams/spend (retorna nome, email, role)."""
-    print("Buscando membros do time via /teams/spend...")
+def fetch_members(api_key):
     all_members = []
     page = 1
-
     while True:
-        data = api_call("/teams/spend", {"page": page, "pageSize": 50})
+        data = api_call("/teams/spend", api_key, {"page": page, "pageSize": 50})
+        if not data:
+            break
         spend_list = data.get("teamMemberSpend", [])
         for s in spend_list:
             all_members.append({
@@ -98,71 +122,49 @@ def fetch_team_members_from_spend():
                 "role": s.get("role", "member"),
             })
         total_pages = data.get("totalPages", 1)
-        print(f"  → Página {page}/{total_pages}: {len(spend_list)} membros")
-
+        print(f"    Página {page}/{total_pages}: {len(spend_list)} membros")
         if page >= total_pages:
             break
         page += 1
         time.sleep(0.3)
-
-    print(f"  → {len(all_members)} membros encontrados")
     return all_members
 
 
-def fetch_usage_events():
-    """Busca todos os eventos de uso com paginação."""
-    print("Buscando eventos de uso...")
+def fetch_events(api_key):
     all_events = []
     page = 1
-    page_size = 100
-
     while True:
-        data = api_call("/teams/filtered-usage-events", {
-            "page": page,
-            "pageSize": page_size
+        data = api_call("/teams/filtered-usage-events", api_key, {
+            "page": page, "pageSize": 100
         })
+        if not data:
+            break
         events = data.get("usageEvents", [])
         all_events.extend(events)
         pagination = data.get("pagination", {})
-        print(f"  → Página {page}: {len(events)} eventos (total: {len(all_events)})")
-
+        print(f"    Página {page}: {len(events)} eventos (total: {len(all_events)})")
         if not pagination.get("hasNextPage", False):
             break
         page += 1
         time.sleep(0.3)
-
     return all_events
 
 
-def fetch_spend():
-    """Busca dados de gastos do time."""
-    print("Buscando dados de gastos...")
-    data = api_call("/teams/spend")
-    spend = data.get("teamMemberSpend", [])
-    print(f"  → {len(spend)} registros de gastos")
-    return spend
-
-
-def process_data(members_raw, events_raw, spend_raw):
-    """Processa os dados brutos e retorna o JSON para o dashboard."""
-
-    # Normalizar membros
+def process_group(members_raw, events_raw, vertical_map, name_map, default_vertical):
     members = {}
     for m in members_raw:
         email = (m.get("email") or "").strip().lower()
         if not email:
             continue
-        name = m.get("name") or NAME_MAP.get(email, "(Sem nome)")
+        name = m.get("name") or name_map.get(email, "(Sem nome)")
         if name in ("Unnamed", "", "N/A"):
-            name = NAME_MAP.get(email, "(Sem nome)")
+            name = name_map.get(email, "(Sem nome)")
         members[email] = {
-            "name": name,
-            "email": email,
+            "name": name, "email": email,
             "role": m.get("role", "Member"),
-            "vertical": VERTICAL_MAP.get(email, "N/D"),
+            "vertical": vertical_map.get(email, default_vertical),
         }
 
-    # Processar eventos de uso
     usage_by_user = {}
     usage_by_user_date = {}
     daily_totals = {}
@@ -173,8 +175,6 @@ def process_data(members_raw, events_raw, spend_raw):
         email = (ev.get("userEmail") or "").strip().lower()
         if not email:
             continue
-
-        # Timestamp pode ser milissegundos ou ISO string
         ts = ev.get("timestamp", "")
         try:
             if isinstance(ts, (int, float)) or (isinstance(ts, str) and ts.isdigit()):
@@ -189,51 +189,37 @@ def process_data(members_raw, events_raw, spend_raw):
         raw_cost = ev.get("requestsCosts", 1)
         requests_count = round(float(raw_cost)) if raw_cost else 1
         model = ev.get("model", "unknown")
-
         tokens = ev.get("tokenUsage", {})
         total_tokens = (
-            tokens.get("inputTokens", 0) +
-            tokens.get("outputTokens", 0) +
-            tokens.get("cacheWriteTokens", 0) +
-            tokens.get("cacheReadTokens", 0)
+            tokens.get("inputTokens", 0) + tokens.get("outputTokens", 0) +
+            tokens.get("cacheWriteTokens", 0) + tokens.get("cacheReadTokens", 0)
         )
 
-        # Acumular por usuário
         if email not in usage_by_user:
             usage_by_user[email] = {"requests": 0, "tokens": 0, "dates": set()}
         usage_by_user[email]["requests"] += requests_count
         usage_by_user[email]["tokens"] += total_tokens
         usage_by_user[email]["dates"].add(date_str)
 
-        # Acumular por usuário+data
         key = (email, date_str)
         usage_by_user_date[key] = usage_by_user_date.get(key, 0) + requests_count
-
-        # Totais diários
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
-
-        # Modelos
         model_usage[model] = model_usage.get(model, 0) + requests_count
 
-        # Adicionar membro se não existia
         if email not in members:
             members[email] = {
-                "name": NAME_MAP.get(email, email.split("@")[0].title()),
-                "email": email,
-                "role": "Member",
-                "vertical": VERTICAL_MAP.get(email, "N/D"),
+                "name": name_map.get(email, email.split("@")[0].title()),
+                "email": email, "role": "Member",
+                "vertical": vertical_map.get(email, default_vertical),
             }
 
     all_dates = sorted(all_dates)
 
-    # Construir lista de membros enriquecida
     member_list = []
     for email, m in members.items():
         u = usage_by_user.get(email, {"requests": 0, "tokens": 0, "dates": set()})
         tr = u["requests"]
         dates = sorted(u["dates"]) if u["dates"] else []
-
-        # Calcular período e meses ativos
         if dates:
             d1 = datetime.strptime(dates[0], "%Y-%m-%d")
             d2 = datetime.strptime(dates[-1], "%Y-%m-%d")
@@ -252,28 +238,20 @@ def process_data(members_raw, events_raw, spend_raw):
             meses_ativos = "—"
 
         member_list.append({
-            "name": m["name"],
-            "email": email,
-            "role": m["role"],
-            "vertical": m["vertical"],
-            "total_requests": round(tr),
-            "total_tokens": u["tokens"],
-            "days_used": len(dates),
-            "periodo": periodo,
-            "meses_ativos": meses_ativos,
-            "used": tr > 0,
+            "name": m["name"], "email": email, "role": m["role"],
+            "vertical": m["vertical"], "total_requests": round(tr),
+            "total_tokens": u["tokens"], "days_used": len(dates),
+            "periodo": periodo, "meses_ativos": meses_ativos, "used": tr > 0,
         })
 
     member_list.sort(key=lambda x: -x["total_requests"])
 
-    # Daily usage dict para heatmap
     daily_usage = {}
     for (email, date_str), req in usage_by_user_date.items():
         if email not in daily_usage:
             daily_usage[email] = {}
         daily_usage[email][date_str] = round(req)
 
-    # Vertical summary
     vert_summary = {}
     for m in member_list:
         v = m["vertical"]
@@ -284,7 +262,6 @@ def process_data(members_raw, events_raw, spend_raw):
             vert_summary[v]["used"] += 1
         vert_summary[v]["requests"] += m["total_requests"]
 
-    # Determinar período do relatório
     if all_dates:
         d_start = datetime.strptime(all_dates[0], "%Y-%m-%d")
         d_end = datetime.strptime(all_dates[-1], "%Y-%m-%d")
@@ -311,44 +288,68 @@ def process_data(members_raw, events_raw, spend_raw):
             "total_days": len(all_dates),
         },
         "report_period": report_period,
-        "updated_at": (datetime.now(tz=None) - timedelta(hours=3)).strftime("%d/%m/%Y %H:%M") + " (BRT)",
     }
 
 
-def build_html(data):
-    """Lê o template HTML e injeta os dados."""
+def build_html(all_groups_data):
     template_path = os.path.join(os.path.dirname(__file__), "..", "template.html")
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
 
-    html = html.replace("__DATA_PLACEHOLDER__", json.dumps(data, ensure_ascii=False))
-    html = html.replace("__REPORT_PERIOD__", data["report_period"])
-    html = html.replace("__UPDATED_AT__", data["updated_at"])
+    html = html.replace("__DATA_PLACEHOLDER__", json.dumps(all_groups_data, ensure_ascii=False))
+    html = html.replace("__UPDATED_AT__", all_groups_data["updated_at"])
 
     return html
 
 
 def main():
-    if not API_KEY:
-        print("ERRO: Variável CURSOR_API_KEY não definida.", file=sys.stderr)
+    now_brt = datetime.now(tz=None) - timedelta(hours=3)
+    print(f"═══ Cursor Dashboard Builder (Multi-Group) ═══")
+    print(f"Início: {now_brt.strftime('%Y-%m-%d %H:%M')} (BRT)\n")
+
+    all_groups_data = {
+        "groups": {},
+        "group_list": [],
+        "updated_at": now_brt.strftime("%d/%m/%Y %H:%M") + " (BRT)",
+    }
+
+    for group in GROUPS:
+        api_key = os.environ.get(group["api_key_env"], "")
+        if not api_key:
+            print(f"⚠ Grupo '{group['name']}': API Key ({group['api_key_env']}) não encontrada, pulando...")
+            continue
+
+        print(f"━━━ Grupo: {group['name']} ━━━")
+        print(f"  Buscando membros...")
+        members = fetch_members(api_key)
+        print(f"  → {len(members)} membros")
+
+        print(f"  Buscando eventos...")
+        events = fetch_events(api_key)
+        print(f"  → {len(events)} eventos")
+
+        print(f"  Processando...")
+        data = process_group(
+            members, events,
+            group["vertical_map"], group["name_map"],
+            group["default_vertical"]
+        )
+        data["vert_names"] = group["vert_names"]
+
+        all_groups_data["groups"][group["id"]] = data
+        all_groups_data["group_list"].append({
+            "id": group["id"],
+            "name": group["name"],
+        })
+
+        print(f"  → {data['stats']['total_members']} membros, {data['stats']['active_members']} ativos, {data['stats']['total_requests']:,} requests\n")
+
+    if not all_groups_data["groups"]:
+        print("ERRO: Nenhum grupo processado.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"═══ Cursor Dashboard Builder ═══")
-    print(f"Início: {datetime.now(tz=None).strftime('%Y-%m-%d %H:%M UTC')}\n")
-
-    members = fetch_team_members_from_spend()
-    events = fetch_usage_events()
-    spend = []  # Já extraímos membros do spend
-
-    print("\nProcessando dados...")
-    data = process_data(members, events, spend)
-
-    print(f"  → {data['stats']['total_members']} membros")
-    print(f"  → {data['stats']['active_members']} ativos ({data['stats']['total_days']} dias)")
-    print(f"  → {data['stats']['total_requests']:,} requests totais")
-
-    print("\nGerando HTML...")
-    html = build_html(data)
+    print("Gerando HTML...")
+    html = build_html(all_groups_data)
 
     output_path = os.path.join(os.path.dirname(__file__), "..", "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
