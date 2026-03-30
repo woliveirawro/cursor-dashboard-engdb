@@ -106,7 +106,23 @@ def api_call(endpoint, api_key, payload=None):
 
 
 def fetch_members(api_key):
+    """Tenta /teams/team-members primeiro; faz fallback para /teams/spend."""
     all_members = []
+
+    # Tentativa 1: endpoint team-members
+    data = api_call("/teams/team-members", api_key, {})
+    if data:
+        raw = data.get("teamMembers", data.get("members", []))
+        if raw:
+            # Normaliza para o formato {email, name}
+            for m in raw:
+                email = m.get("email", "") or m.get("userId", "")
+                name  = m.get("name", "") or m.get("displayName", "") or email.split("@")[0]
+                all_members.append({"email": email, "name": name})
+            print(f"  → {len(all_members)} membros via /team-members")
+            return all_members
+
+    # Fallback: endpoint spend
     page = 1
     while True:
         data = api_call("/teams/spend", api_key, {"page": page, "pageSize": 50})
@@ -115,10 +131,15 @@ def fetch_members(api_key):
         members = data.get("members", [])
         if not members:
             break
-        all_members.extend(members)
+        for m in members:
+            email = m.get("email", "") or m.get("userId", "")
+            name  = m.get("name", "") or email.split("@")[0]
+            all_members.append({"email": email, "name": name})
         if len(members) < 50:
             break
         page += 1
+
+    print(f"  → {len(all_members)} membros via /spend")
     return all_members
 
 
@@ -146,17 +167,27 @@ def fetch_events(api_key):
 # ─────────────────────────────────────────────
 # Processamento de dados
 # ─────────────────────────────────────────────
+def parse_timestamp(raw_ts):
+    """Aceita timestamp como int (ms epoch) ou string ISO 8601."""
+    try:
+        if isinstance(raw_ts, str):
+            return datetime.fromisoformat(raw_ts.replace("Z", "+00:00")).replace(tzinfo=None)
+        return datetime.utcfromtimestamp(int(raw_ts) / 1000)
+    except Exception:
+        return None
+
+
 def process_group(members, events, vertical_map, name_map, default_vertical):
-    now = datetime.utcnow()
+    from datetime import timezone
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
     cutoff = now - timedelta(days=31)
 
     # Indexar eventos por e-mail
     events_by_email = {}
     all_dates = set()
     for ev in events:
-        ts = ev.get("timestamp", 0) / 1000
-        dt = datetime.utcfromtimestamp(ts)
-        if dt < cutoff:
+        dt = parse_timestamp(ev.get("timestamp", 0))
+        if dt is None or dt < cutoff:
             continue
         email = ev.get("userId", "")
         day = dt.strftime("%Y-%m-%d")
@@ -235,7 +266,8 @@ def build_html(all_groups_data):
 # Main
 # ─────────────────────────────────────────────
 def main():
-    now_brt = datetime.utcnow() - timedelta(hours=3)
+    from datetime import timezone
+    now_brt = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(hours=3)
     print(f"═══ Cursor Dashboard Builder (Multi-Group) ═══")
     print(f"Início: {now_brt.strftime('%Y-%m-%d %H:%M')} (BRT)\n")
 
