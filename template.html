@@ -105,6 +105,13 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .heat-legend-arrow{color:var(--text3);font-size:.7rem;margin:0 2px}
 
 .vert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:28px}
+.vert-grid.single-vert{grid-template-columns:1fr}
+.vert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;position:relative;overflow:hidden}
+.vert-card.wide .vert-stats{grid-template-columns:repeat(4,1fr)}
+.vert-card.wide .vert-members{column-count:2;column-gap:24px}
+.vert-card.wide .vert-member{break-inside:avoid}
+@media(min-width:1000px){.vert-card.extra-wide .vert-members{column-count:3}}
+.vert-members-header{display:flex;justify-content:space-between;padding:8px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px;font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
 .vert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;position:relative;overflow:hidden}
 .vert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .vert-card.card-arq::before{background:var(--arq)}.vert-card.card-eu::before{background:var(--eu)}
@@ -388,11 +395,21 @@ function renderHeatmap(){
 function renderVerticals(){
   const vertNames=G.vert_names||{};
   const verts=Object.keys(VS);
-  document.getElementById('vert-grid').innerHTML=verts.map(v=>{
+  const isSingle=verts.length<=2; // 1 vertical real + possível N/D
+  const grid=document.getElementById('vert-grid');
+  grid.className='vert-grid fade-in'+(isSingle?' single-vert':'');
+
+  grid.innerHTML=verts.map(v=>{
     const d=VS[v],adoption=d.total?Math.round(d.used/d.total*100):0;
     const members=M.filter(m=>m.vertical===v).sort((a,b)=>b.total_requests-a.total_requests);
     const color=vertColorsMap[v]||'var(--nd)';
-    return`<div class="vert-card card-${vClass(v)}">
+    const isWide=isSingle&&members.length>8;
+    const isExtraWide=isSingle&&members.length>20;
+    const cardClass=`vert-card card-${vClass(v)}${isWide?' wide':''}${isExtraWide?' extra-wide':''}`;
+
+    const membersHeader=isWide?`<div class="vert-members-header"><span>Membro</span><span>Requests · Dias</span></div>`:'';
+
+    return`<div class="${cardClass}">
       <div class="vert-title">${vertNames[v]||v} <span style="font-weight:400;color:var(--text3);font-size:.82rem">(${v})</span></div>
       <div class="vert-stats">
         <div class="vert-stat"><div class="vert-stat-val">${d.total}</div><div class="vert-stat-label">Membros</div></div>
@@ -401,7 +418,7 @@ function renderVerticals(){
         <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${color}"></div></div>
-      <div class="vert-members">${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
+      <div class="vert-members">${membersHeader}${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
     </div>`;
   }).join('');
 }
