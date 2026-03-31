@@ -12,90 +12,120 @@ from base64 import b64encode
 API_BASE = "https://api.cursor.com"
 
 # ══════════════════════════════════════════════════════════════
+# MAPEAMENTO DE VERTICAIS ENGDB (e-mail → vertical)
+# ══════════════════════════════════════════════════════════════
+ENGDB_VERTICAL_MAP = {
+    "daniela.costa@engdb.com.br": "I&S",
+    "andre.santos@engdb.com.br": "I&S",
+    "ulisses.oliveira@engdb.com.br": "I&S",
+    "alaecio.junior@engdb.com.br": "I&S",
+    "ana.rosa@engdb.com.br": "I&S",
+    "marcio.silva@engdb.com.br": "I&S",
+    "phelipe.medeiros@engdb.com.br": "I&S",
+    "ricardo.tassini@engdb.com.br": "I&S",
+    "sabrina.silva@engdb.com.br": "I&S",
+    "jhon.carvalho@engdb.com.br": "I&S",
+    "luciano.mengarelli@engdb.com.br": "E&U",
+    "andre.zaniboni@engdb.com.br": "E&U",
+    "danilo.netti@engdb.com.br": "E&U",
+    "amauri.serra@engdb.com.br": "E&U",
+    "stefano.damacena@engdb.com.br": "E&U",
+    "romero.barreto@engdb.com.br": "E&U",
+    "edson.junior@engdb.com.br": "E&U",
+    "jose.marcelo@engdb.com.br": "E&U",
+    "leonardo.sousa@engdb.com.br": "E&U",
+    "oswaldo.pelegrina@engdb.com.br": "E&U",
+    "ulisses.rodrigues@engdb.com.br": "E&U",
+    "ricardo.chagas@engdb.com.br": "Arq",
+    "sergio.marmilicz@engdb.com.br": "Arq",
+    "tiago.cardoso@engdb.com.br": "Arq",
+    "wander.oliveira@engdb.com.br": "Arq",
+    "thiago.mascarenhas@engdb.com.br": "Arq",
+    "alessandro.schneider@engdb.com.br": "Arq",
+    "brenno.neves@engdb.com.br": "Arq",
+    "luiz.souza@engdb.com.br": "Arq",
+    "mariane.quirino@engdb.com.br": "Arq",
+    "walter.moura@engdb.com.br": "Arq",
+}
+
+ENGDB_NAME_MAP = {
+    "thiago.mascarenhas@engdb.com.br": "Thiago Mascarenhas",
+    "luciano.mengarelli@engdb.com.br": "Luciano Mengarelli",
+    "ulisses.oliveira@engdb.com.br": "Ulisses Oliveira",
+    "andre.zaniboni@engdb.com.br": "Andre Zaniboni",
+    "daniela.costa@engdb.com.br": "Daniela Costa",
+    "danilo.netti@engdb.com.br": "Danilo Netti",
+    "alaecio.junior@engdb.com.br": "Alaecio Quirino",
+    "ulisses.rodrigues@engdb.com.br": "Ulisses Rodrigues",
+    "amauri.serra@engdb.com.br": "Amauri Serra",
+    "romero.barreto@engdb.com.br": "Romero Barreto",
+}
+
+# ══════════════════════════════════════════════════════════════
 # CONFIGURAÇÃO DOS GRUPOS
-# Para adicionar um novo grupo, basta criar uma entrada aqui
+# filter_vertical: filtra membros pela vertical (para sub-grupos ENGDB)
+# Grupos com mesmo api_key_env reutilizam dados da API (cache)
 # ══════════════════════════════════════════════════════════════
 GROUPS = [
     {
-        "id": "engdb",
-        "name": "ENGDB",
+        "id": "arq",
+        "name": "Arquitetura",
         "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "Arq",
         "default_vertical": "N/D",
-        "vertical_map": {
-            "daniela.costa@engdb.com.br": "I&S",
-            "andre.santos@engdb.com.br": "I&S",
-            "ulisses.oliveira@engdb.com.br": "I&S",
-            "alaecio.junior@engdb.com.br": "I&S",
-            "ana.rosa@engdb.com.br": "I&S",
-            "marcio.silva@engdb.com.br": "I&S",
-            "phelipe.medeiros@engdb.com.br": "I&S",
-            "ricardo.tassini@engdb.com.br": "I&S",
-            "sabrina.silva@engdb.com.br": "I&S",
-            "luciano.mengarelli@engdb.com.br": "E&U",
-            "andre.zaniboni@engdb.com.br": "E&U",
-            "danilo.netti@engdb.com.br": "E&U",
-            "amauri.serra@engdb.com.br": "E&U",
-            "stefano.damacena@engdb.com.br": "E&U",
-            "romero.barreto@engdb.com.br": "E&U",
-            "edson.junior@engdb.com.br": "E&U",
-            "jose.marcelo@engdb.com.br": "E&U",
-            "leonardo.sousa@engdb.com.br": "E&U",
-            "oswaldo.pelegrina@engdb.com.br": "E&U",
-            "ulisses.rodrigues@engdb.com.br": "E&U",
-            "ricardo.chagas@engdb.com.br": "Arq",
-            "sergio.marmilicz@engdb.com.br": "Arq",
-            "tiago.cardoso@engdb.com.br": "Arq",
-            "wander.oliveira@engdb.com.br": "Arq",
-            "thiago.mascarenhas@engdb.com.br": "Arq",
-            "alessandro.schneider@engdb.com.br": "Arq",
-            "brenno.neves@engdb.com.br": "Arq",
-            "luiz.souza@engdb.com.br": "Arq",
-            "mariane.quirino@engdb.com.br": "Arq",
-            "walter.moura@engdb.com.br": "Arq",
-            "jhon.carvalho@engdb.com.br": "I&S",
-        },
-        "name_map": {
-            "thiago.mascarenhas@engdb.com.br": "Thiago Mascarenhas",
-            "luciano.mengarelli@engdb.com.br": "Luciano Mengarelli",
-            "ulisses.oliveira@engdb.com.br": "Ulisses Oliveira",
-            "andre.zaniboni@engdb.com.br": "Andre Zaniboni",
-            "daniela.costa@engdb.com.br": "Daniela Costa",
-            "danilo.netti@engdb.com.br": "Danilo Netti",
-            "alaecio.junior@engdb.com.br": "Alaecio Quirino",
-            "ulisses.rodrigues@engdb.com.br": "Ulisses Rodrigues",
-            "amauri.serra@engdb.com.br": "Amauri Serra",
-            "romero.barreto@engdb.com.br": "Romero Barreto",
-        },
-        "vert_names": {
-            "Arq": "Arquitetura",
-            "E&U": "Energia e Utilities",
-            "I&S": "Indústria e Serviços",
-            "N/D": "Não Definido",
-        },
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"Arq": "Arquitetura"},
+    },
+    {
+        "id": "eu",
+        "name": "Energia e Utilities",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "E&U",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"E&U": "Energia e Utilities"},
+    },
+    {
+        "id": "is",
+        "name": "Indústria e Serviços",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "I&S",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"I&S": "Indústria e Serviços"},
+    },
+    {
+        "id": "nd",
+        "name": "N/D",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "N/D",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"N/D": "Não Definido"},
     },
     {
         "id": "produtos",
         "name": "Produtos",
         "api_key_env": "CURSOR_API_KEY_2",
+        "filter_vertical": None,
         "default_vertical": "Produtos",
         "vertical_map": {},
         "name_map": {},
-        "vert_names": {
-            "Produtos": "Produtos",
-            "N/D": "Não Definido",
-        },
+        "vert_names": {"Produtos": "Produtos"},
     },
     {
         "id": "telco",
         "name": "Telco & Media",
         "api_key_env": "CURSOR_API_KEY_3",
-        "default_vertical": "Telco & Media",
+        "filter_vertical": None,
+        "default_vertical": "Telco&Media",
         "vertical_map": {},
         "name_map": {},
-        "vert_names": {
-            "Telco&Media": "Telco & Media",
-            "N/D": "Não Definido",
-        },
+        "vert_names": {"Telco&Media": "Telco & Media"},
     },
 ]
 
@@ -162,11 +192,14 @@ def fetch_events(api_key):
     return all_events
 
 
-def process_group(members_raw, events_raw, vertical_map, name_map, default_vertical):
+def process_group(members_raw, events_raw, vertical_map, name_map, default_vertical, filter_vertical=None):
     members = {}
     for m in members_raw:
         email = (m.get("email") or "").strip().lower()
         if not email:
+            continue
+        vert = vertical_map.get(email, default_vertical)
+        if filter_vertical and vert != filter_vertical:
             continue
         name = m.get("name") or name_map.get(email, "(Sem nome)")
         if name in ("Unnamed", "", "N/A"):
@@ -174,7 +207,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         members[email] = {
             "name": name, "email": email,
             "role": m.get("role", "Member"),
-            "vertical": vertical_map.get(email, default_vertical),
+            "vertical": vert,
         }
 
     usage_by_user = {}
@@ -182,11 +215,29 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
     daily_totals = {}
     model_usage = {}
     all_dates = set()
+    member_emails = set(members.keys())
 
     for ev in events_raw:
         email = (ev.get("userEmail") or "").strip().lower()
         if not email:
             continue
+
+        # Determinar vertical do email
+        vert = vertical_map.get(email, default_vertical)
+
+        # Se filtrando, só processar eventos de membros da vertical
+        if filter_vertical and vert != filter_vertical:
+            continue
+
+        # Adicionar membro se não veio no spend
+        if email not in member_emails:
+            name = name_map.get(email, email.split("@")[0].title())
+            members[email] = {
+                "name": name, "email": email,
+                "role": "Member", "vertical": vert,
+            }
+            member_emails.add(email)
+
         ts = ev.get("timestamp", "")
         try:
             if isinstance(ts, (int, float)) or (isinstance(ts, str) and ts.isdigit()):
@@ -217,13 +268,6 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         usage_by_user_date[key] = usage_by_user_date.get(key, 0) + requests_count
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
         model_usage[model] = model_usage.get(model, 0) + requests_count
-
-        if email not in members:
-            members[email] = {
-                "name": name_map.get(email, email.split("@")[0].title()),
-                "email": email, "role": "Member",
-                "vertical": vertical_map.get(email, default_vertical),
-            }
 
     all_dates = sorted(all_dates)
 
@@ -307,10 +351,8 @@ def build_html(all_groups_data):
     template_path = os.path.join(os.path.dirname(__file__), "..", "template.html")
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
-
     html = html.replace("__DATA_PLACEHOLDER__", json.dumps(all_groups_data, ensure_ascii=False))
     html = html.replace("__UPDATED_AT__", all_groups_data["updated_at"])
-
     return html
 
 
@@ -325,6 +367,9 @@ def main():
         "updated_at": now_brt.strftime("%d/%m/%Y %H:%M") + " (BRT)",
     }
 
+    # Cache: mesma API Key → reutiliza dados (evita chamadas duplicadas)
+    api_cache = {}
+
     for group in GROUPS:
         api_key = os.environ.get(group["api_key_env"], "")
         if not api_key:
@@ -332,19 +377,26 @@ def main():
             continue
 
         print(f"━━━ Grupo: {group['name']} ━━━")
-        print(f"  Buscando membros...")
-        members = fetch_members(api_key)
-        print(f"  → {len(members)} membros")
 
-        print(f"  Buscando eventos...")
-        events = fetch_events(api_key)
-        print(f"  → {len(events)} eventos")
+        cache_key = group["api_key_env"]
+        if cache_key in api_cache:
+            print(f"  Reutilizando dados do cache ({cache_key})...")
+            members, events = api_cache[cache_key]
+        else:
+            print(f"  Buscando membros...")
+            members = fetch_members(api_key)
+            print(f"  → {len(members)} membros")
+            print(f"  Buscando eventos...")
+            events = fetch_events(api_key)
+            print(f"  → {len(events)} eventos")
+            api_cache[cache_key] = (members, events)
 
-        print(f"  Processando...")
+        fv = group.get("filter_vertical")
+        print(f"  Processando{f' (filtro: {fv})' if fv else ''}...")
         data = process_group(
             members, events,
             group["vertical_map"], group["name_map"],
-            group["default_vertical"]
+            group["default_vertical"], fv
         )
         data["vert_names"] = group["vert_names"]
 
