@@ -25,12 +25,17 @@ ENGDB_VERTICAL_MAP = {
     "ricardo.tassini@engdb.com.br": "I&S",
     "sabrina.silva@engdb.com.br": "I&S",
     "jhon.carvalho@engdb.com.br": "I&S",
+    "edi.goetz@engdb.com.br": "I&S",
+    "victor.brendo@engdb.com.br": "I&S",
+    "davi.carmo@engdb.com.br": "I&S",
+    "guilherme.nascimento@engdb.com.br": "I&S",
+    "marcio.mattos@engdb.com.br": "I&S",
+    "romero.barreto@engdb.com.br": "I&S",
     "luciano.mengarelli@engdb.com.br": "E&U",
     "andre.zaniboni@engdb.com.br": "E&U",
     "danilo.netti@engdb.com.br": "E&U",
     "amauri.serra@engdb.com.br": "E&U",
     "stefano.damacena@engdb.com.br": "E&U",
-    "romero.barreto@engdb.com.br": "E&U",
     "edson.junior@engdb.com.br": "E&U",
     "jose.marcelo@engdb.com.br": "E&U",
     "leonardo.sousa@engdb.com.br": "E&U",
@@ -48,18 +53,9 @@ ENGDB_VERTICAL_MAP = {
     "walter.moura@engdb.com.br": "Arq",
 }
 
-ENGDB_NAME_MAP = {
-    "thiago.mascarenhas@engdb.com.br": "Thiago Mascarenhas",
-    "luciano.mengarelli@engdb.com.br": "Luciano Mengarelli",
-    "ulisses.oliveira@engdb.com.br": "Ulisses Oliveira",
-    "andre.zaniboni@engdb.com.br": "Andre Zaniboni",
-    "daniela.costa@engdb.com.br": "Daniela Costa",
-    "danilo.netti@engdb.com.br": "Danilo Netti",
-    "alaecio.junior@engdb.com.br": "Alaecio Quirino",
-    "ulisses.rodrigues@engdb.com.br": "Ulisses Rodrigues",
-    "amauri.serra@engdb.com.br": "Amauri Serra",
-    "romero.barreto@engdb.com.br": "Romero Barreto",
-}
+# Nomes são extraídos automaticamente do e-mail (ex: victor.brendo@ → Victor Brendo)
+# Use este dict apenas para sobrescrever nomes que o e-mail não representa bem
+ENGDB_NAME_MAP = {}
 
 # ══════════════════════════════════════════════════════════════
 # CONFIGURAÇÃO DOS GRUPOS
@@ -192,6 +188,13 @@ def fetch_events(api_key):
     return all_events
 
 
+def name_from_email(email):
+    """Deriva nome do e-mail: david.oliveira@engdb.com.br → David Oliveira"""
+    local = email.split("@")[0]
+    parts = local.replace("_", ".").replace("-", ".").split(".")
+    return " ".join(p.capitalize() for p in parts if p)
+
+
 def process_group(members_raw, events_raw, vertical_map, name_map, default_vertical, filter_vertical=None):
     members = {}
     for m in members_raw:
@@ -201,9 +204,9 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         vert = vertical_map.get(email, default_vertical)
         if filter_vertical and vert != filter_vertical:
             continue
-        name = m.get("name") or name_map.get(email, "(Sem nome)")
-        if name in ("Unnamed", "", "N/A"):
-            name = name_map.get(email, "(Sem nome)")
+        name = m.get("name") or ""
+        if not name or name in ("Unnamed", "N/A", "(Sem nome)"):
+            name = name_map.get(email, name_from_email(email))
         members[email] = {
             "name": name, "email": email,
             "role": m.get("role", "Member"),
@@ -231,7 +234,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
 
         # Adicionar membro se não veio no spend
         if email not in member_emails:
-            name = name_map.get(email, email.split("@")[0].title())
+            name = name_map.get(email, name_from_email(email))
             members[email] = {
                 "name": name, "email": email,
                 "role": "Member", "vertical": vert,
