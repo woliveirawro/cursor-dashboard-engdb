@@ -17,7 +17,7 @@ API_BASE = "https://api.cursor.com"
 ENGDB_VERTICAL_MAP = {
     "daniela.costa@engdb.com.br": "I&S",
     "andre.santos@engdb.com.br": "I&S",
-    "ulisses.oliveira@engdb.com.br": "I&S",
+    "ulisses.oliveira@engdb.com.br": "E&U",
     "alaecio.junior@engdb.com.br": "I&S",
     "ana.rosa@engdb.com.br": "I&S",
     "marcio.silva@engdb.com.br": "I&S",
