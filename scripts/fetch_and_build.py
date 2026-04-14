@@ -17,7 +17,7 @@ API_BASE = "https://api.cursor.com"
 ENGDB_VERTICAL_MAP = {
     "daniela.costa@engdb.com.br": "I&S",
     "andre.santos@engdb.com.br": "I&S",
-    "ulisses.oliveira@engdb.com.br": "E&U",
+    "ulisses.oliveira@engdb.com.br": "I&S",
     "alaecio.junior@engdb.com.br": "I&S",
     "ana.rosa@engdb.com.br": "I&S",
     "marcio.silva@engdb.com.br": "I&S",
@@ -216,7 +216,9 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
     usage_by_user = {}
     usage_by_user_date = {}
     daily_totals = {}
+    daily_od_costs = {}
     model_usage = {}
+    od_by_model = {}
     all_dates = set()
     member_emails = set(members.keys())
 
@@ -262,21 +264,42 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         )
 
         if email not in usage_by_user:
-            usage_by_user[email] = {"requests": 0, "tokens": 0, "dates": set()}
+            usage_by_user[email] = {"requests": 0, "tokens": 0, "dates": set(),
+                                    "od_requests": 0, "od_cents": 0.0, "included_requests": 0}
         usage_by_user[email]["requests"] += requests_count
         usage_by_user[email]["tokens"] += total_tokens
         usage_by_user[email]["dates"].add(date_str)
+
+        # Classificar: On-Demand vs Included
+        kind = ev.get("kindLabel", "")
+        cost_cents = tokens.get("totalCents", 0) or 0
+        if "usage-based" in kind.lower() or "on-demand" in kind.lower():
+            usage_by_user[email]["od_requests"] += requests_count
+            usage_by_user[email]["od_cents"] += cost_cents
+        else:
+            usage_by_user[email]["included_requests"] += requests_count
 
         key = (email, date_str)
         usage_by_user_date[key] = usage_by_user_date.get(key, 0) + requests_count
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
         model_usage[model] = model_usage.get(model, 0) + requests_count
 
+        # Custo on-demand por dia
+        if "usage-based" in kind.lower() or "on-demand" in kind.lower():
+            od_daily_key = date_str
+            daily_od_costs[od_daily_key] = daily_od_costs.get(od_daily_key, 0) + cost_cents
+            # Custo on-demand por modelo
+            od_model_key = model
+            od_by_model[od_model_key] = od_by_model.get(od_model_key, {"requests": 0, "cents": 0.0})
+            od_by_model[od_model_key]["requests"] += requests_count
+            od_by_model[od_model_key]["cents"] += cost_cents
+
     all_dates = sorted(all_dates)
 
     member_list = []
     for email, m in members.items():
-        u = usage_by_user.get(email, {"requests": 0, "tokens": 0, "dates": set()})
+        u = usage_by_user.get(email, {"requests": 0, "tokens": 0, "dates": set(),
+                                      "od_requests": 0, "od_cents": 0.0, "included_requests": 0})
         tr = u["requests"]
         dates = sorted(u["dates"]) if u["dates"] else []
         if dates:
@@ -296,9 +319,14 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             periodo = "—"
             meses_ativos = "—"
 
+        od_dollars = round(u["od_cents"] / 100, 2)
+
         member_list.append({
             "name": m["name"], "email": email, "role": m["role"],
             "vertical": m["vertical"], "total_requests": round(tr),
+            "included_requests": round(u["included_requests"]),
+            "od_requests": round(u["od_requests"]),
+            "od_cost": od_dollars,
             "total_tokens": u["tokens"], "days_used": len(dates),
             "periodo": periodo, "meses_ativos": meses_ativos, "used": tr > 0,
         })
@@ -343,9 +371,17 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             "active_members": sum(1 for m in member_list if m["used"]),
             "inactive_members": sum(1 for m in member_list if not m["used"]),
             "total_requests": round(sum(m["total_requests"] for m in member_list)),
+            "total_od_requests": round(sum(m["od_requests"] for m in member_list)),
+            "total_od_cost": round(sum(m["od_cost"] for m in member_list), 2),
             "total_tokens": round(sum(m["total_tokens"] for m in member_list)),
             "total_days": len(all_dates),
+            "od_members": sum(1 for m in member_list if m["od_requests"] > 0),
         },
+        "daily_od_costs": [{"date": d, "cents": round(daily_od_costs.get(d, 0), 2)} for d in all_dates],
+        "od_by_model": sorted(
+            [{"model": k, "requests": v["requests"], "cost": round(v["cents"]/100, 2)} for k, v in od_by_model.items()],
+            key=lambda x: -x["cost"]
+        ),
         "report_period": report_period,
     }
 
