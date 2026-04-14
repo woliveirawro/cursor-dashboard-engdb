@@ -271,11 +271,14 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         usage_by_user[email]["dates"].add(date_str)
 
         # Classificar: On-Demand vs Included
-        kind = ev.get("kindLabel", "")
-        cost_cents = tokens.get("totalCents", 0) or 0
-        if "usage-based" in kind.lower() or "on-demand" in kind.lower():
+        # Campo real da API: 'kind' (não 'kindLabel'), 'chargedCents' (não tokenUsage.totalCents)
+        kind = ev.get("kind", "") or ev.get("kindLabel", "") or ""
+        charged_cents = ev.get("chargedCents", 0) or 0
+        is_ondemand = "usage-based" in kind.lower() or "on-demand" in kind.lower()
+
+        if is_ondemand:
             usage_by_user[email]["od_requests"] += requests_count
-            usage_by_user[email]["od_cents"] += cost_cents
+            usage_by_user[email]["od_cents"] += charged_cents
         else:
             usage_by_user[email]["included_requests"] += requests_count
 
@@ -284,15 +287,12 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
         model_usage[model] = model_usage.get(model, 0) + requests_count
 
-        # Custo on-demand por dia
-        if "usage-based" in kind.lower() or "on-demand" in kind.lower():
-            od_daily_key = date_str
-            daily_od_costs[od_daily_key] = daily_od_costs.get(od_daily_key, 0) + cost_cents
-            # Custo on-demand por modelo
-            od_model_key = model
-            od_by_model[od_model_key] = od_by_model.get(od_model_key, {"requests": 0, "cents": 0.0})
-            od_by_model[od_model_key]["requests"] += requests_count
-            od_by_model[od_model_key]["cents"] += cost_cents
+        # Custo on-demand por dia e por modelo
+        if is_ondemand:
+            daily_od_costs[date_str] = daily_od_costs.get(date_str, 0) + charged_cents
+            od_by_model[model] = od_by_model.get(model, {"requests": 0, "cents": 0.0})
+            od_by_model[model]["requests"] += requests_count
+            od_by_model[model]["cents"] += charged_cents
 
     all_dates = sorted(all_dates)
 
