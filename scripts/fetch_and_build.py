@@ -158,6 +158,8 @@ def fetch_members(api_key):
                 "name": s.get("name", ""),
                 "email": s.get("email", ""),
                 "role": s.get("role", "member"),
+                "spend_cents": s.get("spendCents", 0) or 0,
+                "premium_requests": s.get("fastPremiumRequests", 0) or 0,
             })
         total_pages = data.get("totalPages", 1)
         print(f"    Página {page}/{total_pages}: {len(spend_list)} membros")
@@ -211,6 +213,8 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             "name": name, "email": email,
             "role": m.get("role", "Member"),
             "vertical": vert,
+            "spend_cents": m.get("spend_cents", 0),
+            "premium_requests": m.get("premium_requests", 0),
         }
 
     usage_by_user = {}
@@ -240,6 +244,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             members[email] = {
                 "name": name, "email": email,
                 "role": "Member", "vertical": vert,
+                "spend_cents": 0, "premium_requests": 0,
             }
             member_emails.add(email)
 
@@ -319,14 +324,16 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             periodo = "—"
             meses_ativos = "—"
 
-        od_dollars = round(u["od_cents"] / 100, 2)
+        # Custo on-demand: usar spendCents do /teams/spend (fonte oficial, bate com portal Cursor)
+        official_od_cost = round(m.get("spend_cents", 0) / 100, 2)
+        od_req_from_events = round(u["od_requests"])
 
         member_list.append({
             "name": m["name"], "email": email, "role": m["role"],
             "vertical": m["vertical"], "total_requests": round(tr),
             "included_requests": round(u["included_requests"]),
-            "od_requests": round(u["od_requests"]),
-            "od_cost": od_dollars,
+            "od_requests": od_req_from_events,
+            "od_cost": official_od_cost,
             "total_tokens": u["tokens"], "days_used": len(dates),
             "periodo": periodo, "meses_ativos": meses_ativos, "used": tr > 0,
         })
