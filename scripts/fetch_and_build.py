@@ -51,6 +51,8 @@ ENGDB_VERTICAL_MAP = {
     "luiz.souza@engdb.com.br": "Arq",
     "mariane.quirino@engdb.com.br": "Arq",
     "walter.moura@engdb.com.br": "Arq",
+    "cristiano.franco@engdb.com.br": "Arq",
+    "adriel.muniz@engdb.com.br": "IndeX",
 }
 
 # Nomes são extraídos automaticamente do e-mail (ex: victor.brendo@ → Victor Brendo)
@@ -75,7 +77,7 @@ GROUPS = [
     },
     {
         "id": "eu",
-        "name": "Energia e Utilities",
+        "name": "Energia & Utilities",
         "api_key_env": "CURSOR_API_KEY",
         "filter_vertical": "E&U",
         "default_vertical": "N/D",
@@ -85,13 +87,23 @@ GROUPS = [
     },
     {
         "id": "is",
-        "name": "Indústria e Serviços",
+        "name": "Indústria & Serviços",
         "api_key_env": "CURSOR_API_KEY",
         "filter_vertical": "I&S",
         "default_vertical": "N/D",
         "vertical_map": ENGDB_VERTICAL_MAP,
         "name_map": ENGDB_NAME_MAP,
         "vert_names": {"I&S": "Indústria e Serviços"},
+    },
+        {
+        "id": "is",
+        "name": "IndeX",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "I&S",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"IndeX": "IndeX"},
     },
     {
         "id": "nd",
