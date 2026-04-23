@@ -99,11 +99,11 @@ GROUPS = [
         "id": "is",
         "name": "IndeX",
         "api_key_env": "CURSOR_API_KEY",
-        "filter_vertical": "I&S",
+        "filter_vertical": "IndeX",
         "default_vertical": "N/D",
         "vertical_map": ENGDB_VERTICAL_MAP,
         "name_map": ENGDB_NAME_MAP,
-        "vert_names": {"IndeX": "IndeX"},
+        "vert_names": {"IndeX": "Industria 4.0"},
     },
     {
         "id": "nd",
