@@ -97,7 +97,7 @@ GROUPS = [
         "vert_names": {"I&S": "Indústria e Serviços"},
     },
     {
-        "id": "is",
+        "id": "idx",
         "name": "IndeX",
         "api_key_env": "CURSOR_API_KEY",
         "filter_vertical": "IndeX",
