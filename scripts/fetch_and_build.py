@@ -52,6 +52,7 @@ ENGDB_VERTICAL_MAP = {
     "mariane.quirino@engdb.com.br": "Arq",
     "walter.moura@engdb.com.br": "Arq",
     "cristiano.franco@engdb.com.br": "Arq",
+    "thiago.mascarenhas@eng.it": "Arq",
     "adriel.muniz@engdb.com.br": "IndeX",
 }
 
