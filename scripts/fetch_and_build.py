@@ -95,7 +95,7 @@ GROUPS = [
         "name_map": ENGDB_NAME_MAP,
         "vert_names": {"I&S": "Indústria e Serviços"},
     },
-        {
+    {
         "id": "is",
         "name": "IndeX",
         "api_key_env": "CURSOR_API_KEY",
