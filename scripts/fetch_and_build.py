@@ -127,16 +127,6 @@ GROUPS = [
         "vert_names": {"IndeX": "IndeX"},
     },
     {
-        "id": "nd",
-        "name": "N/D",
-        "api_key_env": "CURSOR_API_KEY",
-        "filter_vertical": "N/D",
-        "default_vertical": "N/D",
-        "vertical_map": ENGDB_VERTICAL_MAP,
-        "name_map": ENGDB_NAME_MAP,
-        "vert_names": {"N/D": "Não Definido"},
-    },
-    {
         "id": "produtos",
         "name": "Produtos",
         "api_key_env": "CURSOR_API_KEY_2",
@@ -165,6 +155,16 @@ GROUPS = [
         "vertical_map": TELCO_VERTICAL_MAP,
         "name_map": {},
         "vert_names": {"Claro": "Claro"},
+    },
+    {
+        "id": "nd",
+        "name": "N/D",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "N/D",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"N/D": "Não Definido"},
     },
 ]
 
