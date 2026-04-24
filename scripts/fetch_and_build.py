@@ -61,6 +61,26 @@ ENGDB_VERTICAL_MAP = {
 ENGDB_NAME_MAP = {}
 
 # ══════════════════════════════════════════════════════════════
+# MAPEAMENTO DE VERTICAIS TELCO & MEDIA (e-mail → vertical)
+# Membros mapeados como "Claro" saem do Telco e vão para o grupo Claro
+# Membros não listados ficam como "Telco&Media"
+# ══════════════════════════════════════════════════════════════
+TELCO_VERTICAL_MAP = {
+    "renato.lopes@engdb.com.br": "Claro",
+    "filipe.rezes@engdb.com.br": "Claro",
+    "joao.queiroz@engdb.com.br": "Claro",
+    "david.oliveira@engdb.com.br": "Claro",
+    "eduardo.lucca@engdb.com.br": "Claro",
+    "ariel.pinto@engdb.com.br": "Claro",
+    "barbara.teodoro@engdb.com.br": "Claro",
+    "guilherme.silva@engdb.com.br": "Claro",
+    "salomao.gerard@engdb.com.br": "Claro",
+    "leane.santana@engdb.com.br": "Claro",
+    "joao.couto@engdb.com.br": "Claro",
+    "rodolfo.atayan@gmail.com": "Claro",
+}
+
+# ══════════════════════════════════════════════════════════════
 # CONFIGURAÇÃO DOS GRUPOS
 # filter_vertical: filtra membros pela vertical (para sub-grupos ENGDB)
 # Grupos com mesmo api_key_env reutilizam dados da API (cache)
@@ -136,8 +156,17 @@ GROUPS = [
         "name_map": {},
         "vert_names": {"Telco&Media": "Telco & Media"},
     },
+    {
+        "id": "claro",
+        "name": "Claro",
+        "api_key_env": "CURSOR_API_KEY_3",
+        "filter_vertical": "Claro",
+        "default_vertical": "Telco&Media",
+        "vertical_map": TELCO_VERTICAL_MAP,
+        "name_map": {},
+        "vert_names": {"Claro": "Claro"},
+    },
 ]
-
 
 def api_call(endpoint, api_key, payload=None):
     url = f"{API_BASE}{endpoint}"
