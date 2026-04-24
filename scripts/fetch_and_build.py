@@ -142,7 +142,7 @@ GROUPS = [
         "api_key_env": "CURSOR_API_KEY_3",
         "filter_vertical": "Telco&Media",
         "default_vertical": "Telco&Media",
-        "vertical_map": {},
+        "vertical_map": TELCO_VERTICAL_MAP,
         "name_map": {},
         "vert_names": {"Telco&Media": "Telco & Media"},
     },
