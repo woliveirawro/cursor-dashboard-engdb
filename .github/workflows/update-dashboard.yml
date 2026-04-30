@@ -29,11 +29,11 @@ jobs:
           CURSOR_API_KEY_3: ${{ secrets.CURSOR_API_KEY_3 }}
         run: python scripts/fetch_and_build.py
 
-      - name: Commit index.html atualizado
+      - name: Commit arquivos atualizados
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add index.html
+          git add index.html data/od_history.json
           git diff --cached --quiet || git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')"
           git pull --rebase
           git push
