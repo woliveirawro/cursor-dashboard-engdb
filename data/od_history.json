@@ -1,0 +1,160 @@
+{
+  "arq": {
+    "group_name": "Arquitetura",
+    "cycles": {
+      "04/2026": {}
+    }
+  },
+  "eu": {
+    "group_name": "Energia & Utilities",
+    "cycles": {
+      "04/2026": {}
+    }
+  },
+  "is": {
+    "group_name": "Indústria & Serviços",
+    "cycles": {
+      "04/2026": {}
+    }
+  },
+  "idx": {
+    "group_name": "IndeX",
+    "cycles": {
+      "04/2026": {}
+    }
+  },
+  "produtos": {
+    "group_name": "Produtos",
+    "cycles": {
+      "04/2026": {
+        "wallisson.marinho@engdb.com.br": {
+          "name": "Wallisson Marinho",
+          "vertical": "Produtos",
+          "od_cost": 10.88,
+          "od_requests": 282
+        },
+        "kaique.moreira@engdb.com.br": {
+          "name": "Kaique da Silva Moreira",
+          "vertical": "Produtos",
+          "od_cost": 7.23,
+          "od_requests": 215
+        },
+        "marcelo.raveli@engdb.com.br": {
+          "name": "Marcelo Raveli",
+          "vertical": "Produtos",
+          "od_cost": 11.14,
+          "od_requests": 286
+        },
+        "anderson.cavalcanti@engdb.com.br": {
+          "name": "Anderson Cavalcanti Rolim",
+          "vertical": "Produtos",
+          "od_cost": 2.96,
+          "od_requests": 75
+        },
+        "mariana.tiberio@engdb.com.br": {
+          "name": "Mariana Marques Tiberio",
+          "vertical": "Produtos",
+          "od_cost": 9.88,
+          "od_requests": 251
+        },
+        "cleydson.santos@engdb.com.br": {
+          "name": "Cleydson Borges dos Santos",
+          "vertical": "Produtos",
+          "od_cost": 3.16,
+          "od_requests": 113
+        },
+        "raphaela.barros@engdb.com.br": {
+          "name": "Raphaela Barros",
+          "vertical": "Produtos",
+          "od_cost": 4.52,
+          "od_requests": 112
+        },
+        "bruno.anjos@engdb.com.br": {
+          "name": "Bruno Anjos",
+          "vertical": "Produtos",
+          "od_cost": 3.68,
+          "od_requests": 92
+        },
+        "fernanda.rodrigues@engdb.com.br": {
+          "name": "Fernanda Pereira dos Santos Rodrigues",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 6
+        }
+      }
+    }
+  },
+  "telco": {
+    "group_name": "Telco & Media",
+    "cycles": {
+      "04/2026": {
+        "david.silva@engdb.com.br": {
+          "name": "David Silva",
+          "vertical": "Telco&Media",
+          "od_cost": 260.98,
+          "od_requests": 6087
+        },
+        "caio.araujo@engdb.com.br": {
+          "name": "Caio Victor Ramos dos Santos",
+          "vertical": "Telco&Media",
+          "od_cost": 108.24,
+          "od_requests": 2373
+        },
+        "daiana.ferreira@engdb.com.br": {
+          "name": "Daiana Fiori Ferreira",
+          "vertical": "Telco&Media",
+          "od_cost": 23.39,
+          "od_requests": 534
+        },
+        "jose.furini@engdb.com.br": {
+          "name": "Junior Furini",
+          "vertical": "Telco&Media",
+          "od_cost": 52.47,
+          "od_requests": 950
+        },
+        "alexandre.alvino@engdb.com.br": {
+          "name": "Alexandre Alvino",
+          "vertical": "Telco&Media",
+          "od_cost": 29.12,
+          "od_requests": 538
+        },
+        "claudson.bispo@engdb.com.br": {
+          "name": "Claudson Bispo Martins Santos",
+          "vertical": "Telco&Media",
+          "od_cost": 17.97,
+          "od_requests": 372
+        },
+        "bruno.eustaquio@engdb.com.br": {
+          "name": "Bruno Eustaquio Enes Cardoso",
+          "vertical": "Telco&Media",
+          "od_cost": 0.82,
+          "od_requests": 19
+        },
+        "gustavo.yuji@engdb.com.br": {
+          "name": "Gustavo Yuji Mekaru",
+          "vertical": "Telco&Media",
+          "od_cost": 4.05,
+          "od_requests": 92
+        },
+        "thiago.krul@engdb.com.br": {
+          "name": "Thiago Luiz krul",
+          "vertical": "Telco&Media",
+          "od_cost": 3.15,
+          "od_requests": 72
+        }
+      }
+    }
+  },
+  "claro": {
+    "group_name": "Claro",
+    "cycles": {
+      "04/2026": {}
+    }
+  },
+  "nd": {
+    "group_name": "N/D",
+    "cycles": {
+      "04/2026": {}
+    }
+  }
+}
