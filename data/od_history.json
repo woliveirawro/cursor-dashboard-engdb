@@ -88,7 +88,7 @@
           "name": "Mariana Marques Tiberio",
           "vertical": "Produtos",
           "od_cost": 10.04,
-          "od_requests": 251
+          "od_requests": 253
         },
         "raphaela.barros@engdb.com.br": {
           "name": "Raphaela Barros",
@@ -99,8 +99,8 @@
         "anderson.cavalcanti@engdb.com.br": {
           "name": "Anderson Cavalcanti Rolim",
           "vertical": "Produtos",
-          "od_cost": 2.96,
-          "od_requests": 115
+          "od_cost": 4.61,
+          "od_requests": 120
         },
         "bruno.anjos@engdb.com.br": {
           "name": "Bruno Anjos",
@@ -112,7 +112,7 @@
           "name": "Fernanda Pereira dos Santos Rodrigues",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 6
+          "od_requests": 4
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
@@ -124,7 +124,7 @@
           "name": "Cleydson Borges dos Santos",
           "vertical": "Produtos",
           "od_cost": 4.52,
-          "od_requests": 113
+          "od_requests": 117
         }
       }
     }
