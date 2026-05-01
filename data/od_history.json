@@ -21,7 +21,8 @@
           "od_cost": 25.48,
           "od_requests": 0
         }
-      }
+      },
+      "05/2026": {}
     }
   },
   "eu": {
@@ -46,7 +47,8 @@
           "od_cost": 31.66,
           "od_requests": 0
         }
-      }
+      },
+      "05/2026": {}
     }
   },
   "is": {
@@ -59,13 +61,15 @@
           "od_cost": 2.35,
           "od_requests": 64
         }
-      }
+      },
+      "05/2026": {}
     }
   },
   "idx": {
     "group_name": "IndeX",
     "cycles": {
-      "04/2026": {}
+      "04/2026": {},
+      "05/2026": {}
     }
   },
   "produtos": {
@@ -126,7 +130,8 @@
           "od_cost": 4.52,
           "od_requests": 117
         }
-      }
+      },
+      "05/2026": {}
     }
   },
   "telco": {
@@ -187,19 +192,77 @@
           "od_cost": 3.15,
           "od_requests": 72
         }
+      },
+      "05/2026": {
+        "david.silva@engdb.com.br": {
+          "name": "David Silva",
+          "vertical": "Telco&Media",
+          "od_cost": 260.98,
+          "od_requests": 6087
+        },
+        "caio.araujo@engdb.com.br": {
+          "name": "Caio Victor Ramos dos Santos",
+          "vertical": "Telco&Media",
+          "od_cost": 108.24,
+          "od_requests": 2373
+        },
+        "daiana.ferreira@engdb.com.br": {
+          "name": "Daiana Fiori Ferreira",
+          "vertical": "Telco&Media",
+          "od_cost": 23.39,
+          "od_requests": 534
+        },
+        "jose.furini@engdb.com.br": {
+          "name": "Junior Furini",
+          "vertical": "Telco&Media",
+          "od_cost": 52.47,
+          "od_requests": 950
+        },
+        "alexandre.alvino@engdb.com.br": {
+          "name": "Alexandre Alvino",
+          "vertical": "Telco&Media",
+          "od_cost": 29.12,
+          "od_requests": 538
+        },
+        "gustavo.yuji@engdb.com.br": {
+          "name": "Gustavo Yuji Mekaru",
+          "vertical": "Telco&Media",
+          "od_cost": 4.05,
+          "od_requests": 92
+        },
+        "bruno.eustaquio@engdb.com.br": {
+          "name": "Bruno Eustaquio Enes Cardoso",
+          "vertical": "Telco&Media",
+          "od_cost": 0.82,
+          "od_requests": 19
+        },
+        "claudson.bispo@engdb.com.br": {
+          "name": "Claudson Bispo Martins Santos",
+          "vertical": "Telco&Media",
+          "od_cost": 17.97,
+          "od_requests": 372
+        },
+        "thiago.krul@engdb.com.br": {
+          "name": "Thiago Luiz krul",
+          "vertical": "Telco&Media",
+          "od_cost": 3.15,
+          "od_requests": 72
+        }
       }
     }
   },
   "claro": {
     "group_name": "Claro",
     "cycles": {
-      "04/2026": {}
+      "04/2026": {},
+      "05/2026": {}
     }
   },
   "nd": {
     "group_name": "N/D",
     "cycles": {
-      "04/2026": {}
+      "04/2026": {},
+      "05/2026": {}
     }
   }
 }
