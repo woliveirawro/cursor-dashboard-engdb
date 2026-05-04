@@ -22,7 +22,26 @@
           "od_requests": 0
         }
       },
-      "05/2026": {}
+      "05/2026": {
+        "thiago.mascarenhas@eng.it": {
+          "name": "Thiago NoMa",
+          "vertical": "Arq",
+          "od_cost": 0.0,
+          "od_requests": 5288
+        },
+        "ricardo.chagas@engdb.com.br": {
+          "name": "Ricardo Chagas",
+          "vertical": "Arq",
+          "od_cost": 0.0,
+          "od_requests": 1384
+        },
+        "wander.oliveira@engdb.com.br": {
+          "name": "Wander Oliveira",
+          "vertical": "Arq",
+          "od_cost": 0.0,
+          "od_requests": 1030
+        }
+      }
     }
   },
   "eu": {
@@ -48,7 +67,26 @@
           "od_requests": 0
         }
       },
-      "05/2026": {}
+      "05/2026": {
+        "edson.junior@engdb.com.br": {
+          "name": "Edson Pereira dos Reis Junior",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 1260
+        },
+        "leonardo.sousa@engdb.com.br": {
+          "name": "Leonardo Reis de Sousa",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 790
+        },
+        "stefano.damacena@engdb.com.br": {
+          "name": "Stefano Correia Rodrigues Damacena",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 602
+        }
+      }
     }
   },
   "is": {
@@ -62,7 +100,14 @@
           "od_requests": 64
         }
       },
-      "05/2026": {}
+      "05/2026": {
+        "edi.goetz@engdb.com.br": {
+          "name": "Edi Nei Goetz",
+          "vertical": "I&S",
+          "od_cost": 0.0,
+          "od_requests": 79
+        }
+      }
     }
   },
   "idx": {
@@ -233,8 +278,8 @@
         "bruno.eustaquio@engdb.com.br": {
           "name": "Bruno Eustaquio Enes Cardoso",
           "vertical": "Telco&Media",
-          "od_cost": 0.82,
-          "od_requests": 19
+          "od_cost": 3.63,
+          "od_requests": 89
         },
         "claudson.bispo@engdb.com.br": {
           "name": "Claudson Bispo Martins Santos",
