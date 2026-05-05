@@ -26,8 +26,8 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 0.0,
-          "od_requests": 5281
+          "od_cost": 5.25,
+          "od_requests": 5392
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 586
+          "od_requests": 544
         }
       }
     }
@@ -242,55 +242,55 @@
         "david.silva@engdb.com.br": {
           "name": "David Silva",
           "vertical": "Telco&Media",
-          "od_cost": 260.98,
-          "od_requests": 6087
+          "od_cost": 0.0,
+          "od_requests": 6093
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
-          "od_cost": 108.24,
+          "od_cost": 0.0,
           "od_requests": 2373
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
           "vertical": "Telco&Media",
-          "od_cost": 23.39,
+          "od_cost": 0.0,
           "od_requests": 534
         },
         "jose.furini@engdb.com.br": {
           "name": "Junior Furini",
           "vertical": "Telco&Media",
-          "od_cost": 52.47,
+          "od_cost": 0.0,
           "od_requests": 950
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
           "vertical": "Telco&Media",
-          "od_cost": 29.12,
+          "od_cost": 0.0,
           "od_requests": 538
         },
         "gustavo.yuji@engdb.com.br": {
           "name": "Gustavo Yuji Mekaru",
           "vertical": "Telco&Media",
-          "od_cost": 4.05,
+          "od_cost": 0.0,
           "od_requests": 92
         },
         "bruno.eustaquio@engdb.com.br": {
           "name": "Bruno Eustaquio Enes Cardoso",
           "vertical": "Telco&Media",
-          "od_cost": 3.63,
+          "od_cost": 0.0,
           "od_requests": 89
         },
         "claudson.bispo@engdb.com.br": {
           "name": "Claudson Bispo Martins Santos",
           "vertical": "Telco&Media",
-          "od_cost": 17.97,
+          "od_cost": 0.0,
           "od_requests": 372
         },
         "thiago.krul@engdb.com.br": {
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
-          "od_cost": 3.15,
+          "od_cost": 0.0,
           "od_requests": 72
         }
       }
