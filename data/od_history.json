@@ -27,13 +27,13 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 5288
+          "od_requests": 5287
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 1384
+          "od_requests": 1385
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 602
+          "od_requests": 586
         }
       }
     }
