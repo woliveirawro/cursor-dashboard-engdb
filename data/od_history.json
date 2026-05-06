@@ -27,13 +27,13 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 5.25,
-          "od_requests": 5392
+          "od_requests": 5324
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 1384
+          "od_requests": 899
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 544
+          "od_requests": 524
         }
       }
     }
@@ -105,7 +105,7 @@
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
           "od_cost": 0.0,
-          "od_requests": 79
+          "od_requests": 255
         }
       }
     }
@@ -176,7 +176,62 @@
           "od_requests": 117
         }
       },
-      "05/2026": {}
+      "05/2026": {
+        "wallisson.marinho@engdb.com.br": {
+          "name": "Wallisson Marinho",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 274
+        },
+        "kaique.moreira@engdb.com.br": {
+          "name": "Kaique da Silva Moreira",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 215
+        },
+        "anderson.cavalcanti@engdb.com.br": {
+          "name": "Anderson Cavalcanti Rolim",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 121
+        },
+        "marcelo.raveli@engdb.com.br": {
+          "name": "Marcelo Raveli",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 286
+        },
+        "mariana.tiberio@engdb.com.br": {
+          "name": "Mariana Marques Tiberio",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 267
+        },
+        "raphaela.barros@engdb.com.br": {
+          "name": "Raphaela Barros",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 198
+        },
+        "cleydson.santos@engdb.com.br": {
+          "name": "Cleydson Borges dos Santos",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 125
+        },
+        "bruno.anjos@engdb.com.br": {
+          "name": "Bruno Anjos",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 92
+        },
+        "fernanda.rodrigues@engdb.com.br": {
+          "name": "Fernanda Pereira dos Santos Rodrigues",
+          "vertical": "Produtos",
+          "od_cost": 0.0,
+          "od_requests": 27
+        }
+      }
     }
   },
   "telco": {
