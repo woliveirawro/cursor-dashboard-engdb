@@ -27,13 +27,13 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 5.25,
-          "od_requests": 5324
+          "od_requests": 5283
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 899
+          "od_requests": 886
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 524
+          "od_requests": 522
         }
       }
     }
@@ -104,8 +104,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 0.0,
-          "od_requests": 255
+          "od_cost": 9.84,
+          "od_requests": 781
         }
       }
     }
