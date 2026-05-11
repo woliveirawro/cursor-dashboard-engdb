@@ -26,8 +26,8 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 166.81,
-          "od_requests": 9319
+          "od_cost": 182.87,
+          "od_requests": 9309
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
@@ -72,19 +72,19 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 1226
+          "od_requests": 1185
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 0.8,
-          "od_requests": 442
+          "od_cost": 0.88,
+          "od_requests": 444
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 253
+          "od_requests": 249
         }
       }
     }
@@ -104,8 +104,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 137.66,
-          "od_requests": 3521
+          "od_cost": 147.0,
+          "od_requests": 3755
         }
       }
     }
@@ -298,13 +298,13 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 12.69,
-          "od_requests": 5590
+          "od_requests": 6673
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 2250
+          "od_requests": 2197
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
@@ -322,7 +322,7 @@
           "name": "Alexandre Alvino",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 110
+          "od_requests": 27
         },
         "gustavo.yuji@engdb.com.br": {
           "name": "Gustavo Yuji Mekaru",
