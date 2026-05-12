@@ -26,20 +26,20 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 185.43,
-          "od_requests": 9291
+          "od_cost": 204.06,
+          "od_requests": 9668
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 19.0,
-          "od_requests": 945
+          "od_cost": 20.76,
+          "od_requests": 921
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 0.0,
-          "od_requests": 1030
+          "od_cost": 0.96,
+          "od_requests": 1062
         }
       }
     }
@@ -297,14 +297,14 @@
         "david.silva@engdb.com.br": {
           "name": "David Silva",
           "vertical": "Telco&Media",
-          "od_cost": 65.16,
-          "od_requests": 6786
+          "od_cost": 70.84,
+          "od_requests": 5935
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 2197
+          "od_requests": 2146
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
