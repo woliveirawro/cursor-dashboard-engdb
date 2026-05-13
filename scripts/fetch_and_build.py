@@ -55,6 +55,12 @@ ENGDB_VERTICAL_MAP = {
     "thiago.mascarenhas@eng.it": "Arq",
     "adriel.muniz@engdb.com.br": "IndeX",
     "lucineia.rocha@engdb.com.br": "E&U",
+    "wander.rodriguesa@engdb.com.br": "I&S",
+    "carlos.martins@engdb.com.br": "I&S",
+    "julio.rosa@engdb.com.br": "I&S",
+    "renato.bartolamei@engdb.com.br": "I&S",
+    "fernando.teves@engdb.com.br": "Arq",
+    "artur.forato@engdb.com.br": "E&U",
 }
 
 # Nomes são extraídos automaticamente do e-mail (ex: victor.brendo@ → Victor Brendo)
