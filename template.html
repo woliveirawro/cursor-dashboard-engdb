@@ -344,7 +344,7 @@ const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'pr
 const shortDate=d=>{const p=d.split('-');return p[2]+'/'+p[1]};
 function renderMesesTags(m){if(!m||m==='—')return'<span style="color:var(--text3)">—</span>';return m.split(', ').map(x=>`<span class="mes-tag">${x}</span>`).join('')}
 
-const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Produtos':'var(--prod)','Telco&Media':'var(--telco)','Claro':'var(--claro)','IndeX':'var(--idx)','N/D':'var(--nd)'};
+const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Produtos':'var(--prod)','Telco&Media':'var(--telco)','Claro':'var(--claro)','IndeX':'var(--idx)','Cloud':'var(--cloud)','N/D':'var(--nd)'};
 
 function renderGroupBar(){
   document.getElementById('group-bar').innerHTML=
