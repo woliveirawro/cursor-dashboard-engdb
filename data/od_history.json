@@ -26,20 +26,20 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 212.91,
-          "od_requests": 9765
+          "od_cost": 213.6,
+          "od_requests": 10018
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 24.04,
-          "od_requests": 902
+          "od_requests": 899
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
           "od_cost": 6.4,
-          "od_requests": 1192
+          "od_requests": 1224
         }
       }
     }
@@ -72,19 +72,19 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 1059
+          "od_requests": 1027
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 1.28,
+          "od_cost": 1.36,
           "od_requests": 124
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 215
+          "od_requests": 207
         }
       }
     }
@@ -104,8 +104,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 230.74,
-          "od_requests": 6370
+          "od_cost": 251.57,
+          "od_requests": 6536
         }
       }
     }
@@ -298,13 +298,13 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 105.91,
-          "od_requests": 6308
+          "od_requests": 5976
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 1882
+          "od_requests": 1732
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
