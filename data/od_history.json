@@ -27,7 +27,7 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 210.75,
-          "od_requests": 9701
+          "od_requests": 9748
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
@@ -72,19 +72,19 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 1073
+          "od_requests": 1067
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
           "od_cost": 1.28,
-          "od_requests": 170
+          "od_requests": 122
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 225
+          "od_requests": 221
         }
       }
     }
@@ -298,7 +298,7 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 99.53,
-          "od_requests": 6286
+          "od_requests": 6320
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
@@ -362,6 +362,12 @@
     "group_name": "N/D",
     "cycles": {
       "04/2026": {},
+      "05/2026": {}
+    }
+  },
+  "Cloud-Labs": {
+    "group_name": "Cloud-Labs",
+    "cycles": {
       "05/2026": {}
     }
   }
