@@ -166,14 +166,14 @@ GROUPS = [
         "vert_names": {"Claro": "Claro"},
     },
      {
-        "id": "Cloud-Labs",
-        "name": "Cloud-Labs",
+        "id": "Cloud",
+        "name": "Cloud",
         "api_key_env": "CURSOR_API_KEY",
-        "filter_vertical": "Cloud-Labs",
+        "filter_vertical": "Cloud",
         "default_vertical": "N/D",
         "vertical_map": ENGDB_VERTICAL_MAP,
         "name_map": ENGDB_NAME_MAP,
-        "vert_names": {"Cloud-Labs": "Cloud-Labs"},
+        "vert_names": {"Cloud": "Cloud"},
     },
     {
         "id": "nd",
