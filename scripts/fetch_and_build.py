@@ -173,7 +173,7 @@ GROUPS = [
         "default_vertical": "N/D",
         "vertical_map": ENGDB_VERTICAL_MAP,
         "name_map": ENGDB_NAME_MAP,
-        "vert_names": {"IndeX": "IndeX"},
+        "vert_names": {"Cloud-Labs": "Cloud-Labs"},
     },
     {
         "id": "nd",
