@@ -26,20 +26,20 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 227.78,
-          "od_requests": 10167
+          "od_cost": 231.3,
+          "od_requests": 10252
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 26.44,
-          "od_requests": 890
+          "od_cost": 28.44,
+          "od_requests": 884
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 7.92,
-          "od_requests": 1266
+          "od_cost": 9.52,
+          "od_requests": 1298
         }
       }
     }
@@ -72,7 +72,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 944
+          "od_requests": 930
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 203
+          "od_requests": 201
         }
       }
     }
@@ -297,14 +297,14 @@
         "david.silva@engdb.com.br": {
           "name": "David Silva",
           "vertical": "Telco&Media",
-          "od_cost": 112.94,
-          "od_requests": 6698
+          "od_cost": 143.23,
+          "od_requests": 6944
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 1643
+          "od_requests": 1404
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
@@ -347,6 +347,12 @@
           "vertical": "Telco&Media",
           "od_cost": 0.0,
           "od_requests": 72
+        },
+        "vinicius.santos.souza@engdb.com.br": {
+          "name": "Vinicius Santos Souza",
+          "vertical": "Telco&Media",
+          "od_cost": 0.0,
+          "od_requests": 150
         }
       }
     }
