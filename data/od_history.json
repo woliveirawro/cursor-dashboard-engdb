@@ -26,19 +26,19 @@
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
-          "od_cost": 213.6,
-          "od_requests": 10018
+          "od_cost": 227.78,
+          "od_requests": 10088
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 24.04,
-          "od_requests": 899
+          "od_cost": 25.56,
+          "od_requests": 825
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 6.4,
+          "od_cost": 7.68,
           "od_requests": 1224
         }
       }
@@ -72,19 +72,19 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 1027
+          "od_requests": 986
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 1.36,
-          "od_requests": 124
+          "od_cost": 1.44,
+          "od_requests": 36
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 207
+          "od_requests": 203
         }
       }
     }
@@ -104,7 +104,7 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 251.57,
+          "od_cost": 258.23,
           "od_requests": 6536
         }
       }
@@ -229,7 +229,7 @@
           "name": "Fernanda Pereira dos Santos Rodrigues",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 27
+          "od_requests": 26
         }
       }
     }
@@ -298,13 +298,13 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 105.91,
-          "od_requests": 5976
+          "od_requests": 6032
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 1732
+          "od_requests": 1697
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
