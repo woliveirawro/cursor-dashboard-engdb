@@ -27,19 +27,19 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 10243
+          "od_requests": 10183
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 28.44,
-          "od_requests": 780
+          "od_requests": 737
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
           "od_cost": 10.96,
-          "od_requests": 1280
+          "od_requests": 1264
         }
       }
     }
@@ -72,7 +72,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 847
+          "od_requests": 757
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -297,14 +297,14 @@
         "david.silva@engdb.com.br": {
           "name": "David Silva",
           "vertical": "Telco&Media",
-          "od_cost": 220.01,
-          "od_requests": 7856
+          "od_cost": 267.52,
+          "od_requests": 7713
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 719
+          "od_requests": 239
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
@@ -316,7 +316,7 @@
           "name": "Junior Furini",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 359
+          "od_requests": 144
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
@@ -351,7 +351,7 @@
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
           "vertical": "Telco&Media",
-          "od_cost": 8.28,
+          "od_cost": 10.27,
           "od_requests": 216
         }
       }
