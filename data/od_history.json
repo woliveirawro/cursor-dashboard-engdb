@@ -27,19 +27,19 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 10183
+          "od_requests": 10176
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 28.44,
-          "od_requests": 737
+          "od_requests": 724
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
           "od_cost": 10.96,
-          "od_requests": 1264
+          "od_requests": 1238
         }
       }
     }
@@ -72,7 +72,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 757
+          "od_requests": 699
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -181,7 +181,7 @@
           "name": "Wallisson Marinho",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 274
+          "od_requests": 251
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
@@ -298,13 +298,13 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 267.52,
-          "od_requests": 7713
+          "od_requests": 7540
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 239
+          "od_requests": 24
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
@@ -316,7 +316,7 @@
           "name": "Junior Furini",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 144
+          "od_requests": 42
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
@@ -346,7 +346,7 @@
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 72
+          "od_requests": 581
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
