@@ -27,7 +27,7 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 10176
+          "od_requests": 10172
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
@@ -39,7 +39,7 @@
           "name": "Wander Oliveira",
           "vertical": "Arq",
           "od_cost": 10.96,
-          "od_requests": 1238
+          "od_requests": 1222
         }
       }
     }
@@ -72,7 +72,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 699
+          "od_requests": 672
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -84,7 +84,7 @@
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
-          "od_requests": 145
+          "od_requests": 143
         }
       }
     }
@@ -181,7 +181,7 @@
           "name": "Wallisson Marinho",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 251
+          "od_requests": 74
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
@@ -304,7 +304,7 @@
           "name": "Caio Victor Ramos dos Santos",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 24
+          "od_requests": 22
         },
         "daiana.ferreira@engdb.com.br": {
           "name": "Daiana Fiori Ferreira",
@@ -345,8 +345,8 @@
         "thiago.krul@engdb.com.br": {
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
-          "od_cost": 0.0,
-          "od_requests": 581
+          "od_cost": 22.34,
+          "od_requests": 1645
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
