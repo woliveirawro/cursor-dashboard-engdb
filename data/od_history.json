@@ -27,24 +27,24 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 7373
+          "od_requests": 7324
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 29.84,
-          "od_requests": 801
+          "od_cost": 34.24,
+          "od_requests": 882
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 11.44,
-          "od_requests": 526
+          "od_cost": 12.4,
+          "od_requests": 546
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 1.52,
+          "od_cost": 1.68,
           "od_requests": 42
         }
       }
@@ -110,8 +110,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 264.92,
-          "od_requests": 6706
+          "od_cost": 301.32,
+          "od_requests": 8426
         }
       }
     }
@@ -303,8 +303,8 @@
         "david.silva@engdb.com.br": {
           "name": "David Silva",
           "vertical": "Telco&Media",
-          "od_cost": 285.23,
-          "od_requests": 8110
+          "od_cost": 286.88,
+          "od_requests": 8280
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
@@ -351,20 +351,20 @@
         "thiago.krul@engdb.com.br": {
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
-          "od_cost": 134.66,
-          "od_requests": 3810
+          "od_cost": 140.36,
+          "od_requests": 4301
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
           "vertical": "Telco&Media",
-          "od_cost": 11.24,
-          "od_requests": 260
+          "od_cost": 11.4,
+          "od_requests": 282
         },
         "rafael.prado@engdb.com.br": {
           "name": "Rafael Ferreira Prado da Costa",
           "vertical": "Telco&Media",
           "od_cost": 32.42,
-          "od_requests": 1144
+          "od_requests": 1426
         }
       }
     }
