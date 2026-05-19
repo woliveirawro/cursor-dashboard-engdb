@@ -1,4 +1,4 @@
-# Cursor AI - Dashboard de Utilização - ENGDB
+# Cursor AI - Dashboard de Utilização
 
 Dashboard automatizado que consome a **Admin API do Cursor** e publica relatórios de uso do time via **GitHub Pages**.
 
