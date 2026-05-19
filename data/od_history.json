@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 7387
+          "od_requests": 7373
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 28.44,
-          "od_requests": 759
+          "od_cost": 29.84,
+          "od_requests": 801
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 10.96,
-          "od_requests": 518
+          "od_cost": 11.44,
+          "od_requests": 526
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 0.0,
-          "od_requests": 38
+          "od_cost": 1.52,
+          "od_requests": 42
         }
       }
     }
@@ -110,7 +110,7 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 258.23,
+          "od_cost": 264.92,
           "od_requests": 6706
         }
       }
@@ -304,7 +304,7 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 285.23,
-          "od_requests": 8058
+          "od_requests": 8110
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
@@ -351,19 +351,19 @@
         "thiago.krul@engdb.com.br": {
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
-          "od_cost": 129.07,
-          "od_requests": 3625
+          "od_cost": 134.66,
+          "od_requests": 3810
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
           "vertical": "Telco&Media",
-          "od_cost": 11.03,
-          "od_requests": 254
+          "od_cost": 11.24,
+          "od_requests": 260
         },
         "rafael.prado@engdb.com.br": {
           "name": "Rafael Ferreira Prado da Costa",
           "vertical": "Telco&Media",
-          "od_cost": 0.0,
+          "od_cost": 32.42,
           "od_requests": 1144
         }
       }
