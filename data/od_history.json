@@ -27,24 +27,24 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 7255
+          "od_requests": 7150
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 34.96,
-          "od_requests": 903
+          "od_cost": 35.88,
+          "od_requests": 923
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 12.56,
-          "od_requests": 558
+          "od_cost": 13.04,
+          "od_requests": 592
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 1.68,
+          "od_cost": 2.4,
           "od_requests": 60
         }
       }
@@ -77,13 +77,13 @@
         "edson.junior@engdb.com.br": {
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
-          "od_cost": 0.0,
-          "od_requests": 681
+          "od_cost": 1.52,
+          "od_requests": 713
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 1.44,
+          "od_cost": 2.4,
           "od_requests": 60
         },
         "stefano.damacena@engdb.com.br": {
@@ -110,8 +110,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 333.72,
-          "od_requests": 9651
+          "od_cost": 382.47,
+          "od_requests": 11261
         }
       }
     }
@@ -187,7 +187,7 @@
           "name": "Wallisson Marinho",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 21
+          "od_requests": 20
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
