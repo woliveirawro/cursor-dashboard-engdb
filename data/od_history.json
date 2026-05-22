@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 6782
+          "od_requests": 6748
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 36.9,
-          "od_requests": 987
+          "od_cost": 38.94,
+          "od_requests": 1045
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 17.76,
-          "od_requests": 686
+          "od_cost": 19.04,
+          "od_requests": 733
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 8.72,
-          "od_requests": 693
+          "od_cost": 27.64,
+          "od_requests": 709
         }
       }
     }
@@ -77,8 +77,8 @@
         "edson.junior@engdb.com.br": {
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
-          "od_cost": 5.2,
-          "od_requests": 720
+          "od_cost": 5.92,
+          "od_requests": 600
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -110,8 +110,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 533.65,
-          "od_requests": 15437
+          "od_cost": 613.88,
+          "od_requests": 15710
         }
       }
     }
@@ -321,8 +321,8 @@
         "jose.furini@engdb.com.br": {
           "name": "Junior Furini",
           "vertical": "Telco&Media",
-          "od_cost": 0.0,
-          "od_requests": 47
+          "od_cost": 0.45,
+          "od_requests": 57
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
@@ -351,8 +351,8 @@
         "thiago.krul@engdb.com.br": {
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
-          "od_cost": 156.4,
-          "od_requests": 4301
+          "od_cost": 157.0,
+          "od_requests": 4311
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
@@ -373,7 +373,14 @@
     "group_name": "Claro",
     "cycles": {
       "04/2026": {},
-      "05/2026": {}
+      "05/2026": {
+        "filipe.rezes@engdb.com.br": {
+          "name": "Filipe Reppold Rezes",
+          "vertical": "Claro",
+          "od_cost": 0.29,
+          "od_requests": 4
+        }
+      }
     }
   },
   "nd": {
