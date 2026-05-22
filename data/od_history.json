@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 6868
+          "od_requests": 6782
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 36.9,
-          "od_requests": 933
+          "od_requests": 987
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 16.64,
-          "od_requests": 676
+          "od_cost": 17.76,
+          "od_requests": 686
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 4.32,
-          "od_requests": 218
+          "od_cost": 8.72,
+          "od_requests": 693
         }
       }
     }
@@ -77,8 +77,8 @@
         "edson.junior@engdb.com.br": {
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
-          "od_cost": 4.8,
-          "od_requests": 748
+          "od_cost": 5.2,
+          "od_requests": 720
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -110,8 +110,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 486.46,
-          "od_requests": 13430
+          "od_cost": 533.65,
+          "od_requests": 15437
         }
       }
     }
@@ -322,7 +322,7 @@
           "name": "Junior Furini",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 42
+          "od_requests": 47
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
