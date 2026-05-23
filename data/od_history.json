@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 6711
+          "od_requests": 6666
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 40.9,
-          "od_requests": 1045
+          "od_requests": 1194
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 21.6,
-          "od_requests": 725
+          "od_cost": 22.16,
+          "od_requests": 707
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 28.28,
-          "od_requests": 723
+          "od_cost": 28.84,
+          "od_requests": 988
         }
       }
     }
@@ -78,7 +78,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 6.24,
-          "od_requests": 592
+          "od_requests": 562
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -187,7 +187,7 @@
           "name": "Wallisson Marinho",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 20
+          "od_requests": 19
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
@@ -211,7 +211,7 @@
           "name": "Mariana Marques Tiberio",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 263
+          "od_requests": 261
         },
         "raphaela.barros@engdb.com.br": {
           "name": "Raphaela Barros",
@@ -316,7 +316,7 @@
           "name": "Daiana Fiori Ferreira",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 534
+          "od_requests": 522
         },
         "jose.furini@engdb.com.br": {
           "name": "Junior Furini",
@@ -334,7 +334,7 @@
           "name": "Gustavo Yuji Mekaru",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 92
+          "od_requests": 89
         },
         "bruno.eustaquio@engdb.com.br": {
           "name": "Bruno Eustaquio Enes Cardoso",
@@ -377,7 +377,7 @@
         "filipe.rezes@engdb.com.br": {
           "name": "Filipe Reppold Rezes",
           "vertical": "Claro",
-          "od_cost": 0.29,
+          "od_cost": 4.68,
           "od_requests": 68
         }
       }
