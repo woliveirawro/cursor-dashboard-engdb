@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 6573
+          "od_requests": 6486
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 73.22,
-          "od_requests": 1922
+          "od_cost": 74.36,
+          "od_requests": 1947
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
           "od_cost": 22.16,
-          "od_requests": 649
+          "od_requests": 651
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 43.16,
-          "od_requests": 1351
+          "od_cost": 53.96,
+          "od_requests": 1637
         }
       }
     }
@@ -78,7 +78,7 @@
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
           "od_cost": 6.24,
-          "od_requests": 523
+          "od_requests": 547
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
@@ -205,7 +205,7 @@
           "name": "Marcelo Raveli",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 6
+          "od_requests": 2
         },
         "mariana.tiberio@engdb.com.br": {
           "name": "Mariana Marques Tiberio",
@@ -322,7 +322,7 @@
           "name": "Junior Furini",
           "vertical": "Telco&Media",
           "od_cost": 0.94,
-          "od_requests": 56
+          "od_requests": 59
         },
         "alexandre.alvino@engdb.com.br": {
           "name": "Alexandre Alvino",
@@ -358,13 +358,13 @@
           "name": "Vinicius Santos Souza",
           "vertical": "Telco&Media",
           "od_cost": 11.94,
-          "od_requests": 282
+          "od_requests": 290
         },
         "rafael.prado@engdb.com.br": {
           "name": "Rafael Ferreira Prado da Costa",
           "vertical": "Telco&Media",
           "od_cost": 39.61,
-          "od_requests": 1426
+          "od_requests": 1428
         }
       }
     }
@@ -378,7 +378,7 @@
           "name": "Filipe Reppold Rezes",
           "vertical": "Claro",
           "od_cost": 5.36,
-          "od_requests": 78
+          "od_requests": 85
         }
       }
     }
