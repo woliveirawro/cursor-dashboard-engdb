@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 5755
+          "od_requests": 5644
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 88.34,
-          "od_requests": 2432
+          "od_cost": 94.5,
+          "od_requests": 2461
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 27.64,
-          "od_requests": 705
+          "od_cost": 28.04,
+          "od_requests": 777
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 81.16,
-          "od_requests": 2211
+          "od_cost": 88.34,
+          "od_requests": 2516
         }
       }
     }
@@ -77,14 +77,14 @@
         "edson.junior@engdb.com.br": {
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
-          "od_cost": 19.44,
-          "od_requests": 504
+          "od_cost": 20.08,
+          "od_requests": 532
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 6.09,
-          "od_requests": 159
+          "od_cost": 6.33,
+          "od_requests": 173
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
@@ -110,8 +110,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 740.08,
-          "od_requests": 18669
+          "od_cost": 746.29,
+          "od_requests": 17967
         }
       }
     }
@@ -187,7 +187,7 @@
           "name": "Wallisson Marinho",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 19
+          "od_requests": 13
         },
         "kaique.moreira@engdb.com.br": {
           "name": "Kaique da Silva Moreira",
@@ -198,8 +198,8 @@
         "anderson.cavalcanti@engdb.com.br": {
           "name": "Anderson Cavalcanti Rolim",
           "vertical": "Produtos",
-          "od_cost": 0.44,
-          "od_requests": 113
+          "od_cost": 0.72,
+          "od_requests": 103
         },
         "marcelo.raveli@engdb.com.br": {
           "name": "Marcelo Raveli",
@@ -210,14 +210,14 @@
         "mariana.tiberio@engdb.com.br": {
           "name": "Mariana Marques Tiberio",
           "vertical": "Produtos",
-          "od_cost": 4.48,
-          "od_requests": 337
+          "od_cost": 5.12,
+          "od_requests": 297
         },
         "raphaela.barros@engdb.com.br": {
           "name": "Raphaela Barros",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 127
+          "od_requests": 118
         },
         "cleydson.santos@engdb.com.br": {
           "name": "Cleydson Borges dos Santos",
@@ -304,7 +304,7 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 293.28,
-          "od_requests": 7561
+          "od_requests": 6582
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
@@ -316,7 +316,7 @@
           "name": "Daiana Fiori Ferreira",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 11
+          "od_requests": 2
         },
         "jose.furini@engdb.com.br": {
           "name": "Junior Furini",
@@ -334,13 +334,13 @@
           "name": "Gustavo Yuji Mekaru",
           "vertical": "Telco&Media",
           "od_cost": 31.7,
-          "od_requests": 618
+          "od_requests": 612
         },
         "bruno.eustaquio@engdb.com.br": {
           "name": "Bruno Eustaquio Enes Cardoso",
           "vertical": "Telco&Media",
           "od_cost": 0.0,
-          "od_requests": 59
+          "od_requests": 56
         },
         "claudson.bispo@engdb.com.br": {
           "name": "Claudson Bispo Martins Santos",
