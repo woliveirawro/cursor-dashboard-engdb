@@ -27,25 +27,25 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 235.36,
-          "od_requests": 5644
+          "od_requests": 5624
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 94.5,
-          "od_requests": 2461
+          "od_cost": 96.62,
+          "od_requests": 2485
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 28.04,
-          "od_requests": 777
+          "od_cost": 32.28,
+          "od_requests": 811
         },
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 88.34,
-          "od_requests": 2516
+          "od_cost": 100.74,
+          "od_requests": 2524
         }
       }
     }
@@ -77,20 +77,26 @@
         "edson.junior@engdb.com.br": {
           "name": "Edson Pereira dos Reis Junior",
           "vertical": "E&U",
-          "od_cost": 20.08,
-          "od_requests": 532
+          "od_cost": 23.76,
+          "od_requests": 596
         },
         "leonardo.sousa@engdb.com.br": {
           "name": "Leonardo Reis de Sousa",
           "vertical": "E&U",
-          "od_cost": 6.33,
-          "od_requests": 173
+          "od_cost": 7.13,
+          "od_requests": 179
         },
         "stefano.damacena@engdb.com.br": {
           "name": "Stefano Correia Rodrigues Damacena",
           "vertical": "E&U",
           "od_cost": 0.0,
           "od_requests": 89
+        },
+        "luciano.mengarelli@engdb.com.br": {
+          "name": "Luciano Mengarelli",
+          "vertical": "E&U",
+          "od_cost": 0.96,
+          "od_requests": 24
         }
       }
     }
@@ -111,7 +117,7 @@
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
           "od_cost": 746.29,
-          "od_requests": 17967
+          "od_requests": 17376
         }
       }
     }
@@ -198,8 +204,8 @@
         "anderson.cavalcanti@engdb.com.br": {
           "name": "Anderson Cavalcanti Rolim",
           "vertical": "Produtos",
-          "od_cost": 0.72,
-          "od_requests": 103
+          "od_cost": 0.76,
+          "od_requests": 80
         },
         "marcelo.raveli@engdb.com.br": {
           "name": "Marcelo Raveli",
@@ -210,14 +216,14 @@
         "mariana.tiberio@engdb.com.br": {
           "name": "Mariana Marques Tiberio",
           "vertical": "Produtos",
-          "od_cost": 5.12,
-          "od_requests": 297
+          "od_cost": 5.44,
+          "od_requests": 309
         },
         "raphaela.barros@engdb.com.br": {
           "name": "Raphaela Barros",
           "vertical": "Produtos",
           "od_cost": 0.0,
-          "od_requests": 118
+          "od_requests": 86
         },
         "cleydson.santos@engdb.com.br": {
           "name": "Cleydson Borges dos Santos",
@@ -229,7 +235,7 @@
           "name": "Bruno Anjos",
           "vertical": "Produtos",
           "od_cost": 2.16,
-          "od_requests": 146
+          "od_requests": 144
         },
         "fernanda.rodrigues@engdb.com.br": {
           "name": "Fernanda Pereira dos Santos Rodrigues",
@@ -304,7 +310,7 @@
           "name": "David Silva",
           "vertical": "Telco&Media",
           "od_cost": 293.28,
-          "od_requests": 6582
+          "od_requests": 6333
         },
         "caio.araujo@engdb.com.br": {
           "name": "Caio Victor Ramos dos Santos",
@@ -352,7 +358,7 @@
           "name": "Thiago Luiz krul",
           "vertical": "Telco&Media",
           "od_cost": 157.13,
-          "od_requests": 4313
+          "od_requests": 4283
         },
         "vinicius.santos.souza@engdb.com.br": {
           "name": "Vinicius Santos Souza",
@@ -377,6 +383,12 @@
           "vertical": "Telco&Media",
           "od_cost": 17.58,
           "od_requests": 373
+        },
+        "sarah.marques@engdb.com.br": {
+          "name": "Sarah Marques",
+          "vertical": "Telco&Media",
+          "od_cost": 0.0,
+          "od_requests": 3
         }
       }
     }
