@@ -27,13 +27,13 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 4633
+          "od_requests": 4064
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 2461
+          "od_requests": 2397
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
@@ -44,8 +44,14 @@
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 11.38,
-          "od_requests": 6091
+          "od_cost": 70.37,
+          "od_requests": 6161
+        },
+        "tiago.cardoso@engdb.com.br": {
+          "name": "Tiago Cardoso",
+          "vertical": "Arq",
+          "od_cost": 0.0,
+          "od_requests": 85
         }
       }
     }
@@ -204,8 +210,8 @@
         "anderson.cavalcanti@engdb.com.br": {
           "name": "Anderson Cavalcanti Rolim",
           "vertical": "Produtos",
-          "od_cost": 1.44,
-          "od_requests": 85
+          "od_cost": 1.56,
+          "od_requests": 41
         },
         "marcelo.raveli@engdb.com.br": {
           "name": "Marcelo Raveli",
@@ -216,8 +222,8 @@
         "mariana.tiberio@engdb.com.br": {
           "name": "Mariana Marques Tiberio",
           "vertical": "Produtos",
-          "od_cost": 11.12,
-          "od_requests": 327
+          "od_cost": 12.24,
+          "od_requests": 323
         },
         "raphaela.barros@engdb.com.br": {
           "name": "Raphaela Barros",
@@ -234,7 +240,7 @@
         "bruno.anjos@engdb.com.br": {
           "name": "Bruno Anjos",
           "vertical": "Produtos",
-          "od_cost": 2.16,
+          "od_cost": 3.12,
           "od_requests": 78
         },
         "fernanda.rodrigues@engdb.com.br": {
