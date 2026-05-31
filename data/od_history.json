@@ -27,13 +27,13 @@
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 3338
+          "od_requests": 3102
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 1.04,
-          "od_requests": 2368
+          "od_cost": 2.0,
+          "od_requests": 2238
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
@@ -44,8 +44,8 @@
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 73.17,
-          "od_requests": 7762
+          "od_cost": 137.2,
+          "od_requests": 8218
         },
         "tiago.cardoso@engdb.com.br": {
           "name": "Tiago Cardoso",
