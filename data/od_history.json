@@ -53,6 +53,38 @@
           "od_cost": 3.4,
           "od_requests": 85
         }
+      },
+      "06/2026": {
+        "thiago.mascarenhas@engdb.com.br": {
+          "name": "Thiago Mascarenhas",
+          "vertical": "Arq",
+          "od_cost": 225.14,
+          "od_requests": 10430
+        },
+        "ricardo.chagas@engdb.com.br": {
+          "name": "Ricardo Chagas",
+          "vertical": "Arq",
+          "od_cost": 8.08,
+          "od_requests": 2246
+        },
+        "wander.oliveira@engdb.com.br": {
+          "name": "Wander Oliveira",
+          "vertical": "Arq",
+          "od_cost": 0.56,
+          "od_requests": 897
+        },
+        "thiago.mascarenhas@eng.it": {
+          "name": "Thiago NoMa",
+          "vertical": "Arq",
+          "od_cost": 0.0,
+          "od_requests": 1064
+        },
+        "tiago.cardoso@engdb.com.br": {
+          "name": "Tiago Cardoso",
+          "vertical": "Arq",
+          "od_cost": 3.4,
+          "od_requests": 85
+        }
       }
     }
   },
@@ -104,6 +136,26 @@
           "od_cost": 0.0,
           "od_requests": 30
         }
+      },
+      "06/2026": {
+        "edson.junior@engdb.com.br": {
+          "name": "Edson Pereira dos Reis Junior",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 608
+        },
+        "leonardo.sousa@engdb.com.br": {
+          "name": "Leonardo Reis de Sousa",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 155
+        },
+        "luciano.mengarelli@engdb.com.br": {
+          "name": "Luciano Mengarelli",
+          "vertical": "E&U",
+          "od_cost": 0.0,
+          "od_requests": 30
+        }
       }
     }
   },
@@ -125,6 +177,14 @@
           "od_cost": 0.0,
           "od_requests": 15227
         }
+      },
+      "06/2026": {
+        "edi.goetz@engdb.com.br": {
+          "name": "Edi Nei Goetz",
+          "vertical": "I&S",
+          "od_cost": 0.0,
+          "od_requests": 15191
+        }
       }
     }
   },
@@ -132,7 +192,8 @@
     "group_name": "IndeX",
     "cycles": {
       "04/2026": {},
-      "05/2026": {}
+      "05/2026": {},
+      "06/2026": {}
     }
   },
   "produtos": {
@@ -248,6 +309,32 @@
           "vertical": "Produtos",
           "od_cost": 0.0,
           "od_requests": 26
+        }
+      },
+      "06/2026": {
+        "mariana.tiberio@engdb.com.br": {
+          "name": "Mariana Marques Tiberio",
+          "vertical": "Produtos",
+          "od_cost": 12.24,
+          "od_requests": 307
+        },
+        "anderson.cavalcanti@engdb.com.br": {
+          "name": "Anderson Cavalcanti Rolim",
+          "vertical": "Produtos",
+          "od_cost": 1.96,
+          "od_requests": 51
+        },
+        "bruno.anjos@engdb.com.br": {
+          "name": "Bruno Anjos",
+          "vertical": "Produtos",
+          "od_cost": 3.76,
+          "od_requests": 110
+        },
+        "jalfsonn.silva@engdb.com.br": {
+          "name": "Jalfsonn Pinto da Silva",
+          "vertical": "Produtos",
+          "od_cost": 1.47,
+          "od_requests": 36
         }
       }
     }
@@ -396,6 +483,68 @@
           "od_cost": 0.17,
           "od_requests": 3
         }
+      },
+      "06/2026": {
+        "david.silva@engdb.com.br": {
+          "name": "David Silva",
+          "vertical": "Telco&Media",
+          "od_cost": 293.28,
+          "od_requests": 6161
+        },
+        "thiago.krul@engdb.com.br": {
+          "name": "Thiago Luiz krul",
+          "vertical": "Telco&Media",
+          "od_cost": 157.13,
+          "od_requests": 4241
+        },
+        "rafael.prado@engdb.com.br": {
+          "name": "Rafael Ferreira Prado da Costa",
+          "vertical": "Telco&Media",
+          "od_cost": 87.79,
+          "od_requests": 2421
+        },
+        "bruno.eustaquio@engdb.com.br": {
+          "name": "Bruno Eustaquio Enes Cardoso",
+          "vertical": "Telco&Media",
+          "od_cost": 0.37,
+          "od_requests": 215
+        },
+        "elias.junior@engdb.com.br": {
+          "name": "Elias Ferreira",
+          "vertical": "Telco&Media",
+          "od_cost": 17.58,
+          "od_requests": 373
+        },
+        "gustavo.yuji@engdb.com.br": {
+          "name": "Gustavo Yuji Mekaru",
+          "vertical": "Telco&Media",
+          "od_cost": 31.7,
+          "od_requests": 596
+        },
+        "rode.silva@engdb.com.br": {
+          "name": "Rode Silva",
+          "vertical": "Telco&Media",
+          "od_cost": 32.92,
+          "od_requests": 568
+        },
+        "vinicius.santos.souza@engdb.com.br": {
+          "name": "Vinicius Santos Souza",
+          "vertical": "Telco&Media",
+          "od_cost": 12.67,
+          "od_requests": 294
+        },
+        "jose.furini@engdb.com.br": {
+          "name": "Junior Furini",
+          "vertical": "Telco&Media",
+          "od_cost": 2.32,
+          "od_requests": 35
+        },
+        "sarah.marques@engdb.com.br": {
+          "name": "Sarah Marques",
+          "vertical": "Telco&Media",
+          "od_cost": 0.17,
+          "od_requests": 3
+        }
       }
     }
   },
@@ -410,6 +559,14 @@
           "od_cost": 14.65,
           "od_requests": 246
         }
+      },
+      "06/2026": {
+        "filipe.rezes@engdb.com.br": {
+          "name": "Filipe Reppold Rezes",
+          "vertical": "Claro",
+          "od_cost": 14.65,
+          "od_requests": 246
+        }
       }
     }
   },
@@ -417,7 +574,8 @@
     "group_name": "N/D",
     "cycles": {
       "04/2026": {},
-      "05/2026": {}
+      "05/2026": {},
+      "06/2026": {}
     }
   },
   "Cloud-Labs": {
@@ -429,7 +587,8 @@
   "Cloud": {
     "group_name": "Cloud",
     "cycles": {
-      "05/2026": {}
+      "05/2026": {},
+      "06/2026": {}
     }
   }
 }
