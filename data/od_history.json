@@ -58,32 +58,32 @@
         "thiago.mascarenhas@engdb.com.br": {
           "name": "Thiago Mascarenhas",
           "vertical": "Arq",
-          "od_cost": 225.14,
-          "od_requests": 10430
+          "od_cost": 243.86,
+          "od_requests": 10977
         },
         "ricardo.chagas@engdb.com.br": {
           "name": "Ricardo Chagas",
           "vertical": "Arq",
-          "od_cost": 8.08,
-          "od_requests": 2246
+          "od_cost": 11.0,
+          "od_requests": 2230
         },
         "wander.oliveira@engdb.com.br": {
           "name": "Wander Oliveira",
           "vertical": "Arq",
-          "od_cost": 0.56,
-          "od_requests": 897
+          "od_cost": 2.24,
+          "od_requests": 968
         },
         "thiago.mascarenhas@eng.it": {
           "name": "Thiago NoMa",
           "vertical": "Arq",
           "od_cost": 0.0,
-          "od_requests": 1064
+          "od_requests": 770
         },
         "tiago.cardoso@engdb.com.br": {
           "name": "Tiago Cardoso",
           "vertical": "Arq",
           "od_cost": 3.4,
-          "od_requests": 85
+          "od_requests": 1143
         }
       }
     }
@@ -182,8 +182,8 @@
         "edi.goetz@engdb.com.br": {
           "name": "Edi Nei Goetz",
           "vertical": "I&S",
-          "od_cost": 0.0,
-          "od_requests": 15191
+          "od_cost": 7.95,
+          "od_requests": 15444
         }
       }
     }
@@ -321,14 +321,14 @@
         "anderson.cavalcanti@engdb.com.br": {
           "name": "Anderson Cavalcanti Rolim",
           "vertical": "Produtos",
-          "od_cost": 1.96,
-          "od_requests": 51
+          "od_cost": 2.04,
+          "od_requests": 53
         },
         "bruno.anjos@engdb.com.br": {
           "name": "Bruno Anjos",
           "vertical": "Produtos",
-          "od_cost": 3.76,
-          "od_requests": 110
+          "od_cost": 4.4,
+          "od_requests": 164
         },
         "jalfsonn.silva@engdb.com.br": {
           "name": "Jalfsonn Pinto da Silva",
@@ -506,7 +506,7 @@
         "bruno.eustaquio@engdb.com.br": {
           "name": "Bruno Eustaquio Enes Cardoso",
           "vertical": "Telco&Media",
-          "od_cost": 0.37,
+          "od_cost": 3.45,
           "od_requests": 215
         },
         "elias.junior@engdb.com.br": {
