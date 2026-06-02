@@ -1,0 +1,33 @@
+image: python:3.12-slim
+
+stages:
+  - update
+
+atualizar-dashboard:
+  stage: update
+  # Equivalente ao GitHub Actions: schedule + workflow_dispatch + push to main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'       # Equivale ao workflow_dispatch (botão "Run Pipeline")
+    - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"'
+  variables:
+    GIT_DEPTH: 0   # Clone completo necessário para git push funcionar corretamente
+  script:
+    # Executa o script principal com as variáveis de ambiente (definidas em Settings > CI/CD > Variables)
+    - python scripts/fetch_and_build.py
+    # Configura identidade do bot para o commit
+    - git config user.name "GitLab CI Bot"
+    - git config user.email "ci-bot@gitlab.com"
+    # Injeta o token de acesso na URL do remote para permitir git push
+    - git remote set-url origin "https://oauth2:${GITLAB_TOKEN}@gitlab.com/engbr/comite_de_ia/cursor-dashboard-engdb-clone.git"
+    # Adiciona apenas os arquivos gerados pelo script
+    - git add index.html data/od_history.json
+    # Só commita e faz push se houver mudanças reais
+    - |
+      git diff --cached --quiet \
+        && echo "Sem alteracoes, nenhum commit necessario." \
+        || (
+          git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
+          && git pull --rebase origin main \
+          && git push origin HEAD:main
+        )
