@@ -54,15 +54,6 @@ ENGDB_VERTICAL_MAP = {
     "cristiano.franco@engdb.com.br": "Arq",
     "thiago.mascarenhas@eng.it": "Arq",
     "adriel.muniz@engdb.com.br": "IndeX",
-    "lucineia.rocha@engdb.com.br": "E&U",
-    "wander.rodrigues@engdb.com.br": "I&S",
-    "carlos.martins@engdb.com.br": "I&S",
-    "julio.rosa@engdb.com.br": "I&S",
-    "renato.bartolamei@engdb.com.br": "I&S",
-    "fernando.teves@engdb.com.br": "Arq",
-    "artur.forato@engdb.com.br": "E&U",
-    "leonardo.santos@engdb.com.br": "Arq",
-    "heinrich.filho@engdb.com.br": "Cloud",
 }
 
 # Nomes são extraídos automaticamente do e-mail (ex: victor.brendo@ → Victor Brendo)
@@ -165,16 +156,6 @@ GROUPS = [
         "name_map": {},
         "vert_names": {"Claro": "Claro"},
     },
-     {
-        "id": "Cloud",
-        "name": "Cloud",
-        "api_key_env": "CURSOR_API_KEY",
-        "filter_vertical": "Cloud",
-        "default_vertical": "N/D",
-        "vertical_map": ENGDB_VERTICAL_MAP,
-        "name_map": ENGDB_NAME_MAP,
-        "vert_names": {"Cloud": "Cloud"},
-    },
     {
         "id": "nd",
         "name": "N/D",
@@ -187,7 +168,7 @@ GROUPS = [
     },
 ]
 
-def api_call(endpoint, api_key, payload=None):
+def api_call(endpoint, api_key, payload=None, retries=3):
     url = f"{API_BASE}{endpoint}"
     data = json.dumps(payload or {}).encode()
     creds = b64encode(f"{api_key}:".encode()).decode()
@@ -195,15 +176,24 @@ def api_call(endpoint, api_key, payload=None):
         "Content-Type": "application/json",
         "Authorization": f"Basic {creds}"
     })
-    try:
-        with urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode())
-    except HTTPError as e:
-        print(f"  API Error {e.code}: {e.read().decode()}", file=sys.stderr)
-        return None
-    except URLError as e:
-        print(f"  Connection Error: {e.reason}", file=sys.stderr)
-        return None
+    for attempt in range(retries):
+        try:
+            with urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode())
+        except HTTPError as e:
+            body = e.read().decode()
+            if e.code == 429:
+                wait = 60 * (attempt + 1)
+                print(f"  Rate limit (429), aguardando {wait}s antes de tentar novamente...", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            print(f"  API Error {e.code}: {body}", file=sys.stderr)
+            return None
+        except URLError as e:
+            print(f"  Connection Error: {e.reason}", file=sys.stderr)
+            return None
+    print(f"  Falha após {retries} tentativas.", file=sys.stderr)
+    return None
 
 
 def fetch_members(api_key):
@@ -292,11 +282,14 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         if not email:
             continue
 
+        # Determinar vertical do email
         vert = vertical_map.get(email, default_vertical)
 
+        # Se filtrando, só processar eventos de membros da vertical
         if filter_vertical and vert != filter_vertical:
             continue
 
+        # Adicionar membro se não veio no spend
         if email not in member_emails:
             name = name_map.get(email, name_from_email(email))
             members[email] = {
@@ -333,6 +326,8 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         usage_by_user[email]["tokens"] += total_tokens
         usage_by_user[email]["dates"].add(date_str)
 
+        # Classificar: On-Demand vs Included
+        # Campo real da API: 'kind' (não 'kindLabel'), 'chargedCents' (não tokenUsage.totalCents)
         kind = ev.get("kind", "") or ev.get("kindLabel", "") or ""
         charged_cents = ev.get("chargedCents", 0) or 0
         is_ondemand = "usage-based" in kind.lower() or "on-demand" in kind.lower()
@@ -348,6 +343,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
         model_usage[model] = model_usage.get(model, 0) + requests_count
 
+        # Custo on-demand por dia e por modelo
         if is_ondemand:
             daily_od_costs[date_str] = daily_od_costs.get(date_str, 0) + charged_cents
             od_by_model[model] = od_by_model.get(model, {"requests": 0, "cents": 0.0})
@@ -379,6 +375,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             periodo = "—"
             meses_ativos = "—"
 
+        # Custo on-demand: usar spendCents do /teams/spend (fonte oficial, bate com portal Cursor)
         official_od_cost = round(m.get("spend_cents", 0) / 100, 2)
         od_req_from_events = round(u["od_requests"])
 
@@ -447,21 +444,52 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
     }
 
 
+def build_html(all_groups_data):
+    template_path = os.path.join(os.path.dirname(__file__), "..", "template.html")
+    with open(template_path, "r", encoding="utf-8") as f:
+        html = f.read()
+    html = html.replace("__DATA_PLACEHOLDER__", json.dumps(all_groups_data, ensure_ascii=False))
+    html = html.replace("__UPDATED_AT__", all_groups_data["updated_at"])
+    return html
+
+
 # ══════════════════════════════════════════════════════════════
 # HISTÓRICO ON-DEMAND — persiste dados entre ciclos de billing
 # ══════════════════════════════════════════════════════════════
 
 def load_od_history():
-    """Carrega o histórico de On-Demand salvo em data/od_history.json."""
     history_path = os.path.join(os.path.dirname(__file__), "..", "data", "od_history.json")
     if os.path.exists(history_path):
         with open(history_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            raw = json.load(f)
+        # Compatibilidade: converter estrutura antiga (cycles no root) para nova (members)
+        converted = {}
+        for gid, g in raw.items():
+            if "members" in g:
+                # Já está no formato novo
+                converted[gid] = g
+            elif "cycles" in g:
+                # Formato antigo: converter
+                members = {}
+                for cycle, cycle_members in g["cycles"].items():
+                    for email, m in cycle_members.items():
+                        if email not in members:
+                            members[email] = {"name": m.get("name",""), "vertical": m.get("vertical",""), "cycles": {}}
+                        members[email]["cycles"][cycle] = {
+                            "od_cost": m.get("od_cost", 0),
+                            "od_requests": m.get("od_requests", 0)
+                        }
+                all_cycles = sorted(g["cycles"].keys())
+                converted[gid] = {
+                    "group_name": g.get("group_name", gid),
+                    "members": members,
+                    "all_cycles": all_cycles
+                }
+        return converted
     return {}
 
 
 def save_od_history(history):
-    """Salva o histórico atualizado em data/od_history.json."""
     data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
     os.makedirs(data_dir, exist_ok=True)
     history_path = os.path.join(data_dir, "od_history.json")
@@ -470,60 +498,36 @@ def save_od_history(history):
 
 
 def update_od_history(history, group_id, group_name, member_list, billing_cycle):
-    """
-    Atualiza histórico com dados do ciclo atual.
-    Nunca sobrescreve ciclos anteriores — apenas adiciona/atualiza o ciclo atual.
-    """
     if group_id not in history:
-        history[group_id] = {"group_name": group_name, "cycles": {}}
+        history[group_id] = {"group_name": group_name, "members": {}, "all_cycles": []}
 
-    cycle_data = history[group_id]["cycles"].get(billing_cycle, {})
+    g = history[group_id]
+    if "members" not in g:
+        g["members"] = {}
+    if "all_cycles" not in g:
+        g["all_cycles"] = []
+
     for m in member_list:
         if m["od_cost"] > 0 or m["od_requests"] > 0:
-            cycle_data[m["email"]] = {
-                "name": m["name"],
-                "vertical": m["vertical"],
+            email = m["email"]
+            if email not in g["members"]:
+                g["members"][email] = {"name": m["name"], "vertical": m["vertical"], "cycles": {}}
+            g["members"][email]["cycles"][billing_cycle] = {
                 "od_cost": m["od_cost"],
-                "od_requests": m["od_requests"],
+                "od_requests": m["od_requests"]
             }
-    history[group_id]["cycles"][billing_cycle] = cycle_data
+            # Atualizar nome/vertical se mudou
+            g["members"][email]["name"] = m["name"]
+            g["members"][email]["vertical"] = m["vertical"]
+
+    if billing_cycle not in g["all_cycles"]:
+        g["all_cycles"] = sorted(set(g["all_cycles"] + [billing_cycle]))
+
     return history
 
 
 def build_od_history_summary(history):
-    """Monta visão consolidada do histórico para injetar no dashboard."""
-    summary = {}
-    for group_id, group_data in history.items():
-        group_name = group_data.get("group_name", group_id)
-        cycles = group_data.get("cycles", {})
-        members_hist = {}
-        for cycle, members in cycles.items():
-            for email, m in members.items():
-                if email not in members_hist:
-                    members_hist[email] = {
-                        "name": m["name"],
-                        "vertical": m["vertical"],
-                        "cycles": {}
-                    }
-                members_hist[email]["cycles"][cycle] = {
-                    "od_cost": m["od_cost"],
-                    "od_requests": m["od_requests"],
-                }
-        summary[group_id] = {
-            "group_name": group_name,
-            "members": members_hist,
-            "all_cycles": sorted(cycles.keys()),
-        }
-    return summary
-
-
-def build_html(all_groups_data):
-    template_path = os.path.join(os.path.dirname(__file__), "..", "template.html")
-    with open(template_path, "r", encoding="utf-8") as f:
-        html = f.read()
-    html = html.replace("__DATA_PLACEHOLDER__", json.dumps(all_groups_data, ensure_ascii=False))
-    html = html.replace("__UPDATED_AT__", all_groups_data["updated_at"])
-    return html
+    return history  # Já está no formato correto para o dashboard
 
 
 def main():
@@ -540,12 +544,10 @@ def main():
         "updated_at": now_brt.strftime("%d/%m/%Y %H:%M") + " (BRT)",
     }
 
-    # Carregar histórico On-Demand existente
     od_history = load_od_history()
-    total_cycles = sum(len(v.get("cycles", {})) for v in od_history.values())
-    print(f"Histórico On-Demand: {total_cycles} ciclos registrados\n")
+    total_cycles = sum(len(v.get("all_cycles", [])) for v in od_history.values())
+    print(f"Histórico On-Demand: {len(od_history)} grupos, {total_cycles} ciclos registrados\n")
 
-    # Cache: mesma API Key → reutiliza dados (evita chamadas duplicadas)
     api_cache = {}
 
     for group in GROUPS:
@@ -578,7 +580,6 @@ def main():
         )
         data["vert_names"] = group["vert_names"]
 
-        # Atualizar histórico On-Demand do ciclo atual
         od_history = update_od_history(
             od_history, group["id"], group["name"],
             data["members"], billing_cycle
@@ -602,11 +603,9 @@ def main():
         print("ERRO: Nenhum grupo processado.", file=sys.stderr)
         sys.exit(1)
 
-    # Salvar histórico atualizado
     save_od_history(od_history)
     print(f"Histórico On-Demand salvo em data/od_history.json")
 
-    # Injetar histórico no payload do dashboard
     all_groups_data["od_history"] = build_od_history_summary(od_history)
 
     print("\nGerando HTML...")
