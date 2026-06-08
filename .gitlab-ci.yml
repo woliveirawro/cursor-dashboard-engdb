@@ -7,27 +7,32 @@ atualizar-dashboard:
   stage: update
   before_script:
     - apt-get update -qq && apt-get install -y -qq git
-  # Roda nos agendamentos, trigger manual (UI/API) e push no main
+  # Roda apenas em agendamento ou trigger manual (UI/API)
+  # Não disparar em push para evitar loop: CI commita → dispara novo pipeline
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_PIPELINE_SOURCE == "web"'
     - if: '$CI_PIPELINE_SOURCE == "api"'
-    - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"'
   variables:
     GIT_DEPTH: 0
   script:
-    # Configura git e injeta token antes de qualquer operação
+    # Configuração do git e token
     - git config user.name "GitLab CI Bot"
     - git config user.email "ci-bot@gitlab.com"
     - git remote set-url origin "https://oauth2:${GITLAB_TOKEN}@gitlab.com/engbr/comite_de_ia/cursor-dashboard-engdb-clone.git"
-    # Sempre parte do HEAD mais recente do main para evitar conflitos
-    - git fetch origin main
-    - git checkout -B main origin/main
-    # Executa o script para gerar os arquivos atualizados
+    # Executa o script e gera os arquivos
     - python scripts/fetch_and_build.py
-    # Adiciona apenas os arquivos gerados
+    # Salva os arquivos gerados antes de atualizar o branch
+    - cp index.html /tmp/index.html.generated
+    - cp data/od_history.json /tmp/od_history.json.generated
+    # Atualiza para o HEAD mais recente do main (evita conflito de push)
+    - git fetch origin main
+    - git reset --hard origin/main
+    # Restaura os arquivos gerados sobre o main atualizado
+    - cp /tmp/index.html.generated index.html
+    - cp /tmp/od_history.json.generated data/od_history.json
+    # Commita e faz push apenas se houver mudanças reais
     - git add index.html data/od_history.json
-    # Só commita e faz push se houver mudanças reais
     - |
       git diff --cached --quiet \
         && echo "Sem alteracoes, nenhum commit necessario." \
