@@ -7,23 +7,25 @@ atualizar-dashboard:
   stage: update
   before_script:
     - apt-get update -qq && apt-get install -y -qq git
-  # Equivalente ao GitHub Actions: schedule + workflow_dispatch + push to main
+  # Roda nos agendamentos, trigger manual (UI/API) e push no main
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
-    - if: '$CI_PIPELINE_SOURCE == "web"'       # Botão "Run Pipeline" na UI do GitLab
-    - if: '$CI_PIPELINE_SOURCE == "api"'       # Trigger via API
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "api"'
     - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"'
   variables:
-    GIT_DEPTH: 0   # Clone completo necessário para git push funcionar corretamente
+    GIT_DEPTH: 0
   script:
-    # Executa o script principal com as variáveis de ambiente (definidas em Settings > CI/CD > Variables)
-    - python scripts/fetch_and_build.py
-    # Configura identidade do bot para o commit
+    # Configura git e injeta token antes de qualquer operação
     - git config user.name "GitLab CI Bot"
     - git config user.email "ci-bot@gitlab.com"
-    # Injeta o token de acesso na URL do remote para permitir git push
     - git remote set-url origin "https://oauth2:${GITLAB_TOKEN}@gitlab.com/engbr/comite_de_ia/cursor-dashboard-engdb-clone.git"
-    # Adiciona apenas os arquivos gerados pelo script
+    # Sempre parte do HEAD mais recente do main para evitar conflitos
+    - git fetch origin main
+    - git checkout -B main origin/main
+    # Executa o script para gerar os arquivos atualizados
+    - python scripts/fetch_and_build.py
+    # Adiciona apenas os arquivos gerados
     - git add index.html data/od_history.json
     # Só commita e faz push se houver mudanças reais
     - |
@@ -31,6 +33,5 @@ atualizar-dashboard:
         && echo "Sem alteracoes, nenhum commit necessario." \
         || (
           git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
-          && git pull --rebase origin main \
-          && git push origin HEAD:main
+          && git push origin main
         )
