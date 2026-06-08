@@ -38,5 +38,5 @@ atualizar-dashboard:
         && echo "Sem alteracoes, nenhum commit necessario." \
         || (
           git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
-          && git push origin main
+          && git push origin HEAD:main
         )
