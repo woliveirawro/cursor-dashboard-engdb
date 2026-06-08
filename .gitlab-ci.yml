@@ -2,6 +2,7 @@ image: python:3.12-slim
 
 stages:
   - update
+  - deploy
 
 atualizar-dashboard:
   stage: update
@@ -40,3 +41,18 @@ atualizar-dashboard:
           git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
           && git push origin HEAD:main
         )
+
+# Job de GitLab Pages — publica o index.html como site estático
+# Roda em todo push no main (inclusive o commit do CI acima)
+# Não gera loop pois não commita nada, só publica artefatos
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp index.html public/index.html
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
