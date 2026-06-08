@@ -5,6 +5,8 @@ stages:
 
 atualizar-dashboard:
   stage: update
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq git
   # Equivalente ao GitHub Actions: schedule + workflow_dispatch + push to main
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
