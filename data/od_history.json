@@ -16,7 +16,7 @@
           },
           "06/2026": {
             "od_cost": 0.0,
-            "od_requests": 1716
+            "od_requests": 1392
           }
         }
       },
@@ -51,8 +51,8 @@
             "od_requests": 811
           },
           "06/2026": {
-            "od_cost": 14.41,
-            "od_requests": 1215
+            "od_cost": 36.86,
+            "od_requests": 1770
           }
         }
       },
@@ -65,8 +65,8 @@
             "od_requests": 2524
           },
           "06/2026": {
-            "od_cost": 1361.51,
-            "od_requests": 39734
+            "od_cost": 1419.82,
+            "od_requests": 39798
           }
         }
       },
@@ -75,7 +75,7 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 384.25,
+            "od_cost": 428.83,
             "od_requests": 10722
           }
         }
@@ -135,8 +135,8 @@
             "od_requests": 179
           },
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 158
+            "od_cost": 1.05,
+            "od_requests": 184
           }
         }
       },
@@ -177,8 +177,8 @@
             "od_requests": 17376
           },
           "06/2026": {
-            "od_cost": 66.91,
-            "od_requests": 16960
+            "od_cost": 88.76,
+            "od_requests": 17455
           }
         }
       }
@@ -396,8 +396,8 @@
             "od_requests": 6333
           },
           "06/2026": {
-            "od_cost": 49.39,
-            "od_requests": 7038
+            "od_cost": 55.97,
+            "od_requests": 7049
           }
         }
       },
@@ -552,8 +552,8 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 37.33,
-            "od_requests": 1266
+            "od_cost": 39.14,
+            "od_requests": 1320
           }
         }
       },
@@ -584,8 +584,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 1.15,
-            "od_requests": 586
+            "od_cost": 6.32,
+            "od_requests": 1057
           }
         }
       },
