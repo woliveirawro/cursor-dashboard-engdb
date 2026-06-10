@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 1312
+            "od_cost": 5.66,
+            "od_requests": 1242
           }
         }
       },
@@ -34,7 +34,7 @@
           },
           "06/2026": {
             "od_cost": 24.91,
-            "od_requests": 2636
+            "od_requests": 2300
           }
         }
       },
@@ -52,7 +52,7 @@
           },
           "06/2026": {
             "od_cost": 36.86,
-            "od_requests": 1772
+            "od_requests": 1469
           }
         }
       },
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 1419.82,
-            "od_requests": 39800
+            "od_requests": 39756
           }
         }
       },
@@ -135,8 +135,8 @@
             "od_requests": 179
           },
           "06/2026": {
-            "od_cost": 1.05,
-            "od_requests": 190
+            "od_cost": 2.01,
+            "od_requests": 192
           }
         }
       },
@@ -177,8 +177,8 @@
             "od_requests": 17376
           },
           "06/2026": {
-            "od_cost": 89.08,
-            "od_requests": 17326
+            "od_cost": 108.17,
+            "od_requests": 14332
           }
         }
       }
@@ -396,8 +396,8 @@
             "od_requests": 6333
           },
           "06/2026": {
-            "od_cost": 55.97,
-            "od_requests": 6935
+            "od_cost": 66.79,
+            "od_requests": 6099
           }
         }
       },
@@ -506,8 +506,8 @@
             "od_requests": 22
           },
           "06/2026": {
-            "od_cost": 1.64,
-            "od_requests": 117
+            "od_cost": 23.45,
+            "od_requests": 718
           }
         }
       },
@@ -588,8 +588,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 16.4,
-            "od_requests": 1755
+            "od_cost": 19.72,
+            "od_requests": 2553
           }
         }
       },
@@ -640,7 +640,18 @@
   },
   "nd": {
     "group_name": "N/D",
-    "members": {},
+    "members": {
+      "julio.guedes@engdb.com.br": {
+        "name": "Julio Guedes",
+        "vertical": "N/D",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 6.42,
+            "od_requests": 165
+          }
+        }
+      }
+    },
     "all_cycles": [
       "04/2026",
       "05/2026",
