@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 60.36,
-            "od_requests": 6217
+            "od_cost": 306.05,
+            "od_requests": 8421
           }
         }
       },
@@ -34,7 +34,7 @@
           },
           "06/2026": {
             "od_cost": 24.91,
-            "od_requests": 2583
+            "od_requests": 2585
           }
         }
       },
@@ -52,7 +52,7 @@
           },
           "06/2026": {
             "od_cost": 36.86,
-            "od_requests": 1744
+            "od_requests": 1645
           }
         }
       },
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 1419.82,
-            "od_requests": 39798
+            "od_requests": 39815
           }
         }
       },
@@ -75,8 +75,8 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 428.95,
-            "od_requests": 10742
+            "od_cost": 430.11,
+            "od_requests": 10760
           }
         }
       }
@@ -177,8 +177,8 @@
             "od_requests": 17376
           },
           "06/2026": {
-            "od_cost": 108.17,
-            "od_requests": 17872
+            "od_cost": 127.36,
+            "od_requests": 17139
           }
         }
       }
@@ -342,8 +342,8 @@
             "od_requests": 26
           },
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 691
+            "od_cost": 27.83,
+            "od_requests": 695
           }
         }
       },
@@ -376,6 +376,16 @@
             "od_requests": 24
           }
         }
+      },
+      "joao.garcia@engdb.com.br": {
+        "name": "Joao Garcia",
+        "vertical": "Produtos",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 0.92,
+            "od_requests": 23
+          }
+        }
       }
     },
     "all_cycles": [
@@ -400,8 +410,8 @@
             "od_requests": 6333
           },
           "06/2026": {
-            "od_cost": 67.82,
-            "od_requests": 6104
+            "od_cost": 69.91,
+            "od_requests": 5993
           }
         }
       },
@@ -510,8 +520,8 @@
             "od_requests": 22
           },
           "06/2026": {
-            "od_cost": 39.27,
-            "od_requests": 840
+            "od_cost": 42.36,
+            "od_requests": 925
           }
         }
       },
@@ -560,8 +570,8 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 50.02,
-            "od_requests": 1841
+            "od_cost": 52.31,
+            "od_requests": 1847
           }
         }
       },
@@ -592,8 +602,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 33.44,
-            "od_requests": 3124
+            "od_cost": 49.86,
+            "od_requests": 4241
           }
         }
       },
@@ -650,8 +660,8 @@
         "vertical": "N/D",
         "cycles": {
           "06/2026": {
-            "od_cost": 6.58,
-            "od_requests": 165
+            "od_cost": 11.46,
+            "od_requests": 287
           }
         }
       },
@@ -660,8 +670,8 @@
         "vertical": "N/D",
         "cycles": {
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 4
+            "od_cost": 0.8,
+            "od_requests": 50
           }
         }
       }
