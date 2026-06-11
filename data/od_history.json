@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 5.66,
-            "od_requests": 1242
+            "od_cost": 60.36,
+            "od_requests": 6217
           }
         }
       },
@@ -34,7 +34,7 @@
           },
           "06/2026": {
             "od_cost": 24.91,
-            "od_requests": 2300
+            "od_requests": 2583
           }
         }
       },
@@ -52,7 +52,7 @@
           },
           "06/2026": {
             "od_cost": 36.86,
-            "od_requests": 1469
+            "od_requests": 1744
           }
         }
       },
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 1419.82,
-            "od_requests": 39756
+            "od_requests": 39798
           }
         }
       },
@@ -75,8 +75,8 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 428.91,
-            "od_requests": 10724
+            "od_cost": 428.95,
+            "od_requests": 10742
           }
         }
       }
@@ -136,7 +136,7 @@
           },
           "06/2026": {
             "od_cost": 2.01,
-            "od_requests": 192
+            "od_requests": 204
           }
         }
       },
@@ -178,7 +178,7 @@
           },
           "06/2026": {
             "od_cost": 108.17,
-            "od_requests": 14332
+            "od_requests": 17872
           }
         }
       }
@@ -340,6 +340,10 @@
           "05/2026": {
             "od_cost": 0.0,
             "od_requests": 26
+          },
+          "06/2026": {
+            "od_cost": 0.0,
+            "od_requests": 691
           }
         }
       },
@@ -396,8 +400,8 @@
             "od_requests": 6333
           },
           "06/2026": {
-            "od_cost": 66.79,
-            "od_requests": 6099
+            "od_cost": 67.82,
+            "od_requests": 6104
           }
         }
       },
@@ -506,8 +510,8 @@
             "od_requests": 22
           },
           "06/2026": {
-            "od_cost": 23.45,
-            "od_requests": 718
+            "od_cost": 39.27,
+            "od_requests": 840
           }
         }
       },
@@ -556,8 +560,8 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 39.38,
-            "od_requests": 1334
+            "od_cost": 50.02,
+            "od_requests": 1841
           }
         }
       },
@@ -588,8 +592,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 19.72,
-            "od_requests": 2553
+            "od_cost": 33.44,
+            "od_requests": 3124
           }
         }
       },
@@ -646,8 +650,18 @@
         "vertical": "N/D",
         "cycles": {
           "06/2026": {
-            "od_cost": 6.42,
+            "od_cost": 6.58,
             "od_requests": 165
+          }
+        }
+      },
+      "fernando.teves@engdb.com.br": {
+        "name": "Fernando da Silva Cabral de Teves",
+        "vertical": "N/D",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 0.0,
+            "od_requests": 4
           }
         }
       }
