@@ -32,14 +32,17 @@ atualizar-dashboard:
     # Restaura os arquivos gerados sobre o main atualizado
     - cp /tmp/index.html.generated index.html
     - cp /tmp/od_history.json.generated data/od_history.json
-    # Commita e faz push apenas se houver mudanças reais
+    # Configura o remote do GitHub com token para push a partir do CI
+    - git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/woliveirawro/cursor-dashboard-engdb.git" || git remote set-url github "https://oauth2:${GITHUB_TOKEN}@github.com/woliveirawro/cursor-dashboard-engdb.git"
+    # Commita e faz push nos dois (GitLab + GitHub) se houver mudanças reais
     - git add index.html data/od_history.json
     - |
       git diff --cached --quiet \
         && echo "Sem alteracoes, nenhum commit necessario." \
         || (
           git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
-          && git push origin HEAD:main
+          && git push origin HEAD:main \
+          && git push github HEAD:main
         )
 
 # Job de GitLab Pages — publica o index.html como site estático
