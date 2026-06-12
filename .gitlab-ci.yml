@@ -42,7 +42,7 @@ atualizar-dashboard:
         || (
           git commit -m "Dashboard atualizado $(date -u '+%Y-%m-%d %H:%M UTC')" \
           && git push origin HEAD:main \
-          && git push github HEAD:main
+          && git push github HEAD:main --force
         )
 
 # Job de GitLab Pages — publica o index.html como site estático
