@@ -34,7 +34,7 @@
           },
           "06/2026": {
             "od_cost": 50.48,
-            "od_requests": 3177
+            "od_requests": 3175
           }
         }
       },
@@ -77,6 +77,16 @@
           "06/2026": {
             "od_cost": 430.59,
             "od_requests": 10766
+          }
+        }
+      },
+      "fernando.teves@engdb.com.br": {
+        "name": "Fernando da Silva Cabral de Teves",
+        "vertical": "Arq",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 3.04,
+            "od_requests": 76
           }
         }
       }
@@ -178,7 +188,7 @@
           },
           "06/2026": {
             "od_cost": 133.66,
-            "od_requests": 16988
+            "od_requests": 16780
           }
         }
       }
@@ -383,7 +393,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 1.16,
-            "od_requests": 29
+            "od_requests": 35
           }
         }
       }
@@ -411,7 +421,7 @@
           },
           "06/2026": {
             "od_cost": 75.29,
-            "od_requests": 5754
+            "od_requests": 5774
           }
         }
       },
@@ -603,7 +613,7 @@
           },
           "06/2026": {
             "od_cost": 70.28,
-            "od_requests": 5707
+            "od_requests": 5716
           }
         }
       },
@@ -661,7 +671,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 11.7,
-            "od_requests": 293
+            "od_requests": 295
           }
         }
       },
@@ -694,6 +704,13 @@
     "members": {},
     "all_cycles": [
       "05/2026"
+    ]
+  },
+  "cloud": {
+    "group_name": "Cloud",
+    "members": {},
+    "all_cycles": [
+      "06/2026"
     ]
   }
 }
