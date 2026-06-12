@@ -54,6 +54,15 @@ ENGDB_VERTICAL_MAP = {
     "cristiano.franco@engdb.com.br": "Arq",
     "thiago.mascarenhas@eng.it": "Arq",
     "adriel.muniz@engdb.com.br": "IndeX",
+    "lucineia.rocha@engdb.com.br": "E&U",
+    "wander.rodrigues@engdb.com.br": "I&S",
+    "carlos.martins@engdb.com.br": "I&S",
+    "julio.rosa@engdb.com.br": "I&S",
+    "renato.bartolamei@engdb.com.br": "I&S",
+    "fernando.teves@engdb.com.br": "Arq",
+    "artur.forato@engdb.com.br": "E&U",
+    "leonardo.santos@engdb.com.br": "Arq",
+    "heinrich.filho@engdb.com.br": "Cloud",
 }
 
 # Nomes são extraídos automaticamente do e-mail (ex: victor.brendo@ → Victor Brendo)
@@ -155,6 +164,16 @@ GROUPS = [
         "vertical_map": TELCO_VERTICAL_MAP,
         "name_map": {},
         "vert_names": {"Claro": "Claro"},
+    },
+    {
+        "id": "cloud",
+        "name": "Cloud",
+        "api_key_env": "CURSOR_API_KEY",
+        "filter_vertical": "Cloud",
+        "default_vertical": "N/D",
+        "vertical_map": ENGDB_VERTICAL_MAP,
+        "name_map": ENGDB_NAME_MAP,
+        "vert_names": {"Cloud": "Cloud"},
     },
     {
         "id": "nd",
