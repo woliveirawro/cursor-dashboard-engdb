@@ -33,8 +33,8 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 50.48,
-            "od_requests": 3175
+            "od_cost": 50.64,
+            "od_requests": 3183
           }
         }
       },
@@ -86,7 +86,17 @@
         "cycles": {
           "06/2026": {
             "od_cost": 3.04,
-            "od_requests": 76
+            "od_requests": 78
+          }
+        }
+      },
+      "julio.guedes@engdb.com.br": {
+        "name": "Julio Guedes",
+        "vertical": "Arq",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 11.78,
+            "od_requests": 297
           }
         }
       }
@@ -188,7 +198,7 @@
           },
           "06/2026": {
             "od_cost": 133.66,
-            "od_requests": 16780
+            "od_requests": 16505
           }
         }
       }
@@ -392,8 +402,8 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 1.16,
-            "od_requests": 35
+            "od_cost": 1.4,
+            "od_requests": 39
           }
         }
       }
@@ -420,8 +430,8 @@
             "od_requests": 6333
           },
           "06/2026": {
-            "od_cost": 75.29,
-            "od_requests": 5774
+            "od_cost": 76.45,
+            "od_requests": 5840
           }
         }
       },
@@ -612,8 +622,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 70.28,
-            "od_requests": 5716
+            "od_cost": 70.35,
+            "od_requests": 5749
           }
         }
       },
