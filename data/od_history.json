@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 402.21,
-            "od_requests": 10245
+            "od_cost": 402.37,
+            "od_requests": 10062
           }
         }
       },
@@ -33,8 +33,8 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 58.41,
-            "od_requests": 3307
+            "od_cost": 59.45,
+            "od_requests": 3255
           }
         }
       },
@@ -52,7 +52,7 @@
           },
           "06/2026": {
             "od_cost": 36.86,
-            "od_requests": 1571
+            "od_requests": 1495
           }
         }
       },
@@ -431,7 +431,7 @@
           },
           "06/2026": {
             "od_cost": 234.44,
-            "od_requests": 8233
+            "od_requests": 7688
           }
         }
       },
@@ -522,8 +522,8 @@
             "od_requests": 294
           },
           "06/2026": {
-            "od_cost": 3.17,
-            "od_requests": 389
+            "od_cost": 5.55,
+            "od_requests": 239
           }
         }
       },
@@ -638,6 +638,16 @@
           "06/2026": {
             "od_cost": 3.68,
             "od_requests": 198
+          }
+        }
+      },
+      "leonardo.nsilva@engdb.com.br": {
+        "name": "Leonardo Nascimento Silva",
+        "vertical": "Telco&Media",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 7.06,
+            "od_requests": 397
           }
         }
       }
