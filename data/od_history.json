@@ -16,7 +16,7 @@
           },
           "06/2026": {
             "od_cost": 402.37,
-            "od_requests": 10062
+            "od_requests": 10056
           }
         }
       },
@@ -431,7 +431,7 @@
           },
           "06/2026": {
             "od_cost": 234.44,
-            "od_requests": 7688
+            "od_requests": 6845
           }
         }
       },
@@ -481,7 +481,7 @@
           },
           "06/2026": {
             "od_cost": 0.0,
-            "od_requests": 596
+            "od_requests": 623
           }
         }
       },
@@ -523,7 +523,7 @@
           },
           "06/2026": {
             "od_cost": 5.55,
-            "od_requests": 239
+            "od_requests": 220
           }
         }
       },
@@ -591,7 +591,7 @@
           },
           "06/2026": {
             "od_cost": 53.31,
-            "od_requests": 1866
+            "od_requests": 1885
           }
         }
       },
@@ -623,7 +623,7 @@
           },
           "06/2026": {
             "od_cost": 78.76,
-            "od_requests": 6401
+            "od_requests": 6827
           }
         }
       },
@@ -646,8 +646,8 @@
         "vertical": "Telco&Media",
         "cycles": {
           "06/2026": {
-            "od_cost": 7.06,
-            "od_requests": 397
+            "od_cost": 9.7,
+            "od_requests": 400
           }
         }
       }
