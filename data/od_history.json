@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 402.37,
-            "od_requests": 13272
+            "od_cost": 530.99,
+            "od_requests": 20609
           }
         }
       },
@@ -33,8 +33,8 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 59.45,
-            "od_requests": 3259
+            "od_cost": 59.61,
+            "od_requests": 5092
           }
         }
       },
@@ -156,7 +156,7 @@
           },
           "06/2026": {
             "od_cost": 2.57,
-            "od_requests": 206
+            "od_requests": 208
           }
         }
       },
@@ -480,8 +480,8 @@
             "od_requests": 612
           },
           "06/2026": {
-            "od_cost": 7.93,
-            "od_requests": 722
+            "od_cost": 8.66,
+            "od_requests": 734
           }
         }
       },
@@ -522,8 +522,8 @@
             "od_requests": 294
           },
           "06/2026": {
-            "od_cost": 5.77,
-            "od_requests": 180
+            "od_cost": 6.94,
+            "od_requests": 201
           }
         }
       },
@@ -590,8 +590,8 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 56.53,
-            "od_requests": 1993
+            "od_cost": 61.74,
+            "od_requests": 2155
           }
         }
       },
@@ -622,8 +622,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 93.85,
-            "od_requests": 6835
+            "od_cost": 110.4,
+            "od_requests": 7347
           }
         }
       },
@@ -636,8 +636,8 @@
             "od_requests": 3
           },
           "06/2026": {
-            "od_cost": 3.68,
-            "od_requests": 198
+            "od_cost": 7.64,
+            "od_requests": 373
           }
         }
       },
@@ -646,8 +646,8 @@
         "vertical": "Telco&Media",
         "cycles": {
           "06/2026": {
-            "od_cost": 9.75,
-            "od_requests": 400
+            "od_cost": 10.6,
+            "od_requests": 414
           }
         }
       }
