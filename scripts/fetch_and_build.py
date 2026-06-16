@@ -442,6 +442,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             vert_summary[v]["used"] += 1
         vert_summary[v]["requests"] += m["total_requests"]
         vert_summary[v]["tokens"] += m["total_tokens"]
+        vert_summary[v]["od_cost"] = vert_summary[v].get("od_cost", 0) + m.get("od_cost", 0)
 
     if all_dates:
         d_start = datetime.strptime(all_dates[0], "%Y-%m-%d")

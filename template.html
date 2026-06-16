@@ -214,6 +214,24 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .tok-bar-wrap{height:3px;background:var(--surface3);border-radius:2px;margin-top:5px;overflow:hidden;width:100%}
 .tok-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 
+/* Indicador de plano excedido */
+.plan-badge{display:inline-block;padding:1px 6px;border-radius:6px;font-size:.66rem;font-weight:700;margin-left:5px;vertical-align:middle;font-family:'JetBrains Mono',monospace}
+.plan-badge.ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid var(--green-border)}
+.plan-badge.warn{background:rgba(234,179,8,.12);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.plan-badge.over{background:rgba(239,68,68,.1);color:var(--red);border:1px solid var(--red-border)}
+/* Meses condensado */
+.meses-short{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--accent2);cursor:help;border-bottom:1px dashed rgba(99,102,241,.3);white-space:nowrap}
+/* Linha média no gráfico */
+.avg-ref-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(99,102,241,.55);pointer-events:none;z-index:3}
+.avg-ref-label{position:absolute;right:2px;top:-14px;font-size:.6rem;color:var(--accent2);background:var(--surface2);padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+/* Weekend no heatmap */
+.heat-wknd-header{background:rgba(99,102,241,.08)!important;color:var(--accent2)!important}
+.heat-wknd-cell{outline:1px solid rgba(99,102,241,.08);outline-offset:-1px}
+/* OD custo por request */
+.cost-req-val{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--yellow);font-weight:600}
+/* Alert OD alto */
+.od-alert{color:var(--red)!important;font-weight:700}
+
 @media(max-width:768px){.header,.nav,.content,.group-bar{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -323,12 +341,16 @@ tbody td{padding:10px 16px;white-space:nowrap}
         <div class="od-rank-title">Custo por Modelo (USD)</div>
         <div id="od-rank-model"></div>
       </div>
+      <div class="od-rank-card">
+        <div class="od-rank-title">Custo por Request OD (USD/req)</div>
+        <div id="od-rank-cpr"></div>
+      </div>
     </div>
     <div class="table-wrap fade-in">
       <table>
         <thead><tr>
           <th>Nome</th><th>E-mail</th><th>Vertical</th>
-          <th>Included</th><th>On-Demand</th><th>Custo USD</th>
+          <th class="num">Included</th><th class="num">On-Demand</th><th class="num">Custo USD</th><th class="num" title="Custo On-Demand por request">USD/req</th>
         </tr></thead>
         <tbody id="od-tbody"></tbody>
       </table>
@@ -353,8 +375,9 @@ tbody td{padding:10px 16px;white-space:nowrap}
         <thead><tr>
           <th>Nome</th>
           <th>Vertical</th>
+          <th class="num">Requests</th>
           <th class="num">Total Tokens</th>
-          <th class="num">Tok / Request</th>
+          <th class="num" title="Média de tokens por request — menor = mais eficiente">Tok / Req ⚡</th>
           <th>Top Modelo</th>
           <th>Breakdown de Modelos</th>
         </tr></thead>
@@ -446,18 +469,24 @@ function renderTable(){
   });
   document.getElementById('main-tbody').innerHTML=filtered.map(m=>{
     const odReq=m.od_requests||0;const odCost=m.od_cost||0;
+    const tr=m.total_requests||0;
+    const planPct=Math.round(tr/500*100);
+    const planBadge=tr>0?`<span class="plan-badge ${planPct>=200?'over':planPct>=100?'warn':'ok'}" title="${planPct}% do plano (500 req)">${planPct}%</span>`:'';
+    const meses=m.meses_ativos;
+    const mesesCount=(!meses||meses==='—')?0:meses.split(', ').length;
+    const mesesHtml=mesesCount>0?`<span class="meses-short" title="${meses}">${mesesCount}m</span>`:'<span style="color:var(--text3)">—</span>';
     return`<tr>
     <td class="member-name">${m.name}</td>
     <td class="member-email">${m.email}</td>
     <td>${m.role}</td>
     <td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>
     <td><span class="badge ${m.used?'badge-used':'badge-unused'}">${m.used?'✅ Usou':'❌ Não Usou'}</span></td>
-    <td class="num">${fmt(m.total_requests)}</td>
+    <td class="num">${fmt(tr)}${planBadge}</td>
     <td class="num">${odReq?`<span class="badge badge-od">${fmt(odReq)}</span>`:'—'}</td>
     <td class="${odCost>0?'cost-cell':'cost-cell zero'}">${odCost>0?'$'+odCost.toFixed(2):'—'}</td>
     <td class="num">${m.days_used||'—'}</td>
     <td class="periodo-cell">${m.periodo||'—'}</td>
-    <td class="meses-cell">${renderMesesTags(m.meses_ativos)}</td>
+    <td class="meses-cell">${mesesHtml}</td>
   </tr>`}).join('');
 }
 
@@ -477,10 +506,17 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 function renderDailyChart(){
   if(!DT.length){document.getElementById('daily-chart').innerHTML='<span style="color:var(--text3)">Sem dados</span>';return}
   const maxReq=Math.max(...DT.map(d=>d.requests));
-  document.getElementById('daily-chart').innerHTML=DT.map(d=>{
-    const h=Math.max(4,(d.requests/maxReq)*140);
-    return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
-  }).join('');
+  const avgReq=Math.round(DT.reduce((s,d)=>s+d.requests,0)/DT.length);
+  const avgH=Math.round((avgReq/maxReq)*140);
+  const avgTop=150-avgH;
+  const el=document.getElementById('daily-chart');
+  el.style.position='relative';
+  el.innerHTML=
+    `<div class="avg-ref-line" style="top:${avgTop}px"><span class="avg-ref-label">média ${fmt(avgReq)}</span></div>`+
+    DT.map(d=>{
+      const h=Math.max(4,(d.requests/maxReq)*140);
+      return`<div class="bar-col"><div class="bar" style="height:${h}px"><div class="bar-tooltip">${shortDate(d.date)}: ${fmt(d.requests)}</div></div><div class="bar-label">${shortDate(d.date)}</div></div>`;
+    }).join('');
 }
 
 function renderHeatFilterBar(){
@@ -496,7 +532,13 @@ function renderHeatFilterBar(){
 
 function renderHeatmap(){
   if(!AD.length){document.getElementById('heatmap-head').innerHTML='';document.getElementById('heatmap-body').innerHTML='<tr><td style="color:var(--text3);padding:20px">Sem dados</td></tr>';return}
-  document.getElementById('heatmap-head').innerHTML=`<th style="min-width:200px;padding-left:14px">Nome</th><th style="min-width:220px">E-mail</th><th style="min-width:50px">Vert.</th>`+AD.map(d=>`<th>${d.slice(8)+'/'+d.slice(5,7)}</th>`).join('');
+  const isWknd=d=>{const[y,mo,dy]=d.split('-').map(Number);const w=new Date(y,mo-1,dy).getDay();return w===0||w===6};
+  document.getElementById('heatmap-head').innerHTML=
+    `<th style="min-width:200px;padding-left:14px">Nome</th><th style="min-width:220px">E-mail</th><th style="min-width:50px">Vert.</th>`+
+    AD.map(d=>isWknd(d)
+      ?`<th class="heat-wknd-header" title="Fim de semana">${d.slice(8)+'/'+d.slice(5,7)}</th>`
+      :`<th>${d.slice(8)+'/'+d.slice(5,7)}</th>`
+    ).join('');
   const members=heatFilter==='all'?M:M.filter(m=>m.vertical===heatFilter);
   let allVals=[];
   members.forEach(m=>{const ud=DU[m.email]||{};AD.forEach(d=>{if(ud[d])allVals.push(ud[d])})});
@@ -506,7 +548,7 @@ function renderHeatmap(){
   function hl(v){if(!v)return 0;if(v<=2)return 1;if(v<=p50)return 2;if(v<=p90)return 3;if(v<=p90*3)return 4;return 5}
   document.getElementById('heatmap-body').innerHTML=members.map(m=>{
     const ud=DU[m.email]||{};
-    return`<tr><td>${m.name}</td><td>${m.email}</td><td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>${AD.map(d=>{const v=ud[d]||0;return`<td class="heat-${hl(v)}">${v||''}</td>`}).join('')}</tr>`;
+    return`<tr><td>${m.name}</td><td>${m.email}</td><td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>${AD.map(d=>{const v=ud[d]||0;const wk=isWknd(d)?'heat-wknd-cell':'';return`<td class="heat-${hl(v)} ${wk}">${v||''}</td>`}).join('')}</tr>`;
   }).join('');
 }
 
@@ -533,6 +575,7 @@ function renderVerticals(){
         <div class="vert-stat"><div class="vert-stat-val">${fmt(d.requests)}</div><div class="vert-stat-label">Requests</div></div>
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${adoption}%;background:${color}"></div></div>
+      ${d.od_cost>0?`<div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><span style="font-size:.7rem;color:var(--text3)">Custo On-Demand</span><span style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--red);font-weight:600">$${(d.od_cost||0).toFixed(2)}</span></div>`:''}
       <div class="vert-members">${membersHeader}${members.map(m=>`<div class="vert-member"><span class="vert-member-name">${m.used?'✅':'❌'} ${m.name}</span><span class="vert-member-req">${fmt(m.total_requests)} req · ${m.days_used}d</span></div>`).join('')}</div>
     </div>`;
   }).join('');
@@ -553,11 +596,14 @@ function renderOnDemand(){
   const totalOdCost=s.total_od_cost||0;
   const totalOdReq=s.total_od_requests||0;
   const odCount=s.od_members||0;
+  const PLAN_COST=40;
+  const projectedCost=(s.active_members||0)*PLAN_COST+totalOdCost;
   document.getElementById('od-kpi-row').innerHTML=`
     <div class="kpi"><div class="kpi-icon red">💰</div><div class="kpi-label">Custo On-Demand Total</div><div class="kpi-value" style="color:var(--red)">$${totalOdCost.toFixed(2)}</div><div class="kpi-detail">Acima do plano incluso</div></div>
     <div class="kpi"><div class="kpi-icon red">📊</div><div class="kpi-label">Requests On-Demand</div><div class="kpi-value">${fmt(totalOdReq)}</div><div class="kpi-detail">de ${fmt(s.total_requests)} totais</div></div>
     <div class="kpi"><div class="kpi-icon yellow">👤</div><div class="kpi-label">Membros com On-Demand</div><div class="kpi-value">${odCount}</div><div class="kpi-detail">de ${s.total_members} membros</div></div>
-    <div class="kpi"><div class="kpi-icon purple">📈</div><div class="kpi-label">Custo Médio/Membro</div><div class="kpi-value">$${odCount?((totalOdCost/odCount).toFixed(2)):'0.00'}</div><div class="kpi-detail">Entre membros on-demand</div></div>`;
+    <div class="kpi"><div class="kpi-icon purple">📈</div><div class="kpi-label">Custo Médio/Membro OD</div><div class="kpi-value">$${odCount?((totalOdCost/odCount).toFixed(2)):'0.00'}</div><div class="kpi-detail">Entre membros on-demand</div></div>
+    <div class="kpi"><div class="kpi-icon purple">🧾</div><div class="kpi-label">Custo Total Projetado</div><div class="kpi-value" style="color:var(--yellow)">$${projectedCost.toFixed(2)}</div><div class="kpi-detail">${s.active_members} × $${PLAN_COST} plano + $${totalOdCost.toFixed(2)} OD</div></div>`;
   const odDays=DOD.filter(d=>d.cents>0);
   if(odDays.length){
     const maxCost=Math.max(...odDays.map(d=>d.cents));
@@ -588,14 +634,29 @@ function renderOnDemand(){
   } else {
     document.getElementById('od-rank-model').innerHTML='<span style="color:var(--text3)">Sem dados</span>';
   }
-  document.getElementById('od-tbody').innerHTML=odMembers.map(m=>`<tr>
+  // Ranking custo por request OD
+  const cprMembers=odMembers.filter(m=>(m.od_requests||0)>0).map(m=>({...m,cpr:(m.od_cost||0)/(m.od_requests||1)})).sort((a,b)=>b.cpr-a.cpr);
+  if(cprMembers.length){
+    const maxCpr=cprMembers[0].cpr||1;
+    document.getElementById('od-rank-cpr').innerHTML=cprMembers.slice(0,10).map((m,i)=>{
+      const pct=(m.cpr/maxCpr*100).toFixed(1);
+      return`<div class="od-rank-item"><div class="od-rank-pos">${i+1}</div><div class="od-rank-name">${m.name}</div><div class="od-rank-bar"><div class="od-rank-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--yellow),#f97316)"></div></div><div class="cost-req-val">$${m.cpr.toFixed(4)}</div></div>`;
+    }).join('');
+  } else {
+    document.getElementById('od-rank-cpr').innerHTML='<span style="color:var(--text3)">Sem dados</span>';
+  }
+  document.getElementById('od-tbody').innerHTML=odMembers.map(m=>{
+    const cpr=m.od_requests>0?(m.od_cost/m.od_requests):0;
+    const highOd=(m.od_cost||0)>=5;
+    return`<tr>
     <td class="member-name">${m.name}</td>
     <td class="member-email">${m.email}</td>
     <td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>
     <td class="num">${fmt(m.included_requests||0)}</td>
     <td class="num"><span class="badge badge-od">${fmt(m.od_requests||0)}</span></td>
-    <td class="cost-cell">$${(m.od_cost||0).toFixed(2)}</td>
-  </tr>`).join('')||'<tr><td colspan="6" style="color:var(--text3);padding:20px;text-align:center">Nenhum membro com uso on-demand</td></tr>';
+    <td class="${highOd?'cost-cell od-alert':'cost-cell'}">$${(m.od_cost||0).toFixed(2)}</td>
+    <td class="cost-req-val" style="text-align:right">${m.od_requests>0?'$'+cpr.toFixed(4):'—'}</td>
+  </tr>`;}).join('')||'<tr><td colspan="7" style="color:var(--text3);padding:20px;text-align:center">Nenhum membro com uso on-demand</td></tr>';
 }
 
 // ── Histórico On-Demand ──
@@ -689,15 +750,18 @@ function renderTokens(){
     const top=models[0];
     const topPct=top&&m.total_requests?Math.round(top.requests/m.total_requests*100):0;
     const barPct=Math.max(2,Math.round((m.total_tokens||0)/maxTok*100));
+    const avgTpr=m.avg_tok_per_req||0;
+    const effClass=avgTpr<2000?'var(--green)':avgTpr<5000?'var(--yellow)':'var(--red)';
     return`<tr>
       <td class="member-name">${m.name}</td>
       <td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>
+      <td class="num">${fmt(m.total_requests||0)}</td>
       <td class="num">${fmtTok(m.total_tokens||0)}<div class="tok-bar-wrap"><div class="tok-bar-fill" style="width:${barPct}%"></div></div></td>
-      <td class="num">${fmtTok(m.avg_tok_per_req||0)}</td>
+      <td class="num" style="color:${effClass}">${fmtTok(avgTpr)}</td>
       <td>${top?`<span class="model-pill top-model" title="${top.model}">${shortModel(top.model)}</span>&nbsp;<span style="font-size:.7rem;color:var(--text3)">${topPct}%</span>`:'—'}</td>
       <td><div class="model-breakdown">${models.slice(0,6).map(md=>`<span class="model-pill" title="${md.model} — ${fmt(md.requests)} req">${shortModel(md.model)}</span>`).join('')}</div></td>
     </tr>`;
-  }).join('')||'<tr><td colspan="6" style="color:var(--text3);padding:20px;text-align:center">Sem dados de uso</td></tr>';
+  }).join('')||'<tr><td colspan="7" style="color:var(--text3);padding:20px;text-align:center">Sem dados de uso</td></tr>';
 }
 
 // Theme toggle
