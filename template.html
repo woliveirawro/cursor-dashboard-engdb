@@ -449,9 +449,9 @@ const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Pro
 function renderGroupBar(){
   document.getElementById('group-bar').innerHTML=
     `<span class="group-label">Grupo:</span>`+
-    GROUP_LIST.map(g=>`<button class="group-btn${g.id===activeGroup&&!empresaMode?' active':''}" data-gid="${g.id}">${g.name}</button>`).join('')+
+    `<button class="group-btn empresa-btn${empresaMode?' active':''}" id="empresa-group-btn">🏢 Visão Empresa</button>`+
     `<span class="group-sep"></span>`+
-    `<button class="group-btn empresa-btn${empresaMode?' active':''}" id="empresa-group-btn">🏢 Visão Empresa</button>`;
+    GROUP_LIST.map(g=>`<button class="group-btn${g.id===activeGroup&&!empresaMode?' active':''}" data-gid="${g.id}">${g.name}</button>`).join('');
   document.querySelectorAll('.group-btn:not(.empresa-btn)').forEach(b=>b.addEventListener('click',()=>{
     if(empresaMode){
       empresaMode=false;
