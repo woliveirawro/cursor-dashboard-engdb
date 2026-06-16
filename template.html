@@ -14,7 +14,7 @@
   --green:#22c55e;--green-bg:rgba(34,197,94,.1);--green-border:rgba(34,197,94,.25);
   --red:#ef4444;--red-bg:rgba(239,68,68,.08);--red-border:rgba(239,68,68,.2);
   --yellow:#eab308;--yellow-bg:rgba(234,179,8,.1);
-  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;--prod:#ec4899;--telco:#14b8a6;--claro:#e11d48;--idx:#f97316;
+  --arq:#8b5cf6;--eu:#06b6d4;--is:#f59e0b;--nd:#6b7280;--prod:#ec4899;--telco:#14b8a6;--claro:#e11d48;--idx:#f97316;--cloud:#10b981;
   --radius:10px;--radius-lg:16px;
   --header-bg:linear-gradient(135deg,#111827 0%,#1e1b4b 50%,#111827 100%);
   --header-glow:rgba(99,102,241,.08);
@@ -35,7 +35,7 @@
   --green:#16a34a;--green-bg:rgba(22,163,74,.08);--green-border:rgba(22,163,74,.2);
   --red:#dc2626;--red-bg:rgba(220,38,38,.06);--red-border:rgba(220,38,38,.15);
   --yellow:#ca8a04;--yellow-bg:rgba(202,138,4,.08);
-  --arq:#7c3aed;--eu:#0891b2;--is:#d97706;--nd:#6b7280;--prod:#db2777;--telco:#0d9488;--claro:#be123c;--idx:#ea580c;
+  --arq:#7c3aed;--eu:#0891b2;--is:#d97706;--nd:#6b7280;--prod:#db2777;--telco:#0d9488;--claro:#be123c;--idx:#ea580c;--cloud:#059669;
   --header-bg:linear-gradient(135deg,#ffffff 0%,#eef2ff 50%,#ffffff 100%);
   --header-glow:rgba(79,70,229,.05);
   --h1-gradient:linear-gradient(135deg,#1e1b4b,#4f46e5);
@@ -117,6 +117,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .badge-claro{background:rgba(225,29,72,.1);color:#fb7185;border:1px solid rgba(225,29,72,.25)}
 .badge-idx{background:rgba(249,115,22,.1);color:#fb923c;border:1px solid rgba(249,115,22,.25)}
 .badge-nd{background:rgba(107,114,128,.1);color:#9ca3af;border:1px solid rgba(107,114,128,.25)}
+.badge-cloud{background:rgba(16,185,129,.1);color:#34d399;border:1px solid rgba(16,185,129,.25)}
 .badge-od{background:rgba(239,68,68,.1);color:var(--red);border:1px solid var(--red-border);font-family:'JetBrains Mono',monospace}
 .num{font-family:'JetBrains Mono',monospace;font-weight:500;text-align:right}
 .periodo-cell{font-size:.76rem;color:var(--accent2);font-weight:500}
@@ -198,6 +199,21 @@ tbody td{padding:10px 16px;white-space:nowrap}
 .fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
+.token-vert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:24px}
+.token-vert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;position:relative;overflow:hidden}
+.token-vert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.token-vert-card.card-arq::before{background:var(--arq)}.token-vert-card.card-eu::before{background:var(--eu)}.token-vert-card.card-is::before{background:var(--is)}.token-vert-card.card-nd::before{background:var(--nd)}.token-vert-card.card-produtos::before{background:var(--prod)}.token-vert-card.card-telco::before{background:var(--telco)}.token-vert-card.card-claro::before{background:var(--claro)}.token-vert-card.card-idx::before{background:var(--idx)}.token-vert-card.card-cloud::before{background:var(--cloud)}
+.token-vert-title{font-size:.88rem;font-weight:700;margin-bottom:12px}
+.token-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.token-stat{text-align:center}
+.token-stat-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;line-height:1.2}
+.token-stat-label{font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+.model-pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:.67rem;font-weight:600;background:rgba(99,102,241,.1);color:var(--accent2);border:1px solid rgba(99,102,241,.2);font-family:'JetBrains Mono',monospace;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;cursor:default}
+.model-pill.top-model{background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(139,92,246,.18));border-color:rgba(139,92,246,.4);color:#c4b5fd}
+.model-breakdown{display:flex;flex-wrap:wrap;gap:4px}
+.tok-bar-wrap{height:3px;background:var(--surface3);border-radius:2px;margin-top:5px;overflow:hidden;width:100%}
+.tok-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
 @media(max-width:768px){.header,.nav,.content,.group-bar{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -228,6 +244,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="tab" data-view="verticals">Resumo por Vertical</div>
   <div class="tab" data-view="ondemand">Custos On-Demand</div>
   <div class="tab" data-view="history">Histórico On-Demand</div>
+  <div class="tab" data-view="tokens">Tokens &amp; Modelos</div>
 </div></div>
 
 <div class="content">
@@ -328,6 +345,23 @@ tbody td{padding:10px 16px;white-space:nowrap}
       </table>
     </div>
   </div>
+
+  <div class="view" id="v-tokens">
+    <div class="token-vert-grid fade-in" id="token-vert-grid"></div>
+    <div class="table-wrap fade-in">
+      <table id="token-table">
+        <thead><tr>
+          <th>Nome</th>
+          <th>Vertical</th>
+          <th class="num">Total Tokens</th>
+          <th class="num">Tok / Request</th>
+          <th>Top Modelo</th>
+          <th>Breakdown de Modelos</th>
+        </tr></thead>
+        <tbody id="token-tbody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -340,7 +374,7 @@ let M=G.members||[],DU=G.daily_usage||{},AD=G.all_dates||[],DT=G.daily_totals||[
 let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='',heatFilter='all';
 
 const fmt=n=>(n||0).toLocaleString('pt-BR');
-const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'produtos':v==='Telco&Media'?'telco':v==='Claro'?'claro':v==='IndeX'?'idx':'nd';
+const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'produtos':v==='Telco&Media'?'telco':v==='Claro'?'claro':v==='IndeX'?'idx':v==='Cloud'?'cloud':'nd';
 const shortDate=d=>{const p=d.split('-');return p[2]+'/'+p[1]};
 function renderMesesTags(m){if(!m||m==='—')return'<span style="color:var(--text3)">—</span>';return m.split(', ').map(x=>`<span class="mes-tag">${x}</span>`).join('')}
 
@@ -362,7 +396,7 @@ function switchGroup(){
   document.getElementById('search-input')&&(document.getElementById('search-input').value='');
   renderGroupBar();renderKPIs();renderFilterBar();renderTable();
   renderDailyChart();renderHeatFilterBar();renderHeatmap();
-  renderVerticals();renderModels();renderOnDemand();renderHistory();
+  renderVerticals();renderModels();renderOnDemand();renderHistory();renderTokens();
   document.querySelector('.header-sub').textContent=`ENGDB Team · ${G.report_period||''}`;
 }
 
@@ -621,6 +655,49 @@ function renderHistTable(members,allCycles,selectedCycle){
       ${cycleCells}${totalCell}
     </tr>`;
   }).join('')||'<tr><td colspan="99" style="color:var(--text3);padding:20px;text-align:center">Sem dados on-demand neste ciclo</td></tr>';
+}
+
+// ── Tokens & Modelos ──
+function renderTokens(){
+  const fmtTok=n=>{if(!n)return'—';if(n>=1e9)return(n/1e9).toFixed(2)+' Bi';if(n>=1e6)return(n/1e6).toFixed(1)+' Mi';if(n>=1e3)return Math.round(n/1e3)+'k';return String(n)};
+  const shortModel=n=>n.length>30?n.slice(0,28)+'…':n;
+
+  // Cards por vertical
+  const verts=Object.keys(VS);
+  document.getElementById('token-vert-grid').innerHTML=verts.map(v=>{
+    const d=VS[v];
+    const activeMembers=M.filter(m=>m.vertical===v&&m.used);
+    const totalTok=d.tokens||0;
+    const avgTokUser=activeMembers.length?Math.round(totalTok/activeMembers.length):0;
+    const avgTokReq=d.requests?Math.round(totalTok/d.requests):0;
+    const color=vertColorsMap[v]||'var(--nd)';
+    return`<div class="token-vert-card card-${vClass(v)}">
+      <div class="token-vert-title" style="color:${color}">${v}</div>
+      <div class="token-stats">
+        <div class="token-stat"><div class="token-stat-val">${fmtTok(totalTok)}</div><div class="token-stat-label">Total Tokens</div></div>
+        <div class="token-stat"><div class="token-stat-val">${fmtTok(avgTokUser)}</div><div class="token-stat-label">Média/Usuário</div></div>
+        <div class="token-stat"><div class="token-stat-val">${fmtTok(avgTokReq)}</div><div class="token-stat-label">Média/Request</div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Tabela de usuários (somente quem usou, ordenado por tokens desc)
+  const active=M.filter(m=>m.used).sort((a,b)=>(b.total_tokens||0)-(a.total_tokens||0));
+  const maxTok=active[0]?.total_tokens||1;
+  document.getElementById('token-tbody').innerHTML=active.map(m=>{
+    const models=m.models||[];
+    const top=models[0];
+    const topPct=top&&m.total_requests?Math.round(top.requests/m.total_requests*100):0;
+    const barPct=Math.max(2,Math.round((m.total_tokens||0)/maxTok*100));
+    return`<tr>
+      <td class="member-name">${m.name}</td>
+      <td><span class="badge badge-vertical badge-${vClass(m.vertical)}">${m.vertical}</span></td>
+      <td class="num">${fmtTok(m.total_tokens||0)}<div class="tok-bar-wrap"><div class="tok-bar-fill" style="width:${barPct}%"></div></div></td>
+      <td class="num">${fmtTok(m.avg_tok_per_req||0)}</td>
+      <td>${top?`<span class="model-pill top-model" title="${top.model}">${shortModel(top.model)}</span>&nbsp;<span style="font-size:.7rem;color:var(--text3)">${topPct}%</span>`:'—'}</td>
+      <td><div class="model-breakdown">${models.slice(0,6).map(md=>`<span class="model-pill" title="${md.model} — ${fmt(md.requests)} req">${shortModel(md.model)}</span>`).join('')}</div></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="6" style="color:var(--text3);padding:20px;text-align:center">Sem dados de uso</td></tr>';
 }
 
 // Theme toggle

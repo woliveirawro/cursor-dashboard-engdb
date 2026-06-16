@@ -294,6 +294,7 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
     daily_od_costs = {}
     model_usage = {}
     od_by_model = {}
+    user_models = {}  # {email: {model: {requests, tokens}}}
     all_dates = set()
     member_emails = set(members.keys())
 
@@ -363,6 +364,14 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
         daily_totals[date_str] = daily_totals.get(date_str, 0) + requests_count
         model_usage[model] = model_usage.get(model, 0) + requests_count
 
+        # Modelo por usuário
+        if email not in user_models:
+            user_models[email] = {}
+        if model not in user_models[email]:
+            user_models[email][model] = {"requests": 0, "tokens": 0}
+        user_models[email][model]["requests"] += requests_count
+        user_models[email][model]["tokens"] += total_tokens
+
         # Custo on-demand por dia e por modelo
         if is_ondemand:
             daily_od_costs[date_str] = daily_od_costs.get(date_str, 0) + charged_cents
@@ -407,6 +416,12 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
             "od_cost": official_od_cost,
             "total_tokens": u["tokens"], "days_used": len(dates),
             "periodo": periodo, "meses_ativos": meses_ativos, "used": tr > 0,
+            "avg_tok_per_req": round(u["tokens"] / tr) if tr > 0 else 0,
+            "models": sorted(
+                [{"model": k, "requests": round(v["requests"]), "tokens": v["tokens"]}
+                 for k, v in user_models.get(email, {}).items()],
+                key=lambda x: -x["requests"]
+            ),
         })
 
     member_list.sort(key=lambda x: -x["total_requests"])
@@ -421,11 +436,12 @@ def process_group(members_raw, events_raw, vertical_map, name_map, default_verti
     for m in member_list:
         v = m["vertical"]
         if v not in vert_summary:
-            vert_summary[v] = {"total": 0, "used": 0, "requests": 0}
+            vert_summary[v] = {"total": 0, "used": 0, "requests": 0, "tokens": 0}
         vert_summary[v]["total"] += 1
         if m["used"]:
             vert_summary[v]["used"] += 1
         vert_summary[v]["requests"] += m["total_requests"]
+        vert_summary[v]["tokens"] += m["total_tokens"]
 
     if all_dates:
         d_start = datetime.strptime(all_dates[0], "%Y-%m-%d")
