@@ -808,11 +808,11 @@ function renderEmpresa(){
   const shortM=n=>n&&n.length>26?n.slice(0,24)+'…':(n||'—');
 
   const TIERS=[
-    {id:'heavy', label:'Heavy User',  icon:'🚀', min:200_000_000, color:'var(--red)',     desc:'≥ 200M tok/mês'},
-    {id:'high',  label:'High User',   icon:'🔥', min:100_000_000, color:'var(--yellow)',  desc:'≥ 100M tok/mês'},
-    {id:'mod',   label:'Moderate User',icon:'⚡', min: 50_000_000, color:'var(--green)',   desc:'≥ 50M tok/mês'},
-    {id:'low',   label:'Low User',    icon:'💧', min: 20_000_000, color:'var(--accent2)', desc:'≥ 20M tok/mês'},
-    {id:'none',  label:'No User',     icon:'⚫', min:          0, color:'var(--text3)',   desc:'Sem uso no mês'},
+    {id:'heavy', label:'Heavy User',   icon:'🚀', min:200_000_000, max:Infinity,       color:'var(--red)',     desc:'> 200M tok/mês'},
+    {id:'high',  label:'High User',    icon:'🔥', min:100_000_000, max:199_999_999,    color:'var(--yellow)',  desc:'100M – 199M tok/mês'},
+    {id:'mod',   label:'Moderate User',icon:'⚡', min: 50_000_000, max: 99_999_999,    color:'var(--green)',   desc:'50M – 99M tok/mês'},
+    {id:'low',   label:'Low User',     icon:'💧', min:     10_000, max: 49_999_999,    color:'var(--accent2)', desc:'10K – 49M tok/mês'},
+    {id:'none',  label:'No User',      icon:'⚫', min:          0, max:      9_999,    color:'var(--text3)',   desc:'< 10K tok ou sem uso'},
   ];
 
   // Agrega usuários de todos os grupos (dedup por email)
@@ -847,21 +847,22 @@ function renderEmpresa(){
     <div class="kpi"><div class="kpi-icon blue">📊</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(totReq)}</div><div class="kpi-detail">Todas as verticais</div></div>
     <div class="kpi"><div class="kpi-icon red">💰</div><div class="kpi-label">Custo OD Total</div><div class="kpi-value" style="color:var(--red)">$${totOd.toFixed(2)}</div><div class="kpi-detail">On-demand empresa</div></div>`;
 
-  // Classifica tier
+  // Classifica tier por faixas (com/sem uso)
   const getTier=u=>{
-    if(!u.used||(u.total_tokens||0)===0) return TIERS[4];
-    for(const t of TIERS.slice(0,4)){if((u.total_tokens||0)>=t.min) return t;}
+    const tok=u.total_tokens||0;
+    if(!u.used||tok===0) return TIERS[4]; // No User: sem atividade
+    for(const t of TIERS){if(tok>=t.min&&tok<=t.max) return t;}
     return TIERS[4];
   };
 
   // Tier cards
   document.getElementById('tier-grid').innerHTML=TIERS.map(t=>{
     const users=all.filter(u=>getTier(u).id===t.id);
-    const userHtml=users.slice(0,6).map(u=>
+    const userHtml=users.slice(0,10).map(u=>
       `<div class="tier-user-item">
         <span class="tier-user-name" title="${u.name}">${u.name}</span>
         <span class="tier-user-tok" style="color:${t.color}">${fmtTok(u.total_tokens||0)}</span>
-      </div>`).join('')+(users.length>6?`<div class="tier-more">+${users.length-6} usuários</div>`:'');
+      </div>`).join('')+(users.length>10?`<div class="tier-more">+${users.length-10} usuários</div>`:'');
     return`<div class="tier-card" style="border-color:${t.color}55">
       <div class="tier-header">
         <span class="tier-icon">${t.icon}</span>
