@@ -96,7 +96,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 19.94,
-            "od_requests": 501
+            "od_requests": 505
           }
         }
       }
@@ -327,7 +327,7 @@
           },
           "06/2026": {
             "od_cost": 4.69,
-            "od_requests": 176
+            "od_requests": 151
           }
         }
       },
@@ -413,7 +413,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 1.08,
-            "od_requests": 27
+            "od_requests": 31
           }
         }
       }
