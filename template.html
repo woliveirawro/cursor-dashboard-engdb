@@ -232,6 +232,21 @@ tbody td{padding:10px 16px;white-space:nowrap}
 /* Alert OD alto */
 .od-alert{color:var(--red)!important;font-weight:700}
 
+/* ── Visão Empresa ── */
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px}
+.tier-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:box-shadow .2s}
+.tier-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.18)}
+.tier-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.tier-icon{font-size:1.5rem;line-height:1}
+.tier-name{font-size:.84rem;font-weight:700;margin-bottom:2px}
+.tier-threshold{font-size:.68rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.tier-count{font-size:2.4rem;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1;margin-bottom:10px}
+.tier-user-item{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-size:.72rem;gap:8px}
+.tier-user-item:last-child{border-bottom:none}
+.tier-user-name{color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.tier-user-tok{font-family:'JetBrains Mono',monospace;font-size:.68rem;flex-shrink:0}
+.tier-more{color:var(--text3);font-size:.68rem;padding-top:5px;text-align:center}
+
 @media(max-width:768px){.header,.nav,.content,.group-bar{padding-left:16px;padding-right:16px}.kpi-row{grid-template-columns:1fr 1fr}.vert-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -263,6 +278,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="tab" data-view="ondemand">Custos On-Demand</div>
   <div class="tab" data-view="history">Histórico On-Demand</div>
   <div class="tab" data-view="tokens">Tokens &amp; Modelos</div>
+  <div class="tab" data-view="empresa">🏢 Visão Empresa</div>
 </div></div>
 
 <div class="content">
@@ -385,6 +401,28 @@ tbody td{padding:10px 16px;white-space:nowrap}
       </table>
     </div>
   </div>
+
+  <!-- ── Visão Empresa ── -->
+  <div class="view" id="v-empresa">
+    <div class="kpi-row fade-in" id="empresa-kpi-row"></div>
+    <div class="tier-grid fade-in" id="tier-grid"></div>
+    <div class="table-wrap fade-in">
+      <table id="empresa-table">
+        <thead><tr>
+          <th style="width:36px">#</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Vertical</th>
+          <th>Tier</th>
+          <th class="num">Total Tokens</th>
+          <th class="num">Requests</th>
+          <th class="num" title="Média tokens por request">Tok/Req</th>
+          <th>Top Modelo</th>
+        </tr></thead>
+        <tbody id="empresa-tbody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -419,7 +457,7 @@ function switchGroup(){
   document.getElementById('search-input')&&(document.getElementById('search-input').value='');
   renderGroupBar();renderKPIs();renderFilterBar();renderTable();
   renderDailyChart();renderHeatFilterBar();renderHeatmap();
-  renderVerticals();renderModels();renderOnDemand();renderHistory();renderTokens();
+  renderVerticals();renderModels();renderOnDemand();renderHistory();renderTokens();renderEmpresa();
   document.querySelector('.header-sub').textContent=`ENGDB Team · ${G.report_period||''}`;
 }
 
@@ -762,6 +800,95 @@ function renderTokens(){
       <td><div class="model-breakdown">${models.slice(0,6).map(md=>`<span class="model-pill" title="${md.model} — ${fmt(md.requests)} req">${shortModel(md.model)}</span>`).join('')}</div></td>
     </tr>`;
   }).join('')||'<tr><td colspan="7" style="color:var(--text3);padding:20px;text-align:center">Sem dados de uso</td></tr>';
+}
+
+// ── Visão Empresa ──────────────────────────────────────────────
+function renderEmpresa(){
+  const fmtTok=n=>{if(!n)return'0';if(n>=1e9)return(n/1e9).toFixed(2)+'B';if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return String(n)};
+  const shortM=n=>n&&n.length>26?n.slice(0,24)+'…':(n||'—');
+
+  const TIERS=[
+    {id:'heavy', label:'Heavy User',  icon:'🚀', min:200_000_000, color:'var(--red)',     desc:'≥ 200M tok/mês'},
+    {id:'high',  label:'High User',   icon:'🔥', min:100_000_000, color:'var(--yellow)',  desc:'≥ 100M tok/mês'},
+    {id:'mod',   label:'Moderate User',icon:'⚡', min: 50_000_000, color:'var(--green)',   desc:'≥ 50M tok/mês'},
+    {id:'low',   label:'Low User',    icon:'💧', min: 20_000_000, color:'var(--accent2)', desc:'≥ 20M tok/mês'},
+    {id:'none',  label:'No User',     icon:'⚫', min:          0, color:'var(--text3)',   desc:'Sem uso no mês'},
+  ];
+
+  // Agrega usuários de todos os grupos (dedup por email)
+  const userMap={};
+  GROUP_LIST.forEach(g=>{
+    const gd=GROUPS[g.id]||{};
+    (gd.members||[]).forEach(m=>{
+      if(!userMap[m.email]){
+        userMap[m.email]={...m};
+      } else {
+        const u=userMap[m.email];
+        u.total_tokens=(u.total_tokens||0)+(m.total_tokens||0);
+        u.total_requests=(u.total_requests||0)+(m.total_requests||0);
+        u.od_cost=(u.od_cost||0)+(m.od_cost||0);
+        u.used=u.used||m.used;
+        if(!u.models||!u.models.length) u.models=m.models||[];
+      }
+    });
+  });
+
+  const all=Object.values(userMap).sort((a,b)=>(b.total_tokens||0)-(a.total_tokens||0));
+  const active=all.filter(u=>u.used);
+  const totTok=all.reduce((s,u)=>s+(u.total_tokens||0),0);
+  const totReq=all.reduce((s,u)=>s+(u.total_requests||0),0);
+  const totOd=all.reduce((s,u)=>s+(u.od_cost||0),0);
+
+  // KPIs
+  document.getElementById('empresa-kpi-row').innerHTML=`
+    <div class="kpi"><div class="kpi-icon purple">🏢</div><div class="kpi-label">Total Usuários</div><div class="kpi-value">${all.length}</div><div class="kpi-detail">Todas as verticais</div></div>
+    <div class="kpi"><div class="kpi-icon green">✅</div><div class="kpi-label">Usuários Ativos</div><div class="kpi-value">${active.length}</div><div class="kpi-detail">${Math.round(active.length/(all.length||1)*100)}% adoção geral</div></div>
+    <div class="kpi"><div class="kpi-icon purple">🔢</div><div class="kpi-label">Total Tokens</div><div class="kpi-value">${fmtTok(totTok)}</div><div class="kpi-detail">Período atual</div></div>
+    <div class="kpi"><div class="kpi-icon blue">📊</div><div class="kpi-label">Total Requests</div><div class="kpi-value">${fmt(totReq)}</div><div class="kpi-detail">Todas as verticais</div></div>
+    <div class="kpi"><div class="kpi-icon red">💰</div><div class="kpi-label">Custo OD Total</div><div class="kpi-value" style="color:var(--red)">$${totOd.toFixed(2)}</div><div class="kpi-detail">On-demand empresa</div></div>`;
+
+  // Classifica tier
+  const getTier=u=>{
+    if(!u.used||(u.total_tokens||0)===0) return TIERS[4];
+    for(const t of TIERS.slice(0,4)){if((u.total_tokens||0)>=t.min) return t;}
+    return TIERS[4];
+  };
+
+  // Tier cards
+  document.getElementById('tier-grid').innerHTML=TIERS.map(t=>{
+    const users=all.filter(u=>getTier(u).id===t.id);
+    const userHtml=users.slice(0,6).map(u=>
+      `<div class="tier-user-item">
+        <span class="tier-user-name" title="${u.name}">${u.name}</span>
+        <span class="tier-user-tok" style="color:${t.color}">${fmtTok(u.total_tokens||0)}</span>
+      </div>`).join('')+(users.length>6?`<div class="tier-more">+${users.length-6} usuários</div>`:'');
+    return`<div class="tier-card" style="border-color:${t.color}55">
+      <div class="tier-header">
+        <span class="tier-icon">${t.icon}</span>
+        <div><div class="tier-name" style="color:${t.color}">${t.label}</div><div class="tier-threshold">${t.desc}</div></div>
+      </div>
+      <div class="tier-count" style="color:${t.color}">${users.length}</div>
+      ${userHtml}
+    </div>`;
+  }).join('');
+
+  // Tabela ranking completo
+  document.getElementById('empresa-tbody').innerHTML=all.map((u,i)=>{
+    const t=getTier(u);
+    const top=u.models&&u.models[0];
+    const avgTpr=u.avg_tok_per_req||0;
+    return`<tr>
+      <td class="num" style="color:var(--text3)">${i+1}</td>
+      <td class="member-name">${u.name}</td>
+      <td class="member-email">${u.email}</td>
+      <td><span class="badge badge-vertical badge-${vClass(u.vertical)}">${u.vertical}</span></td>
+      <td style="white-space:nowrap"><span style="color:${t.color};font-weight:700;font-size:.78rem">${t.icon} ${t.label}</span></td>
+      <td class="num" style="font-family:'JetBrains Mono',monospace">${fmtTok(u.total_tokens||0)}</td>
+      <td class="num">${fmt(u.total_requests||0)}</td>
+      <td class="num">${fmtTok(avgTpr)}</td>
+      <td style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text2)">${shortM(top?.model)}</td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="9" style="color:var(--text3);padding:20px;text-align:center">Sem dados</td></tr>';
 }
 
 // Theme toggle
