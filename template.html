@@ -67,6 +67,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .group-btn{padding:8px 20px;font-size:.82rem;font-weight:600;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .25s}
 .group-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .group-btn.active{background:var(--group-active-bg);border-color:transparent;color:#fff;box-shadow:0 2px 12px var(--group-active-shadow)}
+.group-sep{width:1px;height:28px;background:var(--border);margin:0 4px;flex-shrink:0}
+.group-btn.empresa-btn{border-color:rgba(99,102,241,.35);color:var(--accent2)}
+.group-btn.empresa-btn:hover{border-color:var(--accent);background:rgba(99,102,241,.08)}
+.group-btn.empresa-btn.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);border-color:transparent;color:#fff;box-shadow:0 2px 14px rgba(99,102,241,.4)}
 
 .nav{max-width:1600px;margin:0 auto;padding:0 40px}
 .tabs{display:flex;gap:4px;padding:20px 0 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
@@ -278,7 +282,6 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="tab" data-view="ondemand">Custos On-Demand</div>
   <div class="tab" data-view="history">Histórico On-Demand</div>
   <div class="tab" data-view="tokens">Tokens &amp; Modelos</div>
-  <div class="tab" data-view="empresa">🏢 Visão Empresa</div>
 </div></div>
 
 <div class="content">
@@ -434,6 +437,7 @@ let activeGroup=GROUP_LIST[0]?.id||'';
 let G=GROUPS[activeGroup]||{};
 let M=G.members||[],DU=G.daily_usage||{},AD=G.all_dates||[],DT=G.daily_totals||[],MO=G.models||[],VS=G.vertical_summary||{},ST=G.stats||{},DOD=G.daily_od_costs||[],OBM=G.od_by_model||[];
 let currentFilter='all',currentSort='requests',sortDir=-1,searchTerm='',heatFilter='all';
+let empresaMode=false;
 
 const fmt=n=>(n||0).toLocaleString('pt-BR');
 const vClass=v=>v==='Arq'?'arq':v==='E&U'?'eu':v==='I&S'?'is':v==='Produtos'?'produtos':v==='Telco&Media'?'telco':v==='Claro'?'claro':v==='IndeX'?'idx':v==='Cloud'?'cloud':'nd';
@@ -445,10 +449,27 @@ const vertColorsMap={'Arq':'var(--arq)','E&U':'var(--eu)','I&S':'var(--is)','Pro
 function renderGroupBar(){
   document.getElementById('group-bar').innerHTML=
     `<span class="group-label">Grupo:</span>`+
-    GROUP_LIST.map(g=>`<button class="group-btn ${g.id===activeGroup?'active':''}" data-gid="${g.id}">${g.name}</button>`).join('');
-  document.querySelectorAll('.group-btn').forEach(b=>b.addEventListener('click',()=>{
+    GROUP_LIST.map(g=>`<button class="group-btn${g.id===activeGroup&&!empresaMode?' active':''}" data-gid="${g.id}">${g.name}</button>`).join('')+
+    `<span class="group-sep"></span>`+
+    `<button class="group-btn empresa-btn${empresaMode?' active':''}" id="empresa-group-btn">🏢 Visão Empresa</button>`;
+  document.querySelectorAll('.group-btn:not(.empresa-btn)').forEach(b=>b.addEventListener('click',()=>{
+    if(empresaMode){
+      empresaMode=false;
+      document.querySelector('.nav').style.display='';
+    }
     activeGroup=b.dataset.gid;switchGroup();
   }));
+  document.getElementById('empresa-group-btn').addEventListener('click',()=>{
+    if(empresaMode) return;
+    empresaMode=true;
+    // Atualiza highlight dos botões de grupo
+    document.querySelectorAll('.group-btn:not(.empresa-btn)').forEach(b=>b.classList.remove('active'));
+    document.getElementById('empresa-group-btn').classList.add('active');
+    // Oculta a barra de abas e exibe diretamente a view empresa
+    document.querySelector('.nav').style.display='none';
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('v-empresa').classList.add('active');
+  });
 }
 
 function switchGroup(){
