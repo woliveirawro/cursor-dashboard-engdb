@@ -406,6 +406,7 @@ tbody td{padding:10px 16px;white-space:nowrap}
   <div class="view" id="v-empresa">
     <div class="kpi-row fade-in" id="empresa-kpi-row"></div>
     <div class="tier-grid fade-in" id="tier-grid"></div>
+    <div class="filter-bar fade-in" id="empresa-tier-bar"></div>
     <div class="table-wrap fade-in">
       <table id="empresa-table">
         <thead><tr>
@@ -803,6 +804,28 @@ function renderTokens(){
 }
 
 // ── Visão Empresa ──────────────────────────────────────────────
+let empresaTierFilter='all';
+
+function renderEmpresaTable(all,getTier,fmtTok,shortM){
+  const filtered=empresaTierFilter==='all'?all:all.filter(u=>getTier(u).id===empresaTierFilter);
+  document.getElementById('empresa-tbody').innerHTML=filtered.map((u,i)=>{
+    const t=getTier(u);
+    const top=u.models&&u.models[0];
+    const avgTpr=u.avg_tok_per_req||0;
+    return`<tr>
+      <td class="num" style="color:var(--text3)">${i+1}</td>
+      <td class="member-name">${u.name}</td>
+      <td class="member-email">${u.email}</td>
+      <td><span class="badge badge-vertical badge-${vClass(u.vertical)}">${u.vertical}</span></td>
+      <td style="white-space:nowrap"><span style="color:${t.color};font-weight:700;font-size:.78rem">${t.icon} ${t.label}</span></td>
+      <td class="num" style="font-family:'JetBrains Mono',monospace">${fmtTok(u.total_tokens||0)}</td>
+      <td class="num">${fmt(u.total_requests||0)}</td>
+      <td class="num">${fmtTok(avgTpr)}</td>
+      <td style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text2)">${shortM(top?.model)}</td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="9" style="color:var(--text3);padding:20px;text-align:center">Nenhum usuário neste tier</td></tr>';
+}
+
 function renderEmpresa(){
   const fmtTok=n=>{if(!n)return'0';if(n>=1e9)return(n/1e9).toFixed(2)+'B';if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return String(n)};
   const shortM=n=>n&&n.length>26?n.slice(0,24)+'…':(n||'—');
@@ -855,7 +878,7 @@ function renderEmpresa(){
     return TIERS[4];
   };
 
-  // Tier cards
+  // Tier cards (clicáveis para filtrar a tabela)
   document.getElementById('tier-grid').innerHTML=TIERS.map(t=>{
     const users=all.filter(u=>getTier(u).id===t.id);
     const userHtml=users.slice(0,10).map(u=>
@@ -863,7 +886,7 @@ function renderEmpresa(){
         <span class="tier-user-name" title="${u.name}">${u.name}</span>
         <span class="tier-user-tok" style="color:${t.color}">${fmtTok(u.total_tokens||0)}</span>
       </div>`).join('')+(users.length>10?`<div class="tier-more">+${users.length-10} usuários</div>`:'');
-    return`<div class="tier-card" style="border-color:${t.color}55">
+    return`<div class="tier-card" data-tier="${t.id}" style="border-color:${t.color}55;cursor:pointer" onclick="setEmpresaTier('${t.id}')">
       <div class="tier-header">
         <span class="tier-icon">${t.icon}</span>
         <div><div class="tier-name" style="color:${t.color}">${t.label}</div><div class="tier-threshold">${t.desc}</div></div>
@@ -873,23 +896,40 @@ function renderEmpresa(){
     </div>`;
   }).join('');
 
-  // Tabela ranking completo
-  document.getElementById('empresa-tbody').innerHTML=all.map((u,i)=>{
-    const t=getTier(u);
-    const top=u.models&&u.models[0];
-    const avgTpr=u.avg_tok_per_req||0;
-    return`<tr>
-      <td class="num" style="color:var(--text3)">${i+1}</td>
-      <td class="member-name">${u.name}</td>
-      <td class="member-email">${u.email}</td>
-      <td><span class="badge badge-vertical badge-${vClass(u.vertical)}">${u.vertical}</span></td>
-      <td style="white-space:nowrap"><span style="color:${t.color};font-weight:700;font-size:.78rem">${t.icon} ${t.label}</span></td>
-      <td class="num" style="font-family:'JetBrains Mono',monospace">${fmtTok(u.total_tokens||0)}</td>
-      <td class="num">${fmt(u.total_requests||0)}</td>
-      <td class="num">${fmtTok(avgTpr)}</td>
-      <td style="font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text2)">${shortM(top?.model)}</td>
-    </tr>`;
-  }).join('')||'<tr><td colspan="9" style="color:var(--text3);padding:20px;text-align:center">Sem dados</td></tr>';
+  // Barra de filtro por tier
+  const renderTierBar=()=>{
+    document.getElementById('empresa-tier-bar').innerHTML=
+      `<button class="filter-btn${empresaTierFilter==='all'?' active':''}" onclick="setEmpresaTier('all')">Todos</button>`+
+      TIERS.map(t=>{
+        const cnt=all.filter(u=>getTier(u).id===t.id).length;
+        const active=empresaTierFilter===t.id;
+        return`<button class="filter-btn${active?' active':''}" onclick="setEmpresaTier('${t.id}')"
+          style="${active?`background:${t.color}22;border-color:${t.color};color:${t.color}`:''}">
+          ${t.icon} ${t.label}<span style="margin-left:5px;font-size:.7rem;opacity:.7">(${cnt})</span>
+        </button>`;
+      }).join('');
+  };
+  renderTierBar();
+
+  // Armazena para reuso no filtro
+  window._eAll=all; window._eGetTier=getTier; window._eFmtTok=fmtTok; window._eShortM=shortM;
+  window._eRenderBar=renderTierBar;
+
+  // Tabela ranking (usa função separada para poder re-renderizar ao filtrar)
+  renderEmpresaTable(all,getTier,fmtTok,shortM);
+}
+
+function setEmpresaTier(tid){
+  empresaTierFilter=tid;
+  // Atualiza barra e cards
+  if(window._eRenderBar) window._eRenderBar();
+  document.querySelectorAll('#tier-grid .tier-card').forEach(c=>{
+    const isSel=tid==='all'||c.dataset.tier===tid;
+    c.style.opacity=isSel?'1':'0.35';
+    c.style.transform=c.dataset.tier===tid?'scale(1.02)':'scale(1)';
+  });
+  // Re-renderiza tabela filtrada
+  renderEmpresaTable(window._eAll||[],window._eGetTier,window._eFmtTok,window._eShortM);
 }
 
 // Theme toggle
