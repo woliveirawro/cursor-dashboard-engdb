@@ -456,6 +456,11 @@ function renderGroupBar(){
     if(empresaMode){
       empresaMode=false;
       document.querySelector('.nav').style.display='';
+      // Reativa a aba Visão Consolidada ao sair do modo empresa
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      document.getElementById('v-consolidated').classList.add('active');
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelector('.tab[data-view="consolidated"]')?.classList.add('active');
     }
     activeGroup=b.dataset.gid;switchGroup();
   }));
