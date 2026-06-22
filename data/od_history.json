@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 1245.96,
-            "od_requests": 31753
+            "od_cost": 1302.47,
+            "od_requests": 32733
           }
         }
       },
@@ -33,8 +33,8 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 141.22,
-            "od_requests": 4990
+            "od_cost": 143.38,
+            "od_requests": 4977
           }
         }
       },
@@ -51,8 +51,8 @@
             "od_requests": 811
           },
           "06/2026": {
-            "od_cost": 39.7,
-            "od_requests": 1286
+            "od_cost": 40.33,
+            "od_requests": 1302
           }
         }
       },
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 1419.82,
-            "od_requests": 39117
+            "od_requests": 38824
           }
         }
       },
@@ -85,8 +85,8 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 14.72,
-            "od_requests": 376
+            "od_cost": 15.36,
+            "od_requests": 386
           }
         }
       },
@@ -123,8 +123,8 @@
             "od_requests": 596
           },
           "06/2026": {
-            "od_cost": 29.68,
-            "od_requests": 1350
+            "od_cost": 36.64,
+            "od_requests": 1368
           }
         }
       },
@@ -169,8 +169,18 @@
             "od_requests": 24
           },
           "06/2026": {
-            "od_cost": 5.44,
-            "od_requests": 182
+            "od_cost": 6.16,
+            "od_requests": 184
+          }
+        }
+      },
+      "oswaldo.pelegrina@engdb.com.br": {
+        "name": "Oswaldo Augusto Pelegrina",
+        "vertical": "E&U",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 0.16,
+            "od_requests": 4
           }
         }
       }
@@ -197,8 +207,8 @@
             "od_requests": 17376
           },
           "06/2026": {
-            "od_cost": 321.87,
-            "od_requests": 11237
+            "od_cost": 333.29,
+            "od_requests": 11373
           }
         }
       }
@@ -312,8 +322,8 @@
             "od_requests": 86
           },
           "06/2026": {
-            "od_cost": 117.74,
-            "od_requests": 3309
+            "od_cost": 132.21,
+            "od_requests": 3824
           }
         }
       },
@@ -330,7 +340,7 @@
             "od_requests": 80
           },
           "06/2026": {
-            "od_cost": 24.78,
+            "od_cost": 24.82,
             "od_requests": 678
           }
         }
@@ -406,7 +416,7 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 3.2,
+            "od_cost": 3.24,
             "od_requests": 81
           }
         }
@@ -417,7 +427,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 12.43,
-            "od_requests": 311
+            "od_requests": 317
           }
         }
       },
@@ -426,8 +436,8 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 62.35,
-            "od_requests": 1618
+            "od_cost": 64.61,
+            "od_requests": 1626
           }
         }
       },
@@ -437,7 +447,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 1.94,
-            "od_requests": 49
+            "od_requests": 66
           }
         }
       }
@@ -496,7 +506,7 @@
             "od_requests": 2421
           },
           "06/2026": {
-            "od_cost": 0.0,
+            "od_cost": 5.63,
             "od_requests": 1125
           }
         }
@@ -624,8 +634,8 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 66.49,
-            "od_requests": 2242
+            "od_cost": 66.6,
+            "od_requests": 2245
           }
         }
       },
@@ -671,7 +681,7 @@
           },
           "06/2026": {
             "od_cost": 16.92,
-            "od_requests": 581
+            "od_requests": 590
           }
         }
       },
@@ -680,7 +690,7 @@
         "vertical": "Telco&Media",
         "cycles": {
           "06/2026": {
-            "od_cost": 73.86,
+            "od_cost": 77.53,
             "od_requests": 1826
           }
         }
