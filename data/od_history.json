@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 1309.33,
-            "od_requests": 32771
+            "od_cost": 1316.09,
+            "od_requests": 32903
           }
         }
       },
@@ -33,8 +33,8 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 143.38,
-            "od_requests": 4970
+            "od_cost": 143.5,
+            "od_requests": 4879
           }
         }
       },
@@ -51,8 +51,8 @@
             "od_requests": 811
           },
           "06/2026": {
-            "od_cost": 40.33,
-            "od_requests": 1306
+            "od_cost": 40.49,
+            "od_requests": 1308
           }
         }
       },
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 1419.82,
-            "od_requests": 38822
+            "od_requests": 38810
           }
         }
       },
@@ -85,8 +85,8 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 15.44,
-            "od_requests": 386
+            "od_cost": 15.76,
+            "od_requests": 394
           }
         }
       },
@@ -123,8 +123,8 @@
             "od_requests": 596
           },
           "06/2026": {
-            "od_cost": 36.64,
-            "od_requests": 1368
+            "od_cost": 36.96,
+            "od_requests": 1392
           }
         }
       },
@@ -169,8 +169,8 @@
             "od_requests": 24
           },
           "06/2026": {
-            "od_cost": 6.16,
-            "od_requests": 184
+            "od_cost": 6.4,
+            "od_requests": 192
           }
         }
       },
@@ -323,7 +323,7 @@
           },
           "06/2026": {
             "od_cost": 152.79,
-            "od_requests": 3824
+            "od_requests": 3958
           }
         }
       },
@@ -377,7 +377,7 @@
           },
           "06/2026": {
             "od_cost": 32.65,
-            "od_requests": 815
+            "od_requests": 1285
           }
         }
       },
@@ -427,7 +427,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 12.67,
-            "od_requests": 317
+            "od_requests": 318
           }
         }
       },
@@ -437,7 +437,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 64.93,
-            "od_requests": 1626
+            "od_requests": 1657
           }
         }
       },
@@ -447,7 +447,7 @@
         "cycles": {
           "06/2026": {
             "od_cost": 2.62,
-            "od_requests": 67
+            "od_requests": 72
           }
         }
       }
@@ -553,7 +553,7 @@
           },
           "06/2026": {
             "od_cost": 0.0,
-            "od_requests": 373
+            "od_requests": 399
           }
         }
       },
@@ -680,8 +680,8 @@
             "od_requests": 3
           },
           "06/2026": {
-            "od_cost": 17.08,
-            "od_requests": 590
+            "od_cost": 17.67,
+            "od_requests": 705
           }
         }
       },
