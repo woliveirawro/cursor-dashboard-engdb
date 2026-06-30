@@ -15,8 +15,8 @@
             "od_requests": 5624
           },
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 40253
+            "od_cost": 9.01,
+            "od_requests": 40285
           }
         }
       },
@@ -33,7 +33,7 @@
             "od_requests": 2485
           },
           "06/2026": {
-            "od_cost": 8.35,
+            "od_cost": 10.99,
             "od_requests": 3989
           }
         }
@@ -66,7 +66,7 @@
           },
           "06/2026": {
             "od_cost": 0.0,
-            "od_requests": 31608
+            "od_requests": 31508
           }
         }
       },
@@ -85,8 +85,8 @@
         "vertical": "Arq",
         "cycles": {
           "06/2026": {
-            "od_cost": 4.78,
-            "od_requests": 765
+            "od_cost": 6.22,
+            "od_requests": 783
           }
         }
       },
@@ -124,7 +124,7 @@
           },
           "06/2026": {
             "od_cost": 0.0,
-            "od_requests": 1610
+            "od_requests": 1608
           }
         }
       },
@@ -207,8 +207,8 @@
             "od_requests": 17376
           },
           "06/2026": {
-            "od_cost": 0.0,
-            "od_requests": 10850
+            "od_cost": 35.9,
+            "od_requests": 11997
           }
         }
       },
@@ -255,7 +255,7 @@
           },
           "06/2026": {
             "od_cost": 34.59,
-            "od_requests": 1003
+            "od_requests": 1043
           }
         }
       },
@@ -301,7 +301,7 @@
           },
           "06/2026": {
             "od_cost": 47.11,
-            "od_requests": 1199
+            "od_requests": 1450
           }
         }
       },
@@ -333,7 +333,7 @@
           },
           "06/2026": {
             "od_cost": 329.41,
-            "od_requests": 8238
+            "od_requests": 9240
           }
         }
       },
@@ -436,8 +436,8 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 15.71,
-            "od_requests": 395
+            "od_cost": 15.79,
+            "od_requests": 407
           }
         }
       },
@@ -446,7 +446,7 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 66.45,
+            "od_cost": 66.53,
             "od_requests": 1666
           }
         }
@@ -456,8 +456,18 @@
         "vertical": "Produtos",
         "cycles": {
           "06/2026": {
-            "od_cost": 5.5,
-            "od_requests": 144
+            "od_cost": 5.74,
+            "od_requests": 145
+          }
+        }
+      },
+      "davilson.junior@engdb.com.br": {
+        "name": "Davilson Paulino Da Cunha Jun",
+        "vertical": "Produtos",
+        "cycles": {
+          "06/2026": {
+            "od_cost": 0.0,
+            "od_requests": 64
           }
         }
       }
@@ -516,8 +526,8 @@
             "od_requests": 2421
           },
           "06/2026": {
-            "od_cost": 31.91,
-            "od_requests": 739
+            "od_cost": 32.41,
+            "od_requests": 747
           }
         }
       },
@@ -548,8 +558,8 @@
             "od_requests": 568
           },
           "06/2026": {
-            "od_cost": 0.04,
-            "od_requests": 15
+            "od_cost": 1.51,
+            "od_requests": 91
           }
         }
       },
@@ -562,8 +572,8 @@
             "od_requests": 373
           },
           "06/2026": {
-            "od_cost": 25.46,
-            "od_requests": 977
+            "od_cost": 27.14,
+            "od_requests": 1006
           }
         }
       },
@@ -644,7 +654,7 @@
             "od_requests": 2
           },
           "06/2026": {
-            "od_cost": 139.17,
+            "od_cost": 140.23,
             "od_requests": 4621
           }
         }
@@ -676,8 +686,8 @@
             "od_requests": 56
           },
           "06/2026": {
-            "od_cost": 206.31,
-            "od_requests": 9822
+            "od_cost": 207.32,
+            "od_requests": 9871
           }
         }
       },
@@ -700,8 +710,8 @@
         "vertical": "Telco&Media",
         "cycles": {
           "06/2026": {
-            "od_cost": 95.92,
-            "od_requests": 2204
+            "od_cost": 101.08,
+            "od_requests": 2277
           }
         }
       },
